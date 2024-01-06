@@ -34,35 +34,35 @@
       "routes": [
         {
           "pattern": "",
-          "name": "FirstPage",
-          "target": ["firstPage"]
+          "name": "StoresOverview",
+          "target": ["storesOverview"]
         },
         {
-          "pattern": "secondPage/{firstId}",
-          "name": "SecondPage",
-          "target": ["secondPage"]
+          "pattern": "storeDetails/{storeId}",
+          "name": "StoreDetails",
+          "target": ["storeDetails"]
         },
         {
-          "pattern": "secondPage/{firstId}/thirdPage/{secondId}",
-          "name": "ThirdPage",
-          "target": ["thirdPage"]
+          "pattern": "storeDetails/{storeId}/productDetails/{productId}",
+          "name": "ProductDetails",
+          "target": ["productDetails"]
         }
       ],
 
       "targets": {
-        "firstPage": {
-          "viewName": "FirstPage",
-          "viewId": "firstPage",
+        "storesOverview": {
+          "viewName": "StoresOverview",
+          "viewId": "storesOverview",
           "viewLevel": 1
         },
-        "secondPage": {
-          "viewName": "SecondPage",
-          "viewId": "secondPage",
+        "storeDetails": {
+          "viewName": "StoreDetails",
+          "viewId": "storeDetails",
           "viewLevel": 2
         },
-        "thirdPage": {
-          "viewName": "ThirdPage",
-          "viewId": "thirdPage",
+        "productDetails": {
+          "viewName": "ProductDetails",
+          "viewId": "productDetails",
           "viewLevel": 3
         },
         "notFound": {

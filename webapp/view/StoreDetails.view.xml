@@ -1,0 +1,13 @@
+<mvc:View
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	controllerName="pavel.zhukouski.controller.StoreDetails">
+
+	<Page title="Second page">
+		<content>
+			<Button text="Third page" press="onNavToProductDetails" />
+			<Button text="First page" press="onNavToStoresOverview" />
+		</content>
+	</Page>
+
+</mvc:View>
