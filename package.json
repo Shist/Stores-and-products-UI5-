@@ -1,0 +1,15 @@
+{
+  "name": "lx-course-jan24-zhukouski-pavel-ui5",
+  "version": "1.0.0",
+  "description": "This is a web app that working with list of stores and their details as well as list of products and their details.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://leverx-edu-sapui5-course-2023.leverx-group.com/pavel.zhukouski/lx-course-jan24-zhukouski-pavel-ui5"
+  },
+  "author": "Zhukouski Pavel",
+  "license": "ISC"
+}
