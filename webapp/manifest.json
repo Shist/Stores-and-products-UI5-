@@ -36,6 +36,16 @@
           "pattern": "",
           "name": "FirstPage",
           "target": ["firstPage"]
+        },
+        {
+          "pattern": "secondPage/{firstId}",
+          "name": "SecondPage",
+          "target": ["secondPage"]
+        },
+        {
+          "pattern": "secondPage/{firstId}/thirdPage/{secondId}",
+          "name": "ThirdPage",
+          "target": ["thirdPage"]
         }
       ],
 
@@ -45,7 +55,16 @@
           "viewId": "firstPage",
           "viewLevel": 1
         },
-
+        "secondPage": {
+          "viewName": "SecondPage",
+          "viewId": "secondPage",
+          "viewLevel": 2
+        },
+        "thirdPage": {
+          "viewName": "ThirdPage",
+          "viewId": "thirdPage",
+          "viewLevel": 3
+        },
         "notFound": {
           "viewName": "NotFound",
           "viewId": "notFound"

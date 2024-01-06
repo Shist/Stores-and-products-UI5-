@@ -5,7 +5,7 @@
 
 	<Page title="First page">
 		<content>
-			<Button text="Hello world" press="onHelloButtonPress" />
+			<Button text="Second page" press="onNavToSecond" />
 		</content>
 	</Page>
 
