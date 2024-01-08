@@ -1,4 +1,5 @@
 {
+  "_version": "1.9.0",
   "sap.app": {
     "id": "pavel.zhukouski",
     "type": "application",
@@ -10,6 +11,7 @@
     }
   },
   "sap.ui": {
+    "technology": "UI5",
     "deviceTypes": {
       "desktop": true,
       "tablet": true,
@@ -19,6 +21,10 @@
   },
   "sap.ui5": {
     "rootView": "pavel.zhukouski.view.App",
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
@@ -48,7 +54,6 @@
           "target": ["productDetails"]
         }
       ],
-
       "targets": {
         "storesOverview": {
           "viewName": "StoresOverview",
