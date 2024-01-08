@@ -3,9 +3,9 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	controllerName="pavel.zhukouski.controller.ProductDetails">
 
-	<Page title="Third page">
+	<Page title="{i18n>thirdPage}">
 		<content>
-			<Button text="First page" press="onNavToStoresOverview" />
+			<Button text="{i18n>firstPage}" press="onNavToStoresOverview" />
 		</content>
 	</Page>
 
