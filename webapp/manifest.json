@@ -8,6 +8,16 @@
     "description": "{{appDescription}}",
     "applicationVersion": {
       "version": "1.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "http://localhost:3000/odata/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
     }
   },
   "sap.ui": {
@@ -86,7 +96,16 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "pavel.zhukouski.i18n.i18n"
+          "bundleName": "pavel.zhukouski.i18n.i18n",
+          "bundleLocale": "en"
+        }
+      },
+      "odata": {
+        "dataSource": "mainService",
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "InlineRepeat",
+          "useBatch": false
         }
       }
     }
