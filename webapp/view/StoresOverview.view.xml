@@ -1,12 +1,38 @@
 <mvc:View
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f"
 	controllerName="pavel.zhukouski.controller.StoresOverview">
 
-	<Page title="{i18n>storesOverview}">
-		<content>
+	<f:DynamicPage showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>storesList}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="Some link home" />
+						<Link text="Some link 1" />
+						<Link text="Some link 2" />
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader>
+				<SearchField placeholder="{i18n>search}" showRefreshButton="true"></SearchField>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
 			<Button text="{i18n>storeDetails}" press="onNavToStoreDetails" />
-		</content>
-	</Page>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://add" type="Ghost" text="{i18n>create}"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
 
 </mvc:View>
