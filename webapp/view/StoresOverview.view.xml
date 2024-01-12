@@ -4,7 +4,7 @@
 	xmlns:f="sap.f"
 	controllerName="pavel.zhukouski.controller.StoresOverview">
 
-	<f:DynamicPage showFooter="true">
+	<f:DynamicPage showFooter="true" class="sapUiNoContentPadding">
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
@@ -12,9 +12,7 @@
 				</f:heading>
 				<f:breadcrumbs>
 					<Breadcrumbs>
-						<Link text="Some link home" />
-						<Link text="Some link 1" />
-						<Link text="Some link 2" />
+						<Link text="{i18n>storesList}" />
 					</Breadcrumbs>
 				</f:breadcrumbs>
 			</f:DynamicPageTitle>
@@ -25,7 +23,16 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<Button text="{i18n>storeDetails}" press="onNavToStoreDetails" />
+			<List items="{odata>/Stores}" includeItemInSelection="true">
+				<ObjectListItem
+					type="Active"
+					press=""
+					title="{odata>Name}"
+					number="{odata>FloorArea}"
+					numberUnit="{i18n>squareUnit}" >
+						<ObjectAttribute text="{odata>Address}" />
+				</ObjectListItem>
+			</List>
 		</f:content>
 		<f:footer>
 			<OverflowToolbar>
