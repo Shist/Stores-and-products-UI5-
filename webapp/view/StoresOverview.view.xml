@@ -25,8 +25,8 @@
 		<f:content>
 			<List items="{odata>/Stores}" includeItemInSelection="true">
 				<ObjectListItem
+					press="onStoreClick"
 					type="Active"
-					press=""
 					title="{odata>Name}"
 					number="{odata>FloorArea}"
 					numberUnit="{i18n>squareUnit}" >

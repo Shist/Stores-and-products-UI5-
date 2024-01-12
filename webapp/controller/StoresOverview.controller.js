@@ -2,10 +2,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
   "use strict";
 
   return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
-    onNavToStoreDetails: function () {
+    onStoreClick: function (oEvent) {
       this.getOwnerComponent()
         .getRouter()
-        .navTo("StoreDetails", { storeId: 1 });
+        .navTo("StoreDetails", {
+          storeId: oEvent.getSource().getBindingContext("odata").getObject().id,
+        });
     },
   });
 });
