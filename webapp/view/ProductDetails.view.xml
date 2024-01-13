@@ -7,7 +7,7 @@
 	core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
 	controllerName="pavel.zhukouski.controller.ProductDetails">
 
-	<f:DynamicPage class="sapUiNoContentPadding">
+	<f:DynamicPage>
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
@@ -34,7 +34,7 @@
 					<items>
 						<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
 							<content>
-								<layout:VerticalLayout class="sapUiMediumMarginEnd">
+								<layout:VerticalLayout>
 									<ObjectAttribute title="{i18n>price}" text="{odata>Price}"/>
 									<ObjectAttribute title="{i18n>rating}" text="{odata>Rating}"/>
 									<ObjectAttribute title="{i18n>specs}" text="{odata>Specs}"/>
@@ -50,7 +50,28 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			
+			<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
+				<content>
+					<layout:VerticalLayout width="100%">
+						<FeedInput post="" class="sapUiSmallMarginTopBottom" />
+						<List
+						 	id="commentsList"
+							showSeparators="Inner"
+							items="{odata>/ProductComments}" >
+							<FeedListItem
+								sender="{odata>Author}"
+								timestamp="{
+											path: 'odata>Posted',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												pattern: 'MMM d, yyyy'
+											}
+										}"
+								text="{odata>Message}"/>
+						</List>
+					</layout:VerticalLayout>
+				</content>
+			</Panel>
 		</f:content>
 	</f:DynamicPage>
 
