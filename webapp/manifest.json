@@ -102,6 +102,7 @@
         "settings": {
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "InlineRepeat",
+          "defaultOperationMode": "Server",
           "useBatch": false
         }
       },

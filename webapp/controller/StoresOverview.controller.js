@@ -8,9 +8,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
         .getBindingContext("odata")
         .getObject("id");
 
-      const oAppViewModel = this.getView().getModel("appView");
-      oAppViewModel.setProperty("/currStore/id", storeId);
-
       this.getOwnerComponent().getRouter().navTo("StoreDetails", {
         storeId: storeId,
       });
