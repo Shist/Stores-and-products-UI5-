@@ -17,6 +17,10 @@
           "odataVersion": "2.0",
           "localUri": "localService/metadata.xml"
         }
+      },
+      "appViewData": {
+        "uri": "data/appViewModel.json",
+        "type": "JSON"
       }
     }
   },
@@ -93,19 +97,23 @@
       }
     },
     "models": {
-      "i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "settings": {
-          "bundleName": "pavel.zhukouski.i18n.i18n",
-          "bundleLocale": "en"
-        }
-      },
       "odata": {
         "dataSource": "mainService",
         "settings": {
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "InlineRepeat",
           "useBatch": false
+        }
+      },
+      "appView": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "appViewData"
+      },
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pavel.zhukouski.i18n.i18n",
+          "bundleLocale": "en"
         }
       }
     }

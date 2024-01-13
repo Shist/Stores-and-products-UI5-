@@ -13,6 +13,7 @@ sap.ui.define(["sap/ui/core/UIComponent"], function (UIComponent) {
       this.getRouter().initialize();
 
       window.oDataModel = this.getModel("odata"); // <-- TODO: Remove this after debugging
+      window.appViewModel = this.getModel("appView"); // <-- TODO: Remove this after debugging
     },
   });
 });

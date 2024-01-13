@@ -1,0 +1,22 @@
+{
+  "currStore": {
+    "productsCounts": {
+      "statusAll": {
+        "serverKey": "ALL",
+        "count": null
+      },
+      "statusOk": {
+        "serverKey": "OK",
+        "count": null
+      },
+      "statusStorage": {
+        "serverKey": "STORAGE",
+        "count": null
+      },
+      "statusOutOfStock": {
+        "serverKey": "OUT_OF_STOCK",
+        "count": null
+      }
+    }
+  }
+}
