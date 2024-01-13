@@ -14,9 +14,6 @@ sap.ui.define(
         oRouter
           .getRoute("StoreDetails")
           .attachPatternMatched(this.onPatternMatched, this);
-
-        this.updateStatusFiltersWithContext =
-          this.updateStatusFilters.bind(this);
       },
 
       onExit: function () {
@@ -27,16 +24,12 @@ sap.ui.define(
           .detachPatternMatched(this.onPatternMatched, this);
 
         const oProductsBinding = this.byId("productsTable").getBinding("items");
-        oProductsBinding.detachDataReceived(
-          this.updateStatusFiltersWithContext
-        );
+        oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
       },
 
       onAfterRendering: function () {
         const oProductsBinding = this.byId("productsTable").getBinding("items");
-        oProductsBinding.attachDataReceived(
-          this.updateStatusFiltersWithContext
-        );
+        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
       },
 
       onPatternMatched: function (oEvent) {
