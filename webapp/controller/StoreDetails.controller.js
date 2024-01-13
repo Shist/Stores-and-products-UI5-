@@ -91,6 +91,13 @@ sap.ui.define(
         });
       },
 
+      onStoresListLinkClicked: function () {
+        const oAppViewModel = this.getView().getModel("appView");
+        oAppViewModel.setProperty("/currStore/id", null);
+
+        this.getOwnerComponent().getRouter().navTo("StoresOverview");
+      },
+
       // onNavToProductDetails: function () {
       //   this.getOwnerComponent()
       //     .getRouter()

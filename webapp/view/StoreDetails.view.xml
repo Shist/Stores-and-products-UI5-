@@ -13,7 +13,7 @@
 				</f:heading>
 				<f:breadcrumbs>
 					<Breadcrumbs>
-						<Link text="{i18n>storesList}" />
+						<Link text="{i18n>storesList}" press="onStoresListLinkClicked"/>
 						<Link text="{i18n>storeDetails}" />
 					</Breadcrumbs>
 				</f:breadcrumbs>

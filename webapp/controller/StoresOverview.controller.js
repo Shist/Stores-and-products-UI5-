@@ -3,14 +3,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 
   return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
     onStoreClick: function (oEvent) {
-      this.getOwnerComponent()
-        .getRouter()
-        .navTo("StoreDetails", {
-          storeId: oEvent
-            .getSource()
-            .getBindingContext("odata")
-            .getObject("id"),
-        });
+      const storeId = oEvent
+        .getSource()
+        .getBindingContext("odata")
+        .getObject("id");
+
+      const oAppViewModel = this.getView().getModel("appView");
+      oAppViewModel.setProperty("/currStore/id", storeId);
+
+      this.getOwnerComponent().getRouter().navTo("StoreDetails", {
+        storeId: storeId,
+      });
     },
   });
 });

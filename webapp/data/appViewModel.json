@@ -1,5 +1,6 @@
 {
   "currStore": {
+    "id": null,
     "productsCounts": {
       "statusAll": {
         "serverKey": "ALL",
@@ -17,6 +18,9 @@
         "serverKey": "OUT_OF_STOCK",
         "count": null
       }
+    },
+    "currProduct": {
+      "id": null
     }
   }
 }
