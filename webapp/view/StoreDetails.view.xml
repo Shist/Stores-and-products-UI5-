@@ -27,12 +27,18 @@
 							<content>
 								<layout:HorizontalLayout allowWrapping="true">
 									<layout:VerticalLayout class="sapUiMediumMarginEnd">
-										<ObjectAttribute title="{i18n>email}" text="{odata>Name}"/>
-										<ObjectAttribute title="{i18n>phoneNumber}" text="{odata>Email}"/>
-										<ObjectAttribute title="{i18n>address}" text="{odata>PhoneNumber}"/>
+										<ObjectAttribute title="{i18n>email}" text="{odata>Email}"/>
+										<ObjectAttribute title="{i18n>phoneNumber}" text="{odata>PhoneNumber}"/>
+										<ObjectAttribute title="{i18n>address}" text="{odata>Address}"/>
 									</layout:VerticalLayout>
 									<layout:VerticalLayout>
-										<ObjectAttribute title="{i18n>establishedDate}" text="{odata>Established}"/>
+										<ObjectAttribute title="{i18n>establishedDate}" text="{
+											path: 'odata>Established',
+											type: 'sap.ui.model.type.Date',
+											formatOptions: {
+												pattern: 'MMM d, yyyy'
+											}
+										}"/>
 										<ObjectAttribute title="{i18n>floorArea}" text="{odata>FloorArea}"/>
 									</layout:VerticalLayout>
 								</layout:HorizontalLayout>
@@ -67,12 +73,21 @@
 						text="{i18n>outOfStock}" />
 				</items>
 				<content>
-					<Table items="{odata>rel_Products}" includeItemInSelection="true" >
+					<Table items="{odata>rel_Products}" sticky="HeaderToolbar">
+						<headerToolbar>
+							<Toolbar design="Solid">
+								<content>
+									<Title text="{i18n>products}" class="sapUiSmallMarginBegin"/>
+									<ToolbarSpacer/>
+									<SearchField placeholder="{i18n>searchTip}" showRefreshButton="true" width="15rem"/>
+								</content>
+							</Toolbar>
+						</headerToolbar>
 						<columns>
 							<Column>
 								<Text text="{i18n>name}" />
 							</Column>
-							<Column>
+							<Column hAlign="End">
 								<Text text="{i18n>price}" />
 							</Column>
 							<Column>
@@ -90,20 +105,20 @@
 							<Column>
 								<Text text="{i18n>rating}" />
 							</Column>
-							<Column></Column>
+							<Column width="80px"></Column>
 						</columns>
 						<items>
-							<ColumnListItem press="" type="Active">
-								<Text text="{odata>Name}" />
-								<Text text="{odata>Price}" />
-								<Text text="{odata>Specs}" />
-								<Text text="{odata>SupplierInfo}" />
-								<Text text="{odata>MadeIn}" />
-								<Text text="{odata>ProductionCompanyName}" />
-								<Text text="{odata>Rating}" />
-								<HBox>
-									<Button ></Button>
-									<Button ></Button>
+							<ColumnListItem press="" type="Navigation">
+								<Text maxLines="2" text="{odata>Name}" />
+								<Text maxLines="1" text="{odata>Price}" />
+								<Text maxLines="1" text="{odata>Specs}" />
+								<Text maxLines="1" text="{odata>SupplierInfo}" />
+								<Text maxLines="1" text="{odata>MadeIn}" />
+								<Text maxLines="1" text="{odata>ProductionCompanyName}" />
+								<RatingIndicator value="{odata>Rating}" />
+								<HBox justifyContent="SpaceBetween">
+									<Button icon="sap-icon://edit" type="Transparent"></Button>
+									<Button icon="sap-icon://sys-cancel" type="Transparent"></Button>
 								</HBox>
 							</ColumnListItem>
 						</items>
