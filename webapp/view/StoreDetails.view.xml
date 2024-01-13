@@ -1,13 +1,123 @@
 <mvc:View
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
 	controllerName="pavel.zhukouski.controller.StoreDetails">
 
-	<Page title="{i18n>storeDetails}">
-		<content>
-			<Button text="{i18n>productDetails}" press="onNavToProductDetails" />
-			<Button text="{i18n>storesOverview}" press="onNavToStoresOverview" />
-		</content>
-	</Page>
+	<f:DynamicPage showFooter="true" class="sapUiNoContentPadding">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>storeDetails}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>storesList}" />
+						<Link text="{i18n>storeDetails}" />
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader>
+				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+					<items>
+						<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
+							<content>
+								<layout:HorizontalLayout allowWrapping="true">
+									<layout:VerticalLayout class="sapUiMediumMarginEnd">
+										<ObjectAttribute title="{i18n>email}" text="{odata>Name}"/>
+										<ObjectAttribute title="{i18n>phoneNumber}" text="{odata>Email}"/>
+										<ObjectAttribute title="{i18n>address}" text="{odata>PhoneNumber}"/>
+									</layout:VerticalLayout>
+									<layout:VerticalLayout>
+										<ObjectAttribute title="{i18n>establishedDate}" text="{odata>Established}"/>
+										<ObjectAttribute title="{i18n>floorArea}" text="{odata>FloorArea}"/>
+									</layout:VerticalLayout>
+								</layout:HorizontalLayout>
+							</content>
+						</Panel>
+					</items>
+				</FlexBox>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<IconTabBar>
+				<items>
+					<IconTabFilter
+						showAll="true"
+						count="7"
+						text="{i18n>all}" />
+					<IconTabSeparator />
+					<IconTabFilter
+						icon="sap-icon://message-success"
+						iconColor="Positive"
+						count="4"
+						text="{i18n>ok}" />
+					<IconTabFilter
+						icon="sap-icon://message-warning"
+						iconColor="Critical"
+						count="2"
+						text="{i18n>storage}" />
+					<IconTabFilter
+						icon="sap-icon://notification"
+						iconColor="Negative"
+						count="1"
+						text="{i18n>outOfStock}" />
+				</items>
+				<content>
+					<Table items="{odata>rel_Products}" includeItemInSelection="true" >
+						<columns>
+							<Column>
+								<Text text="{i18n>name}" />
+							</Column>
+							<Column>
+								<Text text="{i18n>price}" />
+							</Column>
+							<Column>
+								<Text text="{i18n>specs}" />
+							</Column>
+							<Column>
+								<Text text="{i18n>supplierInfo}" />
+							</Column>
+							<Column>
+								<Text text="{i18n>countryOfOrigin}" />
+							</Column>
+							<Column>
+								<Text text="{i18n>prodCompany}" />
+							</Column>
+							<Column>
+								<Text text="{i18n>rating}" />
+							</Column>
+							<Column></Column>
+						</columns>
+						<items>
+							<ColumnListItem press="" type="Active">
+								<Text text="{odata>Name}" />
+								<Text text="{odata>Price}" />
+								<Text text="{odata>Specs}" />
+								<Text text="{odata>SupplierInfo}" />
+								<Text text="{odata>MadeIn}" />
+								<Text text="{odata>ProductionCompanyName}" />
+								<Text text="{odata>Rating}" />
+								<HBox>
+									<Button ></Button>
+									<Button ></Button>
+								</HBox>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</IconTabBar>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://add" type="Ghost" text="{i18n>create}"/>
+				<Button icon="sap-icon://delete" type="Reject" text="{i18n>delete}"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
 
 </mvc:View>
