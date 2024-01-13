@@ -1,12 +1,57 @@
 <mvc:View
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
 	controllerName="pavel.zhukouski.controller.ProductDetails">
 
-	<Page title="{i18n>productDetails}">
-		<content>
-			<Button text="{i18n>storesOverview}" press="onNavToStoresOverview" />
-		</content>
-	</Page>
+	<f:DynamicPage class="sapUiNoContentPadding">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{
+						parts: [
+							'i18n>productDetaulsPrName',
+							'odata>Name'
+						],
+						formatter: 'formatMessage'
+					}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>storesList}" press="onStoresListLinkClicked"/>
+						<Link text="{i18n>storeDetails}" press="onStoreDetailsLinkClicked"/>
+						<Link text="{i18n>productDetails}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader>
+				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+					<items>
+						<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
+							<content>
+								<layout:VerticalLayout class="sapUiMediumMarginEnd">
+									<ObjectAttribute title="{i18n>price}" text="{odata>Price}"/>
+									<ObjectAttribute title="{i18n>rating}" text="{odata>Rating}"/>
+									<ObjectAttribute title="{i18n>specs}" text="{odata>Specs}"/>
+									<ObjectAttribute title="{i18n>supplierInfo}" text="{odata>SupplierInfo}"/>
+									<ObjectAttribute title="{i18n>prodCompany}" text="{odata>ProductionCompanyName}"/>
+									<ObjectAttribute title="{i18n>countryOfOrigin}" text="{odata>MadeIn}"/>
+									<ObjectAttribute title="{i18n>status}" text="{odata>Status}"/>
+								</layout:VerticalLayout>
+							</content>
+						</Panel>
+					</items>
+				</FlexBox>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			
+		</f:content>
+	</f:DynamicPage>
 
 </mvc:View>

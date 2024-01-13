@@ -31,26 +31,18 @@ sap.ui.define(
       },
 
       onRouterPatternMatched: function (oEvent) {
-        const controllerContext = this;
+        const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
         const oODataModel = this.getView().getModel("odata");
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Stores", { id: sStoreId });
 
-          controllerContext.getView().bindObject({
+          oControllerContext.getView().bindObject({
             path: sKey,
             model: "odata",
           });
         });
-      },
-
-      onStoresListLinkClicked: function () {
-        const oAppViewModel = this.getView().getModel("appView");
-        oAppViewModel.setProperty("/currStatusFilter", "ALL");
-        this.byId("productsTable").getBinding("items").filter([]);
-
-        this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },
 
       updateStatusFilters: function () {
@@ -110,15 +102,28 @@ sap.ui.define(
         return sStorePath;
       },
 
-      // onNavToProductDetails: function () {
-      //   this.getOwnerComponent()
-      //     .getRouter()
-      //     .navTo("ProductDetails", { storeId: 1, productId: 1 });
-      // },
+      onStoresListLinkClicked: function () {
+        const oAppViewModel = this.getView().getModel("appView");
+        oAppViewModel.setProperty("/currStatusFilter", "ALL");
+        this.byId("productsTable").getBinding("items").filter([]);
 
-      // onNavToStoresOverview: function () {
-      //   this.getOwnerComponent().getRouter().navTo("StoresOverview");
-      // },
+        this.getOwnerComponent().getRouter().navTo("StoresOverview");
+      },
+
+      onProductClick: function (oEvent) {
+        const nStoreId = this.getView()
+          .getBindingContext("odata")
+          .getObject("id");
+        const nProductId = oEvent
+          .getSource()
+          .getBindingContext("odata")
+          .getObject("id");
+
+        this.getOwnerComponent().getRouter().navTo("ProductDetails", {
+          storeId: nStoreId,
+          productId: nProductId,
+        });
+      },
     });
   }
 );

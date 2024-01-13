@@ -112,7 +112,7 @@
 							<Column width="80px"></Column>
 						</columns>
 						<items>
-							<ColumnListItem press="" type="Navigation">
+							<ColumnListItem press="onProductClick" type="Navigation">
 								<Text maxLines="2" text="{odata>Name}" />
 								<Text maxLines="1" text="{odata>Price}" />
 								<Text maxLines="1" text="{odata>Specs}" />
