@@ -14,6 +14,9 @@ sap.ui.define(
         oRouter
           .getRoute("StoreDetails")
           .attachPatternMatched(this.onPatternMatched, this);
+
+        this.updateStatusFiltersWithContext =
+          this.updateStatusFilters.bind(this);
       },
 
       onExit: function () {
@@ -22,44 +25,20 @@ sap.ui.define(
         oRouter
           .getRoute("StoreDetails")
           .detachPatternMatched(this.onPatternMatched, this);
+
+        const oProductsTable = this.byId("productsTable");
+        const oProductsBinding = oProductsTable.getBinding("items");
+        oProductsBinding.detachDataReceived(
+          this.updateStatusFiltersWithContext
+        );
       },
 
       onAfterRendering: function () {
-        const oODataModel = this.getView().getModel("odata");
-        const oAppViewModel = this.getView().getModel("appView");
-
         const oProductsTable = this.byId("productsTable");
-        const oItemsBinding = oProductsTable.getBinding("items");
-
-        oItemsBinding.attachDataReceived(function () {
-          const oTableCtx = oProductsTable.getBindingContext("odata");
-          const sStoresPath = oODataModel.createKey(
-            "/Stores",
-            oTableCtx.getObject()
-          );
-          const oProductsCounts = oAppViewModel.getProperty(
-            "/currStore/productsCounts"
-          );
-
-          Object.entries(oProductsCounts).forEach(([sStatus, oStatusValue]) => {
-            const oParams = {
-              success: (sCount) => {
-                oAppViewModel.setProperty(
-                  `/currStore/productsCounts/${sStatus}/count`,
-                  sCount
-                );
-              },
-            };
-
-            if (oStatusValue.serverKey !== "ALL") {
-              oParams.filters = [
-                new Filter("Status", FilterOperator.EQ, oStatusValue.serverKey),
-              ];
-            }
-
-            oODataModel.read(sStoresPath + "/rel_Products/$count", oParams);
-          });
-        });
+        const oProductsBinding = oProductsTable.getBinding("items");
+        oProductsBinding.attachDataReceived(
+          this.updateStatusFiltersWithContext
+        );
       },
 
       onPatternMatched: function (oEvent) {
@@ -75,6 +54,40 @@ sap.ui.define(
             path: sKey,
             model: "odata",
           });
+        });
+      },
+
+      updateStatusFilters: function () {
+        const oODataModel = this.getView().getModel("odata");
+        const oAppViewModel = this.getView().getModel("appView");
+
+        const oProductsTable = this.byId("productsTable");
+        const oTableCtx = oProductsTable.getBindingContext("odata");
+        const sStoresPath = oODataModel.createKey(
+          "/Stores",
+          oTableCtx.getObject()
+        );
+        const oProductsCounts = oAppViewModel.getProperty(
+          "/currStore/productsCounts"
+        );
+
+        Object.entries(oProductsCounts).forEach(([sStatus, oStatusValue]) => {
+          const oParams = {
+            success: (sCount) => {
+              oAppViewModel.setProperty(
+                `/currStore/productsCounts/${sStatus}/count`,
+                sCount
+              );
+            },
+          };
+
+          if (oStatusValue.serverKey !== "ALL") {
+            oParams.filters = [
+              new Filter("Status", FilterOperator.EQ, oStatusValue.serverKey),
+            ];
+          }
+
+          oODataModel.read(sStoresPath + "/rel_Products/$count", oParams);
         });
       },
 
