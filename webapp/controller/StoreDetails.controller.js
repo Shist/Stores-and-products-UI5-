@@ -26,16 +26,14 @@ sap.ui.define(
           .getRoute("StoreDetails")
           .detachPatternMatched(this.onPatternMatched, this);
 
-        const oProductsTable = this.byId("productsTable");
-        const oProductsBinding = oProductsTable.getBinding("items");
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
         oProductsBinding.detachDataReceived(
           this.updateStatusFiltersWithContext
         );
       },
 
       onAfterRendering: function () {
-        const oProductsTable = this.byId("productsTable");
-        const oProductsBinding = oProductsTable.getBinding("items");
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
         oProductsBinding.attachDataReceived(
           this.updateStatusFiltersWithContext
         );
@@ -57,15 +55,19 @@ sap.ui.define(
         });
       },
 
+      onStoresListLinkClicked: function () {
+        const oAppViewModel = this.getView().getModel("appView");
+        oAppViewModel.setProperty("/currStore/id", null);
+        oAppViewModel.setProperty("/currStore/currStatusFilter", "ALL");
+
+        this.getOwnerComponent().getRouter().navTo("StoresOverview");
+      },
+
       updateStatusFilters: function () {
         const oODataModel = this.getView().getModel("odata");
         const oAppViewModel = this.getView().getModel("appView");
-
-        const oProductsTable = this.byId("productsTable");
-        const oTableCtx = oProductsTable.getBindingContext("odata");
-        const sStoresPath = oODataModel.createKey(
-          "/Stores",
-          oTableCtx.getObject()
+        const sAllProductsKey = oAppViewModel.getProperty(
+          "/currStore/productsCounts/statusAll/serverKey"
         );
         const oProductsCounts = oAppViewModel.getProperty(
           "/currStore/productsCounts"
@@ -81,21 +83,55 @@ sap.ui.define(
             },
           };
 
-          if (oStatusValue.serverKey !== "ALL") {
+          if (oStatusValue.serverKey !== sAllProductsKey) {
             oParams.filters = [
               new Filter("Status", FilterOperator.EQ, oStatusValue.serverKey),
             ];
           }
 
-          oODataModel.read(sStoresPath + "/rel_Products/$count", oParams);
+          oODataModel.read(
+            this.getCurrStorePath() + "/rel_Products/$count",
+            oParams
+          );
         });
       },
 
-      onStoresListLinkClicked: function () {
+      onFilterSelect: function (oEvent) {
+        const oODataModel = this.getView().getModel("odata");
         const oAppViewModel = this.getView().getModel("appView");
-        oAppViewModel.setProperty("/currStore/id", null);
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        const sCurrFilter = oAppViewModel.getProperty(
+          "/currStore/currStatusFilter"
+        );
+        const sAllProductsKey = oAppViewModel.getProperty(
+          "/currStore/productsCounts/statusAll/serverKey"
+        );
+        const sFilterKey = oEvent.getParameter("key");
 
-        this.getOwnerComponent().getRouter().navTo("StoresOverview");
+        if (sCurrFilter === sFilterKey) {
+          return;
+        }
+
+        oAppViewModel.setProperty("/currStore/currStatusFilter", sFilterKey);
+
+        oODataModel.read(this.getCurrStorePath() + "/rel_Products");
+
+        if (sFilterKey === sAllProductsKey) {
+          oProductsBinding.filter([]);
+        } else {
+          oProductsBinding.filter(
+            new Filter("Status", FilterOperator.EQ, sFilterKey)
+          );
+        }
+      },
+
+      getCurrStorePath: function () {
+        const oODataModel = this.getView().getModel("odata");
+        const sStorePath = oODataModel.createKey(
+          "/Stores",
+          this.getView().getBindingContext("odata").getObject()
+        );
+        return sStorePath;
       },
 
       // onNavToProductDetails: function () {

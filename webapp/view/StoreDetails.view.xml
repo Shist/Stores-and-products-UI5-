@@ -49,26 +49,30 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<IconTabBar>
+			<IconTabBar select="onFilterSelect">
 				<items>
 					<IconTabFilter
 						text="{i18n>all}"
 						count="{appView>/currStore/productsCounts/statusAll/count}"
+						key="{appView>/currStore/productsCounts/statusAll/serverKey}"
 						showAll="true" />
 					<IconTabSeparator />
 					<IconTabFilter
 						text="{i18n>ok}"
 						count="{appView>/currStore/productsCounts/statusOk/count}"
+						key="{appView>/currStore/productsCounts/statusOk/serverKey}"
 						icon="sap-icon://message-success"
 						iconColor="Positive" />
 					<IconTabFilter
 						text="{i18n>storage}"
 						count="{appView>/currStore/productsCounts/statusStorage/count}"
+						key="{appView>/currStore/productsCounts/statusStorage/serverKey}"
 						icon="sap-icon://message-warning"
 						iconColor="Critical" />
 					<IconTabFilter
 						text="{i18n>outOfStock}"
 						count="{appView>/currStore/productsCounts/statusOutOfStock/count}"
+						key="{appView>/currStore/productsCounts/statusOutOfStock/serverKey}"
 						icon="sap-icon://notification"
 						iconColor="Negative" />
 				</items>
