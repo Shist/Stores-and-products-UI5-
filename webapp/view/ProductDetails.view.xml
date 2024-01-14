@@ -113,7 +113,29 @@
 		<f:content>
 			<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
 				<content>
-					<layout:VerticalLayout width="100%">
+					<VBox>
+						<HBox>
+							<HBox alignItems="Center" class="sapUiTinyMarginEnd">
+								<Label class="sapUiTinyMarginEnd" labelFor="authorInput" text="{
+									parts: [
+										'i18n>label',
+										'i18n>authorName'
+									],
+									formatter: 'formatMessage'
+								}"/>
+								<Input id="authorInput" placeholder="Enter name"/>
+							</HBox>
+							<HBox alignItems="Center">
+								<Label class="sapUiTinyMarginEnd" labelFor="ratingInput" text="{
+									parts: [
+										'i18n>label',
+										'i18n>rating'
+									],
+									formatter: 'formatMessage'
+								}"/>
+								<RatingIndicator id="ratingInput" maxValue="5"/>
+							</HBox>
+						</HBox>
 						<FeedInput post="" class="sapUiSmallMarginTopBottom" />
 						<List
 						 	id="commentsList"
@@ -144,7 +166,7 @@
 								}"
 							/>
 						</List>
-					</layout:VerticalLayout>
+					</VBox>
 				</content>
 			</Panel>
 		</f:content>
