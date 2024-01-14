@@ -3,8 +3,9 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/model/Sorter",
   ],
-  function (Controller, Filter, FilterOperator) {
+  function (Controller, Filter, FilterOperator, Sorter) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoreDetails", {
@@ -105,27 +106,56 @@ sap.ui.define(
       onSortBtnClicked(sBtnKey) {
         const oAppViewModel = this.getView().getModel("appView");
         const sCurrSortState = oAppViewModel.getProperty(
-          `/columnsSortStates/${sBtnKey}`
+          `/columnsSortStates/${sBtnKey}/state`
         );
 
-        const newSortObj = {
-          name: "DEFAULT",
-          price: "DEFAULT",
-          specs: "DEFAULT",
-          supplierInfo: "DEFAULT",
-          country: "DEFAULT",
-          prodCompany: "DEFAULT",
-          rating: "DEFAULT",
+        const newSortStatesObj = {
+          name: {
+            serverKey: "Name",
+            state: "DEFAULT",
+          },
+          price: {
+            serverKey: "Price",
+            state: "DEFAULT",
+          },
+          specs: {
+            serverKey: "Specs",
+            state: "DEFAULT",
+          },
+          supplierInfo: {
+            serverKey: "SupplierInfo",
+            state: "DEFAULT",
+          },
+          country: {
+            serverKey: "MadeIn",
+            state: "DEFAULT",
+          },
+          prodCompany: {
+            serverKey: "ProductionCompanyName",
+            state: "DEFAULT",
+          },
+          rating: {
+            serverKey: "Rating",
+            state: "DEFAULT",
+          },
         };
 
         if (sCurrSortState === "DEFAULT") {
-          newSortObj[sBtnKey] = "ASC";
+          newSortStatesObj[sBtnKey].state = "ASC";
         } else if (sCurrSortState === "ASC") {
-          newSortObj[sBtnKey] = "DESC";
+          newSortStatesObj[sBtnKey].state = "DESC";
         }
 
-        oAppViewModel.setProperty("/columnsSortStates", newSortObj);
+        oAppViewModel.setProperty("/columnsSortStates", newSortStatesObj);
+
+        const oSorter = new Sorter(
+          newSortStatesObj[sBtnKey].serverKey,
+          newSortStatesObj[sBtnKey].state === "DESC"
+        );
+        this.byId("productsTable").getBinding("items").sort(oSorter);
       },
+
+      changeSortStatesInViewModel: function () {},
 
       onSortNameBtnClicked: function () {
         this.onSortBtnClicked("name");

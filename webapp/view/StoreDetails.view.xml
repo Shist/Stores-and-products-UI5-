@@ -134,7 +134,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortNameBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/name',
+										path: 'appView>/columnsSortStates/name/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>name}" />
@@ -143,7 +143,7 @@
 							<Column hAlign="End">
 								<HBox alignItems="Center">
 									<Button press="onSortPriceBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/price',
+										path: 'appView>/columnsSortStates/price/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>price}" />
@@ -152,7 +152,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortSpecsBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/specs',
+										path: 'appView>/columnsSortStates/specs/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>specs}" />
@@ -161,7 +161,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortSupplierBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/supplierInfo',
+										path: 'appView>/columnsSortStates/supplierInfo/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>supplierInfo}" />
@@ -170,7 +170,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortCountryBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/country',
+										path: 'appView>/columnsSortStates/country/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>countryOfOrigin}" />
@@ -179,7 +179,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortProdCompanyBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/prodCompany',
+										path: 'appView>/columnsSortStates/prodCompany/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>prodCompany}" />
@@ -188,7 +188,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortRatingBtnClicked" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/rating',
+										path: 'appView>/columnsSortStates/rating/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>rating}" />

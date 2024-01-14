@@ -19,12 +19,33 @@
     }
   },
   "columnsSortStates": {
-    "name": "DEFAULT",
-    "price": "DEFAULT",
-    "specs": "DEFAULT",
-    "supplierInfo": "DEFAULT",
-    "country": "DEFAULT",
-    "prodCompany": "DEFAULT",
-    "rating": "DEFAULT"
+    "name": {
+      "serverKey": "Name",
+      "state": "DEFAULT"
+    },
+    "price": {
+      "serverKey": "Price",
+      "state": "DEFAULT"
+    },
+    "specs": {
+      "serverKey": "Specs",
+      "state": "DEFAULT"
+    },
+    "supplierInfo": {
+      "serverKey": "SupplierInfo",
+      "state": "DEFAULT"
+    },
+    "country": {
+      "serverKey": "MadeIn",
+      "state": "DEFAULT"
+    },
+    "prodCompany": {
+      "serverKey": "ProductionCompanyName",
+      "state": "DEFAULT"
+    },
+    "rating": {
+      "serverKey": "Rating",
+      "state": "DEFAULT"
+    }
   }
 }
