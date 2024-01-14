@@ -2,6 +2,7 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:f="sap.f"
+	xmlns:tnt="sap.tnt"
 	xmlns:layout="sap.ui.layout"
 	xmlns:core="sap.ui.core"
 	core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
@@ -30,23 +31,83 @@
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader>
-				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
-					<items>
-						<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
-							<content>
-								<layout:VerticalLayout>
-									<ObjectAttribute title="{i18n>price}" text="{odata>Price}"/>
-									<ObjectAttribute title="{i18n>rating}" text="{odata>Rating}"/>
-									<ObjectAttribute title="{i18n>specs}" text="{odata>Specs}"/>
-									<ObjectAttribute title="{i18n>supplierInfo}" text="{odata>SupplierInfo}"/>
-									<ObjectAttribute title="{i18n>prodCompany}" text="{odata>ProductionCompanyName}"/>
-									<ObjectAttribute title="{i18n>countryOfOrigin}" text="{odata>MadeIn}"/>
-									<ObjectAttribute title="{i18n>status}" text="{odata>Status}"/>
-								</layout:VerticalLayout>
-							</content>
-						</Panel>
-					</items>
-				</FlexBox>
+				<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
+					<content>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPrice" text="{
+								parts: [
+									'i18n>label',
+									'i18n>price'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<Text id="textPrice" text="{odata>Price}"/>
+						</HBox>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textRating" text="{
+								parts: [
+									'i18n>label',
+									'i18n>rating'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<Text id="textRating" text="{odata>Rating}"/>
+						</HBox>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSpecs" text="{
+								parts: [
+									'i18n>label',
+									'i18n>specs'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<Text id="textSpecs" text="{odata>Specs}"/>
+						</HBox>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{
+								parts: [
+									'i18n>label',
+									'i18n>supplierInfo'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<Text id="textSupplierInfo" text="{odata>SupplierInfo}"/>
+						</HBox>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textProdCompany" text="{
+								parts: [
+									'i18n>label',
+									'i18n>prodCompany'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<Text id="textProdCompany" text="{odata>ProductionCompanyName}"/>
+						</HBox>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textCountry" text="{
+								parts: [
+									'i18n>label',
+									'i18n>countryOfOrigin'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<Text id="textCountry" text="{odata>MadeIn}"/>
+						</HBox>
+						<HBox alignItems="Start">
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="badgeStatus" text="{
+								parts: [
+									'i18n>label',
+									'i18n>status'
+								],
+								formatter: 'formatMessage'
+							}"/>
+							<tnt:InfoLabel id="badgeStatus" text="{odata>Status}" colorScheme="{
+								path: 'odata>Status',
+								formatter: '.formatBadgeType'
+							}"/>
+						</HBox>
+					</content>
+				</Panel>
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>

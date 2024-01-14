@@ -51,6 +51,32 @@ sap.ui.define(
         });
       },
 
+      formatBadgeType: function (sStatus) {
+        const oAppViewModel = this.getView().getModel("appView");
+        const sOkProductsKey = oAppViewModel.getProperty(
+          "/productsCounts/statusOk/serverKey"
+        );
+        const sStorageProductsKey = oAppViewModel.getProperty(
+          "/productsCounts/statusStorage/serverKey"
+        );
+        const sOutOfStockProductsKey = oAppViewModel.getProperty(
+          "/productsCounts/statusOutOfStock/serverKey"
+        );
+        switch (sStatus) {
+          case sOkProductsKey:
+            return 8;
+          case sStorageProductsKey:
+            return 1;
+          case sOutOfStockProductsKey:
+            return 3;
+          default:
+            if (sStatus) {
+              console.warn(`Got unknown type of product status: ${sStatus}`);
+            }
+            return 10;
+        }
+      },
+
       onStoresListLinkClicked: function () {
         const oAppViewModel = this.getView().getModel("appView");
         oAppViewModel.setProperty("/currStatusFilter", "ALL");

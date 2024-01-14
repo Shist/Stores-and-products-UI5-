@@ -3,6 +3,8 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:f="sap.f"
 	xmlns:layout="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
 	controllerName="pavel.zhukouski.controller.StoreDetails">
 
 	<f:DynamicPage showFooter="true" class="sapUiNoContentPadding">
@@ -21,31 +23,72 @@
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader>
-				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
-					<items>
-						<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
-							<content>
-								<layout:HorizontalLayout allowWrapping="true">
-									<layout:VerticalLayout class="sapUiMediumMarginEnd">
-										<ObjectAttribute title="{i18n>email}" text="{odata>Email}"/>
-										<ObjectAttribute title="{i18n>phoneNumber}" text="{odata>PhoneNumber}"/>
-										<ObjectAttribute title="{i18n>address}" text="{odata>Address}"/>
-									</layout:VerticalLayout>
-									<layout:VerticalLayout>
-										<ObjectAttribute title="{i18n>establishedDate}" text="{
-											path: 'odata>Established',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												pattern: 'MMM d, yyyy'
-											}
-										}"/>
-										<ObjectAttribute title="{i18n>floorArea}" text="{odata>FloorArea}"/>
-									</layout:VerticalLayout>
+				<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
+					<content>
+						<layout:HorizontalLayout allowWrapping="true">
+							<layout:VerticalLayout class="sapUiMediumMarginEnd">
+								<layout:HorizontalLayout>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{
+										parts: [
+											'i18n>label',
+											'i18n>email'
+										],
+										formatter: 'formatMessage'
+									}"/>
+									<Text id="textEmail" text="{odata>Email}"/>
 								</layout:HorizontalLayout>
-							</content>
-						</Panel>
-					</items>
-				</FlexBox>
+								<layout:HorizontalLayout>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{
+										parts: [
+											'i18n>label',
+											'i18n>phoneNumber'
+										],
+										formatter: 'formatMessage'
+									}"/>
+									<Text id="textPhoneNumber" text="{odata>PhoneNumber}"/>
+								</layout:HorizontalLayout>
+								<layout:HorizontalLayout>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{
+										parts: [
+											'i18n>label',
+											'i18n>address'
+										],
+										formatter: 'formatMessage'
+									}"/>
+									<Text id="textAddress" text="{odata>Address}"/>
+								</layout:HorizontalLayout>
+							</layout:VerticalLayout>
+							<layout:VerticalLayout>
+								<layout:HorizontalLayout>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{
+										parts: [
+											'i18n>label',
+											'i18n>establishedDate'
+										],
+										formatter: 'formatMessage'
+									}"/>
+									<Text id="textEstablished" text="{
+										path: 'odata>Established',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'MMM d, yyyy'
+										}
+									}"/>
+								</layout:HorizontalLayout>
+								<layout:HorizontalLayout>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{
+										parts: [
+											'i18n>label',
+											'i18n>floorArea'
+										],
+										formatter: 'formatMessage'
+									}"/>
+									<Text id="textFloorArea" text="{odata>FloorArea}"/>
+								</layout:HorizontalLayout>
+							</layout:VerticalLayout>
+						</layout:HorizontalLayout>
+					</content>
+				</Panel>
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
@@ -83,7 +126,7 @@
 								<content>
 									<Title text="{i18n>products}" class="sapUiSmallMarginBegin"/>
 									<ToolbarSpacer/>
-									<SearchField placeholder="{i18n>searchTip}" showRefreshButton="true" width="15rem"/>
+									<SearchField placeholder="{i18n>searchTip}" width="15rem"/>
 								</content>
 							</Toolbar>
 						</headerToolbar>
