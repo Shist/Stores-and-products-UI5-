@@ -132,25 +132,67 @@
 						</headerToolbar>
 						<columns>
 							<Column>
-								<Text text="{i18n>name}" />
+								<HBox alignItems="Center">
+									<Button press="onSortNameBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/name',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>name}" />
+								</HBox>
 							</Column>
 							<Column hAlign="End">
-								<Text text="{i18n>price}" />
+								<HBox alignItems="Center">
+									<Button press="onSortPriceBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/price',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>price}" />
+								</HBox>
 							</Column>
 							<Column>
-								<Text text="{i18n>specs}" />
+								<HBox alignItems="Center">
+									<Button press="onSortSpecsBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/specs',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>specs}" />
+								</HBox>
 							</Column>
 							<Column>
-								<Text text="{i18n>supplierInfo}" />
+								<HBox alignItems="Center">
+									<Button press="onSortSupplierBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/supplierInfo',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>supplierInfo}" />
+								</HBox>
 							</Column>
 							<Column>
-								<Text text="{i18n>countryOfOrigin}" />
+								<HBox alignItems="Center">
+									<Button press="onSortCountryBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/country',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>countryOfOrigin}" />
+								</HBox>
 							</Column>
 							<Column>
-								<Text text="{i18n>prodCompany}" />
+								<HBox alignItems="Center">
+									<Button press="onSortProdCompanyBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/prodCompany',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>prodCompany}" />
+								</HBox>
 							</Column>
 							<Column>
-								<Text text="{i18n>rating}" />
+								<HBox alignItems="Center">
+									<Button press="onSortRatingBtnClicked" type="Transparent" icon="{
+										path: 'appView>/columnsSortStates/rating',
+										formatter: '.formatSortBtnIcon'
+									}"/>
+									<Text text="{i18n>rating}" />
+								</HBox>
 							</Column>
 							<Column width="80px"></Column>
 						</columns>
@@ -164,8 +206,8 @@
 								<Text maxLines="1" text="{odata>ProductionCompanyName}" />
 								<RatingIndicator value="{odata>Rating}" />
 								<HBox justifyContent="SpaceBetween">
-									<Button icon="sap-icon://edit" type="Transparent"></Button>
-									<Button icon="sap-icon://sys-cancel" type="Transparent"></Button>
+									<Button icon="sap-icon://edit" type="Transparent"/>
+									<Button icon="sap-icon://sys-cancel" type="Transparent"/>
 								</HBox>
 							</ColumnListItem>
 						</items>

@@ -17,5 +17,14 @@
       "serverKey": "OUT_OF_STOCK",
       "count": null
     }
+  },
+  "columnsSortStates": {
+    "name": "DEFAULT",
+    "price": "DEFAULT",
+    "specs": "DEFAULT",
+    "supplierInfo": "DEFAULT",
+    "country": "DEFAULT",
+    "prodCompany": "DEFAULT",
+    "rating": "DEFAULT"
   }
 }
