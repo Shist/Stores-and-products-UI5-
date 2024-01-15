@@ -3,8 +3,9 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/m/FeedListItem",
   ],
-  function (Controller, Filter, FilterOperator) {
+  function (Controller, Filter, FilterOperator, FeedListItem) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.ProductDetails", {
@@ -13,20 +14,6 @@ sap.ui.define(
         oRouter
           .getRoute("ProductDetails")
           .attachPatternMatched(this.onRouterPatternMatched, this);
-      },
-
-      onAfterRendering: function () {
-        const oCommentsBinding = this.byId("commentsList").getBinding("items");
-
-        setTimeout(() => {
-          const nProductId = this.getView()
-            .getBindingContext("odata")
-            .getObject("id");
-
-          oCommentsBinding.filter(
-            new Filter("ProductId", FilterOperator.EQ, nProductId)
-          );
-        }, 100); // TODO: Somehow refactor this cringe. We need to wait before productId will appear inside Binding
       },
 
       onExit: function () {
@@ -47,6 +34,25 @@ sap.ui.define(
           controllerContext.getView().bindObject({
             path: sKey,
             model: "odata",
+          });
+
+          const feedListItemTemplate = new FeedListItem({
+            sender: "{odata>Author}",
+            text: "{odata>Message}",
+            info: "Rating: {odata>Rating}",
+            timestamp: {
+              path: "odata>Posted",
+              type: "sap.ui.model.type.Date",
+              formatOptions: {
+                pattern: "MMM d, yyyy, hh:mm:ss a",
+              },
+            },
+          });
+
+          controllerContext.byId("commentsList").bindAggregation("items", {
+            path: "odata>/ProductComments",
+            template: feedListItemTemplate,
+            filters: [new Filter("ProductId", FilterOperator.EQ, sProductId)],
           });
         });
       },

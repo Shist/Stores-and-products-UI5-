@@ -139,32 +139,7 @@
 						<FeedInput post="" class="sapUiSmallMarginTopBottom" />
 						<List
 						 	id="commentsList"
-							showSeparators="Inner"
-							items="{odata>/ProductComments}" >
-							<FeedListItem
-								sender="{odata>Author}"
-								text="{odata>Message}"
-								info="{
-									parts: [
-										'i18n>ratingValue',
-										'odata>Rating'
-									],
-									formatter: 'formatMessage'
-								}"
-								timestamp="{
-									parts: [
-										'i18n>postedDate',
-										{
-											path: 'odata>Posted',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												pattern: 'MMM d, yyyy, hh:mm:ss a'
-											}
-										}
-									],
-									formatter: 'formatMessage'
-								}"
-							/>
+							showSeparators="Inner" >
 						</List>
 					</VBox>
 				</content>
