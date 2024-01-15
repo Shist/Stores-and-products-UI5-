@@ -103,13 +103,8 @@ sap.ui.define(
         return sStorePath;
       },
 
-      onSortBtnClicked(sBtnKey) {
-        const oAppViewModel = this.getView().getModel("appView");
-        const sCurrSortState = oAppViewModel.getProperty(
-          `/columnsSortStates/${sBtnKey}/state`
-        );
-
-        const newSortStatesObj = {
+      getNewSortObj: function () {
+        return {
           name: {
             serverKey: "Name",
             state: "DEFAULT",
@@ -139,6 +134,15 @@ sap.ui.define(
             state: "DEFAULT",
           },
         };
+      },
+
+      onSortBtnClicked: function (sBtnKey) {
+        const oAppViewModel = this.getView().getModel("appView");
+        const sCurrSortState = oAppViewModel.getProperty(
+          `/columnsSortStates/${sBtnKey}/state`
+        );
+
+        const newSortStatesObj = this.getNewSortObj();
 
         if (sCurrSortState === "DEFAULT") {
           newSortStatesObj[sBtnKey].state = "ASC";
@@ -154,8 +158,6 @@ sap.ui.define(
         );
         this.byId("productsTable").getBinding("items").sort(oSorter);
       },
-
-      changeSortStatesInViewModel: function () {},
 
       onSortNameBtnClicked: function () {
         this.onSortBtnClicked("name");
@@ -201,8 +203,11 @@ sap.ui.define(
 
       onStoresListLinkClicked: function () {
         const oAppViewModel = this.getView().getModel("appView");
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
         oAppViewModel.setProperty("/currStatusFilter", "ALL");
-        this.byId("productsTable").getBinding("items").filter([]);
+        oProductsBinding.filter([]);
+        oAppViewModel.setProperty("/columnsSortStates", this.getNewSortObj());
+        oProductsBinding.sort([]);
 
         this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },
