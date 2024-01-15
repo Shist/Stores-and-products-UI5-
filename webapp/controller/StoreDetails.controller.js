@@ -154,9 +154,27 @@ sap.ui.define(
 
         const oSorter = new Sorter(
           newSortStatesObj[sBtnKey].serverKey,
-          newSortStatesObj[sBtnKey].state === "DESC"
+          newSortStatesObj[sBtnKey].state === "DESC",
+          undefined,
+          this.sorterComparator
         );
         this.byId("productsTable").getBinding("items").sort(oSorter);
+      },
+
+      sorterComparator: function (a, b) {
+        if (!isNaN(a) && !isNaN(b)) {
+          const numA = parseFloat(a);
+          const numB = parseFloat(b);
+          return numA - numB;
+        } else {
+          if (a < b) {
+            return -1;
+          }
+          if (a > b) {
+            return 1;
+          }
+          return 0;
+        }
       },
 
       onSortNameBtnClicked: function () {
