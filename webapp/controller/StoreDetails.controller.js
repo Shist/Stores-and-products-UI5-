@@ -119,6 +119,7 @@ sap.ui.define(
             path: "Name",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterName);
 
@@ -134,6 +135,7 @@ sap.ui.define(
             path: "Specs",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterSpecs);
 
@@ -141,6 +143,7 @@ sap.ui.define(
             path: "SupplierInfo",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterSupplier);
 
@@ -148,6 +151,7 @@ sap.ui.define(
             path: "MadeIn",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterCountry);
 
@@ -155,6 +159,7 @@ sap.ui.define(
             path: "ProductionCompanyName",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterProdCompany);
 

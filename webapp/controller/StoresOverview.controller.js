@@ -38,6 +38,7 @@ sap.ui.define(
             path: "Name",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterName);
 
@@ -45,6 +46,7 @@ sap.ui.define(
             path: "Address",
             operator: FilterOperator.Contains,
             value1: sQuery,
+            caseSensitive: false,
           });
           aFilters.push(filterAddress);
 
