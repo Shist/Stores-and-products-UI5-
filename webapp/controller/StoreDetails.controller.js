@@ -10,7 +10,6 @@ sap.ui.define(
 
     return Controller.extend("pavel.zhukouski.controller.StoreDetails", {
       onInit: function () {
-        console.log("products onInit");
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
           .getRoute("StoreDetails")
@@ -18,13 +17,11 @@ sap.ui.define(
       },
 
       onAfterRendering: function () {
-        console.log("products onAfterRendering");
         const oProductsBinding = this.byId("productsTable").getBinding("items");
         oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
       },
 
       onExit: function () {
-        console.log("products onExit");
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
           .getRoute("StoreDetails")
@@ -44,7 +41,6 @@ sap.ui.define(
       },
 
       onRouterPatternMatched: function (oEvent) {
-        console.log("products onRouterPatternMatched");
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
         const oODataModel = this.getView().getModel("odata");
@@ -309,19 +305,27 @@ sap.ui.define(
         }
       },
 
-      onStoresListLinkClicked: function () {
+      setAllControlsToDefault() {
         const oAppViewModel = this.getView().getModel("appView");
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
         oAppViewModel.setProperty("/currStatusFilter", "ALL");
-        oProductsBinding.filter([]);
-        this.byId("productsSearch").setValue();
+        oAppViewModel.setProperty("/currProductsSearchFilter", "");
         oAppViewModel.setProperty("/columnsSortStates", this.getNewSortObj());
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        oProductsBinding.filter([]);
         oProductsBinding.sort([]);
+      },
+
+      onStoresListLinkClicked: function () {
+        // Setting everything to default before moving to other view
+        this.setAllControlsToDefault();
 
         this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },
 
       onProductClick: function (oEvent) {
+        // Setting everything to default before moving to other view
+        this.setAllControlsToDefault();
+
         const nStoreId = this.getView()
           .getBindingContext("odata")
           .getObject("id");

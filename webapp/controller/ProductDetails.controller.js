@@ -93,12 +93,6 @@ sap.ui.define(
       },
 
       onStoresListLinkClicked: function () {
-        const oAppViewModel = this.getView().getModel("appView");
-
-        oAppViewModel.setProperty("/currStatusFilter", "ALL");
-        oAppViewModel.setProperty("/currProductsSearchFilter", "");
-        oAppViewModel.setProperty("/columnsSortStates", this.getNewSortObj());
-
         this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },
 

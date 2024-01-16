@@ -8,17 +8,6 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
-      onStoreClick: function (oEvent) {
-        const nStoreId = oEvent
-          .getSource()
-          .getBindingContext("odata")
-          .getObject("id");
-
-        this.getOwnerComponent().getRouter().navTo("StoreDetails", {
-          storeId: nStoreId,
-        });
-      },
-
       onStoresSearchBtnClick: function (oEvent) {
         const oStoresBinding = this.byId("storesList").getBinding("items");
         const sQuery = oEvent.getParameter("query");
@@ -63,6 +52,23 @@ sap.ui.define(
         aFilters.push(filterFloorArea);
 
         return aFilters;
+      },
+
+      onStoreClick: function (oEvent) {
+        // Setting everything to default before moving to other view
+        const oAppViewModel = this.getView().getModel("appView");
+        oAppViewModel.setProperty("/currStoresSearchFilter", "");
+        const oStoresBinding = this.byId("storesList").getBinding("items");
+        oStoresBinding.filter([]);
+
+        const nStoreId = oEvent
+          .getSource()
+          .getBindingContext("odata")
+          .getObject("id");
+
+        this.getOwnerComponent().getRouter().navTo("StoreDetails", {
+          storeId: nStoreId,
+        });
       },
     });
   }
