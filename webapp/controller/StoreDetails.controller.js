@@ -62,6 +62,7 @@ sap.ui.define(
           "/productsCounts/statusAll/serverKey"
         );
         const oProductsCounts = oAppViewModel.getProperty("/productsCounts");
+        const productsSearchFilter = this.getProductsSearchFilter();
 
         Object.entries(oProductsCounts).forEach(([sStatus, oStatusValue]) => {
           const oParams = {
@@ -72,13 +73,29 @@ sap.ui.define(
               );
             },
           };
+          const aFilters = [];
 
-          if (oStatusValue.serverKey !== sAllProductsKey) {
-            oParams.filters = [
-              new Filter("Status", FilterOperator.EQ, oStatusValue.serverKey),
-            ];
+          if (productsSearchFilter) {
+            aFilters.push(productsSearchFilter);
           }
 
+          if (oStatusValue.serverKey !== sAllProductsKey) {
+            aFilters.push(
+              new Filter("Status", FilterOperator.EQ, oStatusValue.serverKey)
+            );
+          }
+
+          if (aFilters.length) {
+            oParams.filters = [new Filter({ filters: aFilters, and: true })];
+          }
+
+          window.currFilters = oParams.filters;
+
+          // FOR SOME REASON SERVER DOES NOT CALCULATE COUNTS CORRECTLY (with search Filter)
+          // For example, on this URL
+          // http://localhost:3000/odata/Stores(3)/rel_Products/$count?$filter=(%20Price%20eq%20somestrangestringm%20)
+          // server will return 26, which is weird, right?
+          // There is no way that store has 26 products with Price="somestrangestring"
           oODataModel.read(
             this.getCurrStorePath() + "/rel_Products/$count",
             oParams
