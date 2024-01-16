@@ -1,5 +1,6 @@
 {
   "currStatusFilter": "ALL",
+  "currProductsSearchFilter": "",
   "productsCounts": {
     "statusAll": {
       "serverKey": "ALL",

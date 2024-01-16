@@ -23,19 +23,19 @@ sap.ui.define(
       },
 
       onRouterPatternMatched: function (oEvent) {
-        const controllerContext = this;
+        const oControllerContext = this;
         const sProductId = oEvent.getParameter("arguments").productId;
         const oODataModel = this.getView().getModel("odata");
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Products", { id: sProductId });
 
-          controllerContext.getView().bindObject({
+          oControllerContext.getView().bindObject({
             path: sKey,
             model: "odata",
           });
 
-          const oCommentsBinding = controllerContext
+          const oCommentsBinding = oControllerContext
             .byId("commentsList")
             .getBinding("items");
 
@@ -46,7 +46,7 @@ sap.ui.define(
               path: "ProductId",
               operator: FilterOperator.EQ,
               value1: sProductId,
-              comparator: (a, b) => a - b,
+              comparator: (a, b) => a - b, // <-- For some reason server doesn't filter without a comparator for numbers
             })
           );
         });
@@ -63,6 +63,7 @@ sap.ui.define(
         const sOutOfStockProductsKey = oAppViewModel.getProperty(
           "/productsCounts/statusOutOfStock/serverKey"
         );
+
         switch (sStatus) {
           case sOkProductsKey:
             return 8;
@@ -78,9 +79,25 @@ sap.ui.define(
         }
       },
 
+      getNewSortObj: function () {
+        const oAppViewModel = this.getView().getModel("appView");
+        const oNewSortState = JSON.parse(
+          JSON.stringify(oAppViewModel.getProperty("/columnsSortStates"))
+        );
+
+        for (const key in oNewSortState) {
+          oNewSortState[key].state = "DEFAULT";
+        }
+
+        return oNewSortState;
+      },
+
       onStoresListLinkClicked: function () {
         const oAppViewModel = this.getView().getModel("appView");
+
         oAppViewModel.setProperty("/currStatusFilter", "ALL");
+        oAppViewModel.setProperty("/currProductsSearchFilter", "");
+        oAppViewModel.setProperty("/columnsSortStates", this.getNewSortObj());
 
         this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },

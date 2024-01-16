@@ -132,6 +132,7 @@
 									<ToolbarSpacer/>
 									<SearchField
 										id="productsSearch"
+										value="{appView>/currProductsSearchFilter}"
 										search="onFiltersChanged"
 										placeholder="{i18n>searchTip}"
 										width="15rem"/>
@@ -212,7 +213,7 @@
 								<Text maxLines="1" text="{odata>SupplierInfo}" />
 								<Text maxLines="1" text="{odata>MadeIn}" />
 								<Text maxLines="1" text="{odata>ProductionCompanyName}" />
-								<RatingIndicator value="{odata>Rating}" />
+								<RatingIndicator value="{odata>Rating}" editable="false" />
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent"/>
 									<Button icon="sap-icon://sys-cancel" type="Transparent"/>

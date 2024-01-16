@@ -10,6 +10,7 @@ sap.ui.define(
 
     return Controller.extend("pavel.zhukouski.controller.StoreDetails", {
       onInit: function () {
+        console.log("products onInit");
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
           .getRoute("StoreDetails")
@@ -17,11 +18,13 @@ sap.ui.define(
       },
 
       onAfterRendering: function () {
+        console.log("products onAfterRendering");
         const oProductsBinding = this.byId("productsTable").getBinding("items");
         oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
       },
 
       onExit: function () {
+        console.log("products onExit");
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
           .getRoute("StoreDetails")
@@ -41,6 +44,7 @@ sap.ui.define(
       },
 
       onRouterPatternMatched: function (oEvent) {
+        console.log("products onRouterPatternMatched");
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
         const oODataModel = this.getView().getModel("odata");
@@ -203,36 +207,16 @@ sap.ui.define(
       },
 
       getNewSortObj: function () {
-        return {
-          name: {
-            serverKey: "Name",
-            state: "DEFAULT",
-          },
-          price: {
-            serverKey: "Price",
-            state: "DEFAULT",
-          },
-          specs: {
-            serverKey: "Specs",
-            state: "DEFAULT",
-          },
-          supplierInfo: {
-            serverKey: "SupplierInfo",
-            state: "DEFAULT",
-          },
-          country: {
-            serverKey: "MadeIn",
-            state: "DEFAULT",
-          },
-          prodCompany: {
-            serverKey: "ProductionCompanyName",
-            state: "DEFAULT",
-          },
-          rating: {
-            serverKey: "Rating",
-            state: "DEFAULT",
-          },
-        };
+        const oAppViewModel = this.getView().getModel("appView");
+        const oNewSortState = JSON.parse(
+          JSON.stringify(oAppViewModel.getProperty("/columnsSortStates"))
+        );
+
+        for (const key in oNewSortState) {
+          oNewSortState[key].state = "DEFAULT";
+        }
+
+        return oNewSortState;
       },
 
       onSortBtnClicked: function (sBtnKey) {
