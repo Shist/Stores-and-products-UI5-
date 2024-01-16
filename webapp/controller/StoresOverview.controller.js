@@ -27,36 +27,42 @@ sap.ui.define(
         oStoresBinding.refresh();
 
         if (sQuery && sQuery.length > 0) {
-          const aFilters = [];
+          const aSearchFilters = this.getStoresSearchFilter(sQuery);
 
-          const filterName = new Filter({
-            path: "Name",
-            operator: FilterOperator.Contains,
-            value1: sQuery,
-            caseSensitive: false,
-          });
-          aFilters.push(filterName);
-
-          const filterAddress = new Filter({
-            path: "Address",
-            operator: FilterOperator.Contains,
-            value1: sQuery,
-            caseSensitive: false,
-          });
-          aFilters.push(filterAddress);
-
-          const filterFloorArea = new Filter({
-            path: "FloorArea",
-            operator: FilterOperator.EQ,
-            value1: sQuery,
-            comparator: (a, b) => a - b,
-          });
-          aFilters.push(filterFloorArea);
-
-          targetFilter = new Filter({ filters: aFilters, and: false });
+          targetFilter = new Filter({ filters: aSearchFilters, and: false });
         }
 
         oStoresBinding.filter(targetFilter);
+      },
+
+      getStoresSearchFilter: function (sQuery) {
+        const aFilters = [];
+
+        const filterName = new Filter({
+          path: "Name",
+          operator: FilterOperator.Contains,
+          value1: sQuery,
+          caseSensitive: false,
+        });
+        aFilters.push(filterName);
+
+        const filterAddress = new Filter({
+          path: "Address",
+          operator: FilterOperator.Contains,
+          value1: sQuery,
+          caseSensitive: false,
+        });
+        aFilters.push(filterAddress);
+
+        const filterFloorArea = new Filter({
+          path: "FloorArea",
+          operator: FilterOperator.EQ,
+          value1: sQuery,
+          comparator: (a, b) => a - b,
+        });
+        aFilters.push(filterFloorArea);
+
+        return aFilters;
       },
     });
   }
