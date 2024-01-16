@@ -3,9 +3,8 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/FeedListItem",
   ],
-  function (Controller, Filter, FilterOperator, FeedListItem) {
+  function (Controller, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.ProductDetails", {
@@ -36,25 +35,31 @@ sap.ui.define(
             model: "odata",
           });
 
-          const feedListItemTemplate = new FeedListItem({
-            sender: "{odata>Author}",
-            text: "{odata>Message}",
-            info: "Rating: {odata>Rating}",
-            timestamp: {
-              path: "odata>Posted",
-              type: "sap.ui.model.type.Date",
-              formatOptions: {
-                pattern: "MMM d, yyyy, hh:mm:ss a",
-              },
-            },
-          });
+          const oCommentsBinding = controllerContext
+            .byId("commentsList")
+            .getBinding("items");
 
-          controllerContext.byId("commentsList").bindAggregation("items", {
-            path: "odata>/ProductComments",
-            template: feedListItemTemplate,
-            filters: [new Filter("ProductId", FilterOperator.EQ, sProductId)],
-          });
+          oCommentsBinding.refresh();
+
+          oCommentsBinding.filter(
+            new Filter({
+              path: "ProductId",
+              operator: FilterOperator.EQ,
+              value1: sProductId,
+              comparator: controllerContext.idFilterComparator,
+            })
+          );
         });
+      },
+
+      idFilterComparator: function (a, b) {
+        if (!isNaN(a) && !isNaN(b)) {
+          const numA = parseFloat(a);
+          const numB = parseFloat(b);
+          return numA - numB;
+        } else {
+          return NaN;
+        }
       },
 
       formatBadgeType: function (sStatus) {

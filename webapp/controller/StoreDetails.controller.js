@@ -85,6 +85,8 @@ sap.ui.define(
         );
         const sFilterKey = oEvent.getParameter("key");
 
+        oProductsBinding.refresh();
+
         if (sFilterKey === sAllProductsKey) {
           oProductsBinding.filter([]);
         } else {
@@ -138,6 +140,7 @@ sap.ui.define(
 
       onSortBtnClicked: function (sBtnKey) {
         const oAppViewModel = this.getView().getModel("appView");
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
         const sCurrSortState = oAppViewModel.getProperty(
           `/columnsSortStates/${sBtnKey}/state`
         );
@@ -152,13 +155,19 @@ sap.ui.define(
 
         oAppViewModel.setProperty("/columnsSortStates", newSortStatesObj);
 
-        const oSorter = new Sorter(
-          newSortStatesObj[sBtnKey].serverKey,
-          newSortStatesObj[sBtnKey].state === "DESC",
-          undefined,
-          this.sorterComparator
-        );
-        this.byId("productsTable").getBinding("items").sort(oSorter);
+        oProductsBinding.refresh();
+
+        if (newSortStatesObj[sBtnKey].state === "DEFAULT") {
+          oProductsBinding.sort([]);
+        } else {
+          const oSorter = new Sorter(
+            newSortStatesObj[sBtnKey].serverKey,
+            newSortStatesObj[sBtnKey].state === "DESC",
+            undefined,
+            this.sorterComparator
+          );
+          oProductsBinding.sort(oSorter);
+        }
       },
 
       sorterComparator: function (a, b) {
