@@ -86,39 +86,49 @@ sap.ui.define(
         });
       },
 
-      onFilterSelect: function (oEvent) {
-        const oAppViewModel = this.getView().getModel("appView");
+      onFiltersChanged: function () {
         const oProductsBinding = this.byId("productsTable").getBinding("items");
+        const iconTabBarFilter = this.getIconTabBarFilter();
+        const productsSearchFilter = this.getProductsSearchFilter();
+        const aFilters = [];
+
+        oProductsBinding.refresh();
+
+        if (iconTabBarFilter) {
+          aFilters.push(iconTabBarFilter);
+        }
+
+        if (productsSearchFilter) {
+          aFilters.push(productsSearchFilter);
+        }
+
+        oProductsBinding.filter(new Filter({ filters: aFilters, and: true }));
+      },
+
+      getIconTabBarFilter: function () {
+        const oAppViewModel = this.getView().getModel("appView");
         const sAllProductsKey = oAppViewModel.getProperty(
           "/productsCounts/statusAll/serverKey"
         );
-        const sFilterKey = oEvent.getParameter("key");
+        const iconTabBarFilter = this.byId("iconTabBar").getSelectedKey();
 
-        oProductsBinding.refresh();
-
-        if (sFilterKey === sAllProductsKey) {
-          oProductsBinding.filter([]);
+        if (iconTabBarFilter !== sAllProductsKey) {
+          return new Filter("Status", FilterOperator.EQ, iconTabBarFilter);
         } else {
-          oProductsBinding.filter(
-            new Filter("Status", FilterOperator.EQ, sFilterKey)
-          );
+          return null;
         }
       },
 
-      onProductsSearchBtnClick: function (oEvent) {
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
-        const sQuery = oEvent.getParameter("query");
-        let targetFilter = [];
+      getProductsSearchFilter: function () {
+        const searchInputFilter = this.byId("productsSearch").getValue();
 
-        oProductsBinding.refresh();
-
-        if (sQuery && sQuery.length > 0) {
+        if (searchInputFilter && searchInputFilter.length > 0) {
           const aFilters = [];
 
           const filterName = new Filter({
             path: "Name",
             operator: FilterOperator.Contains,
-            value1: sQuery,
+            value1: searchInputFilter,
             caseSensitive: false,
           });
           aFilters.push(filterName);
@@ -126,7 +136,7 @@ sap.ui.define(
           const filterPrice = new Filter({
             path: "Price",
             operator: FilterOperator.EQ,
-            value1: sQuery,
+            value1: searchInputFilter,
             comparator: (a, b) => a - b,
           });
           aFilters.push(filterPrice);
@@ -134,7 +144,7 @@ sap.ui.define(
           const filterSpecs = new Filter({
             path: "Specs",
             operator: FilterOperator.Contains,
-            value1: sQuery,
+            value1: searchInputFilter,
             caseSensitive: false,
           });
           aFilters.push(filterSpecs);
@@ -142,7 +152,7 @@ sap.ui.define(
           const filterSupplier = new Filter({
             path: "SupplierInfo",
             operator: FilterOperator.Contains,
-            value1: sQuery,
+            value1: searchInputFilter,
             caseSensitive: false,
           });
           aFilters.push(filterSupplier);
@@ -150,7 +160,7 @@ sap.ui.define(
           const filterCountry = new Filter({
             path: "MadeIn",
             operator: FilterOperator.Contains,
-            value1: sQuery,
+            value1: searchInputFilter,
             caseSensitive: false,
           });
           aFilters.push(filterCountry);
@@ -158,7 +168,7 @@ sap.ui.define(
           const filterProdCompany = new Filter({
             path: "ProductionCompanyName",
             operator: FilterOperator.Contains,
-            value1: sQuery,
+            value1: searchInputFilter,
             caseSensitive: false,
           });
           aFilters.push(filterProdCompany);
@@ -166,15 +176,15 @@ sap.ui.define(
           const filterRating = new Filter({
             path: "Rating",
             operator: FilterOperator.EQ,
-            value1: sQuery,
+            value1: searchInputFilter,
             comparator: (a, b) => a - b,
           });
           aFilters.push(filterRating);
 
-          targetFilter = new Filter({ filters: aFilters, and: false });
+          return new Filter({ filters: aFilters, and: false });
+        } else {
+          return null;
         }
-
-        oProductsBinding.filter(targetFilter);
       },
 
       getNewSortObj: function () {
@@ -305,6 +315,7 @@ sap.ui.define(
         const oProductsBinding = this.byId("productsTable").getBinding("items");
         oAppViewModel.setProperty("/currStatusFilter", "ALL");
         oProductsBinding.filter([]);
+        this.byId("productsSearch").setValue();
         oAppViewModel.setProperty("/columnsSortStates", this.getNewSortObj());
         oProductsBinding.sort([]);
 

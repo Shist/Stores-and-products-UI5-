@@ -92,7 +92,7 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<IconTabBar select="onFilterSelect" selectedKey="{appView>/currStatusFilter}" expandable="false">
+			<IconTabBar id="iconTabBar" select="onFiltersChanged" selectedKey="{appView>/currStatusFilter}" expandable="false">
 				<items>
 					<IconTabFilter
 						text="{i18n>all}"
@@ -126,7 +126,7 @@
 								<content>
 									<Title text="{i18n>products}" class="sapUiSmallMarginBegin"/>
 									<ToolbarSpacer/>
-									<SearchField search="onProductsSearchBtnClick" placeholder="{i18n>searchTip}" width="15rem"/>
+									<SearchField id="productsSearch" search="onFiltersChanged" placeholder="{i18n>searchTip}" width="15rem"/>
 								</content>
 							</Toolbar>
 						</headerToolbar>
