@@ -31,15 +31,6 @@ sap.ui.define(
         oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
       },
 
-      getCurrStorePath: function () {
-        const oODataModel = this.getView().getModel("odata");
-        const sStorePath = oODataModel.createKey(
-          "/Stores",
-          this.getView().getBindingContext("odata").getObject()
-        );
-        return sStorePath;
-      },
-
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
@@ -55,6 +46,15 @@ sap.ui.define(
         });
       },
 
+      getCurrStorePath: function () {
+        const oODataModel = this.getView().getModel("odata");
+        const sStorePath = oODataModel.createKey(
+          "/Stores",
+          this.getView().getBindingContext("odata").getObject()
+        );
+        return sStorePath;
+      },
+
       updateStatusFilters: function () {
         const oODataModel = this.getView().getModel("odata");
         const oAppViewModel = this.getView().getModel("appView");
@@ -62,34 +62,33 @@ sap.ui.define(
           "/productsCounts/statusAll/serverKey"
         );
         const oProductsCounts = oAppViewModel.getProperty("/productsCounts");
-        const productsSearchFilter = this.getProductsSearchFilter();
+        const oProductsSearchFilter = this.getProductsSearchFilter();
 
-        Object.entries(oProductsCounts).forEach(([sStatus, oStatusValue]) => {
+        Object.entries(oProductsCounts).forEach(([sStatusKey, oStatusObj]) => {
           const oParams = {
             success: (sCount) => {
               oAppViewModel.setProperty(
-                `/productsCounts/${sStatus}/count`,
+                `/productsCounts/${sStatusKey}/count`,
                 sCount
               );
             },
           };
           const aFilters = [];
 
-          if (productsSearchFilter) {
-            aFilters.push(productsSearchFilter);
+          if (oProductsSearchFilter) {
+            aFilters.push(oProductsSearchFilter);
           }
-
-          if (oStatusValue.serverKey !== sAllProductsKey) {
+          if (oStatusObj.serverKey !== sAllProductsKey) {
             aFilters.push(
-              new Filter("Status", FilterOperator.EQ, oStatusValue.serverKey)
+              new Filter("Status", FilterOperator.EQ, oStatusObj.serverKey)
             );
           }
-
           if (aFilters.length) {
             oParams.filters = [new Filter({ filters: aFilters, and: true })];
           }
 
-          // FOR SOME REASON SERVER DOES NOT CALCULATE COUNTS CORRECTLY (with search Filter)
+          // FOR SOME REASON SERVER DOES NOT CALCULATE COUNTS CORRECTLY
+          // Without search filter - everything is fine; with search filter - fully ignoring search filter
           // For example, on this URL
           // http://localhost:3000/odata/Stores(3)/rel_Products/$count?$filter=(%20Price%20eq%20somestrangestringm%20)
           // server will return 26, which is weird, right?
@@ -103,18 +102,18 @@ sap.ui.define(
 
       onFiltersChanged: function () {
         const oProductsBinding = this.byId("productsTable").getBinding("items");
-        const iconTabBarFilter = this.getIconTabBarFilter();
-        const productsSearchFilter = this.getProductsSearchFilter();
+        const oIconTabBarFilter = this.getIconTabBarFilter();
+        const oProductsSearchFilter = this.getProductsSearchFilter();
         const aFilters = [];
 
         oProductsBinding.refresh();
 
-        if (iconTabBarFilter) {
-          aFilters.push(iconTabBarFilter);
+        if (oIconTabBarFilter) {
+          aFilters.push(oIconTabBarFilter);
         }
 
-        if (productsSearchFilter) {
-          aFilters.push(productsSearchFilter);
+        if (oProductsSearchFilter) {
+          aFilters.push(oProductsSearchFilter);
         }
 
         oProductsBinding.filter(new Filter({ filters: aFilters, and: true }));
@@ -125,76 +124,76 @@ sap.ui.define(
         const sAllProductsKey = oAppViewModel.getProperty(
           "/productsCounts/statusAll/serverKey"
         );
-        const iconTabBarFilter = this.byId("iconTabBar").getSelectedKey();
+        const sIconTabBarKey = this.byId("iconTabBar").getSelectedKey();
 
-        if (iconTabBarFilter !== sAllProductsKey) {
-          return new Filter("Status", FilterOperator.EQ, iconTabBarFilter);
+        if (sIconTabBarKey !== sAllProductsKey) {
+          return new Filter("Status", FilterOperator.EQ, sIconTabBarKey);
         } else {
           return null;
         }
       },
 
-      getProductsSearchFilter: function () {
-        const searchInputFilter = this.byId("productsSearch").getValue();
+      getFilterForStr: function (serverKey, searchValue) {
+        return new Filter({
+          path: serverKey,
+          operator: FilterOperator.Contains,
+          value1: searchValue,
+          caseSensitive: false,
+        });
+      },
 
-        if (searchInputFilter && searchInputFilter.length > 0) {
+      getFilterForNum: function (serverKey, searchValue) {
+        return new Filter({
+          path: serverKey,
+          operator: FilterOperator.EQ,
+          value1: searchValue,
+          comparator: (a, b) => a - b, // <-- For some reason server doesn't filter without a comparator for numbers
+        });
+      },
+
+      getProductsSearchFilter: function () {
+        const oAppViewModel = this.getView().getModel("appView");
+        const oSortFieldsObj = oAppViewModel.getProperty("/columnsSortStates");
+        const sQuery = this.byId("productsSearch").getValue();
+
+        if (sQuery && sQuery.length > 0) {
           const aFilters = [];
 
-          const filterName = new Filter({
-            path: "Name",
-            operator: FilterOperator.Contains,
-            value1: searchInputFilter,
-            caseSensitive: false,
-          });
-          aFilters.push(filterName);
-
-          const filterPrice = new Filter({
-            path: "Price",
-            operator: FilterOperator.EQ,
-            value1: searchInputFilter,
-            comparator: (a, b) => a - b,
-          });
-          aFilters.push(filterPrice);
-
-          const filterSpecs = new Filter({
-            path: "Specs",
-            operator: FilterOperator.Contains,
-            value1: searchInputFilter,
-            caseSensitive: false,
-          });
-          aFilters.push(filterSpecs);
-
-          const filterSupplier = new Filter({
-            path: "SupplierInfo",
-            operator: FilterOperator.Contains,
-            value1: searchInputFilter,
-            caseSensitive: false,
-          });
-          aFilters.push(filterSupplier);
-
-          const filterCountry = new Filter({
-            path: "MadeIn",
-            operator: FilterOperator.Contains,
-            value1: searchInputFilter,
-            caseSensitive: false,
-          });
-          aFilters.push(filterCountry);
-
-          const filterProdCompany = new Filter({
-            path: "ProductionCompanyName",
-            operator: FilterOperator.Contains,
-            value1: searchInputFilter,
-            caseSensitive: false,
-          });
-          aFilters.push(filterProdCompany);
-
-          const filterRating = new Filter({
-            path: "Rating",
-            operator: FilterOperator.EQ,
-            value1: searchInputFilter,
-            comparator: (a, b) => a - b,
-          });
-          aFilters.push(filterRating);
+          const oFilterName = this.getFilterForStr(
+            oSortFieldsObj.name.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterName);
+          const oFilterPrice = this.getFilterForNum(
+            oSortFieldsObj.price.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterPrice);
+          const oFilterSpecs = this.getFilterForStr(
+            oSortFieldsObj.specs.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterSpecs);
+          const oFilterSupplier = this.getFilterForStr(
+            oSortFieldsObj.supplierInfo.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterSupplier);
+          const oFilterCountry = this.getFilterForStr(
+            oSortFieldsObj.country.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterCountry);
+          const oFilterProdCompany = this.getFilterForStr(
+            oSortFieldsObj.prodCompany.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterProdCompany);
+          const oFilterRating = this.getFilterForNum(
+            oSortFieldsObj.rating.serverKey,
+            sQuery
+          );
+          aFilters.push(oFilterRating);
 
           return new Filter({ filters: aFilters, and: false });
         } else {
@@ -222,26 +221,26 @@ sap.ui.define(
           `/columnsSortStates/${sBtnKey}/state`
         );
 
-        const newSortStatesObj = this.getNewSortObj();
+        const oNewSortFieldsObj = this.getNewSortObj();
 
         if (sCurrSortState === "DEFAULT") {
-          newSortStatesObj[sBtnKey].state = "ASC";
+          oNewSortFieldsObj[sBtnKey].state = "ASC";
         } else if (sCurrSortState === "ASC") {
-          newSortStatesObj[sBtnKey].state = "DESC";
+          oNewSortFieldsObj[sBtnKey].state = "DESC";
         }
 
-        oAppViewModel.setProperty("/columnsSortStates", newSortStatesObj);
+        oAppViewModel.setProperty("/columnsSortStates", oNewSortFieldsObj);
 
         oProductsBinding.refresh();
 
-        if (newSortStatesObj[sBtnKey].state === "DEFAULT") {
+        if (oNewSortFieldsObj[sBtnKey].state === "DEFAULT") {
           oProductsBinding.sort([]);
         } else {
           const oSorter = new Sorter(
-            newSortStatesObj[sBtnKey].serverKey,
-            newSortStatesObj[sBtnKey].state === "DESC",
-            undefined,
-            this.sorterComparator
+            oNewSortFieldsObj[sBtnKey].serverKey,
+            oNewSortFieldsObj[sBtnKey].state === "DESC",
+            undefined, // <-- vGroup? parameter; idk how to skip it, just put undefined
+            this.sorterComparator // <-- For some reason server doesn't sort number columns without a comparator
           );
           oProductsBinding.sort(oSorter);
         }
@@ -329,6 +328,7 @@ sap.ui.define(
         const nStoreId = this.getView()
           .getBindingContext("odata")
           .getObject("id");
+
         const nProductId = oEvent
           .getSource()
           .getBindingContext("odata")
