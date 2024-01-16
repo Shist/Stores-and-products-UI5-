@@ -89,8 +89,6 @@ sap.ui.define(
             oParams.filters = [new Filter({ filters: aFilters, and: true })];
           }
 
-          window.currFilters = oParams.filters;
-
           // FOR SOME REASON SERVER DOES NOT CALCULATE COUNTS CORRECTLY (with search Filter)
           // For example, on this URL
           // http://localhost:3000/odata/Stores(3)/rel_Products/$count?$filter=(%20Price%20eq%20somestrangestringm%20)

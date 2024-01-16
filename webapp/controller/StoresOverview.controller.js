@@ -8,11 +8,6 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
-      onAfterRendering: function () {
-        const oStoresBinding = this.byId("storesList").getBinding("items");
-        window.storesBinding = oStoresBinding;
-      },
-
       onStoreClick: function (oEvent) {
         const nStoreId = oEvent
           .getSource()
