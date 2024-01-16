@@ -126,7 +126,7 @@
 								<content>
 									<Title text="{i18n>products}" class="sapUiSmallMarginBegin"/>
 									<ToolbarSpacer/>
-									<SearchField placeholder="{i18n>searchTip}" width="15rem"/>
+									<SearchField search="onProductsSearchBtnClick" placeholder="{i18n>searchTip}" width="15rem"/>
 								</content>
 							</Toolbar>
 						</headerToolbar>

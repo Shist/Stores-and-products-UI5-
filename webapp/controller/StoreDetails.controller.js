@@ -31,6 +31,15 @@ sap.ui.define(
         oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
       },
 
+      getCurrStorePath: function () {
+        const oODataModel = this.getView().getModel("odata");
+        const sStorePath = oODataModel.createKey(
+          "/Stores",
+          this.getView().getBindingContext("odata").getObject()
+        );
+        return sStorePath;
+      },
+
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
@@ -96,13 +105,71 @@ sap.ui.define(
         }
       },
 
-      getCurrStorePath: function () {
-        const oODataModel = this.getView().getModel("odata");
-        const sStorePath = oODataModel.createKey(
-          "/Stores",
-          this.getView().getBindingContext("odata").getObject()
-        );
-        return sStorePath;
+      onProductsSearchBtnClick: function (oEvent) {
+        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        const sQuery = oEvent.getParameter("query");
+        let targetFilter = [];
+
+        oProductsBinding.refresh();
+
+        if (sQuery && sQuery.length > 0) {
+          const aFilters = [];
+
+          const filterName = new Filter({
+            path: "Name",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
+          aFilters.push(filterName);
+
+          const filterPrice = new Filter({
+            path: "Price",
+            operator: FilterOperator.EQ,
+            value1: sQuery,
+            comparator: (a, b) => a - b,
+          });
+          aFilters.push(filterPrice);
+
+          const filterSpecs = new Filter({
+            path: "Specs",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
+          aFilters.push(filterSpecs);
+
+          const filterSupplier = new Filter({
+            path: "SupplierInfo",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
+          aFilters.push(filterSupplier);
+
+          const filterCountry = new Filter({
+            path: "MadeIn",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
+          aFilters.push(filterCountry);
+
+          const filterProdCompany = new Filter({
+            path: "ProductionCompanyName",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
+          aFilters.push(filterProdCompany);
+
+          const filterRating = new Filter({
+            path: "Rating",
+            operator: FilterOperator.EQ,
+            value1: sQuery,
+            comparator: (a, b) => a - b,
+          });
+          aFilters.push(filterRating);
+
+          targetFilter = new Filter({ filters: aFilters, and: false });
+        }
+
+        oProductsBinding.filter(targetFilter);
       },
 
       getNewSortObj: function () {

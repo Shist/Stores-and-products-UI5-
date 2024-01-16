@@ -46,20 +46,10 @@ sap.ui.define(
               path: "ProductId",
               operator: FilterOperator.EQ,
               value1: sProductId,
-              comparator: controllerContext.idFilterComparator,
+              comparator: (a, b) => a - b,
             })
           );
         });
-      },
-
-      idFilterComparator: function (a, b) {
-        if (!isNaN(a) && !isNaN(b)) {
-          const numA = parseFloat(a);
-          const numB = parseFloat(b);
-          return numA - numB;
-        } else {
-          return NaN;
-        }
       },
 
       formatBadgeType: function (sStatus) {

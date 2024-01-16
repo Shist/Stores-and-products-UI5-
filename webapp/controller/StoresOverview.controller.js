@@ -34,18 +34,18 @@ sap.ui.define(
         if (sQuery && sQuery.length > 0) {
           const aFilters = [];
 
-          const filterName = new Filter(
-            "Name",
-            FilterOperator.Contains,
-            sQuery
-          );
+          const filterName = new Filter({
+            path: "Name",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
           aFilters.push(filterName);
 
-          const filterAddress = new Filter(
-            "Address",
-            FilterOperator.Contains,
-            sQuery
-          );
+          const filterAddress = new Filter({
+            path: "Address",
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+          });
           aFilters.push(filterAddress);
 
           const filterFloorArea = new Filter({
