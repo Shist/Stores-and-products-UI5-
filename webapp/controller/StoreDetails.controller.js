@@ -322,17 +322,16 @@ sap.ui.define(
       },
 
       onProductClick: function (oEvent) {
-        // Setting everything to default before moving to other view
-        this.setAllControlsToDefault();
-
         const nStoreId = this.getView()
           .getBindingContext("odata")
           .getObject("id");
-
         const nProductId = oEvent
           .getSource()
           .getBindingContext("odata")
           .getObject("id");
+
+        // Setting everything to default before moving to other view
+        this.setAllControlsToDefault();
 
         this.getOwnerComponent().getRouter().navTo("ProductDetails", {
           storeId: nStoreId,

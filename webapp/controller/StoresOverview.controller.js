@@ -55,16 +55,16 @@ sap.ui.define(
       },
 
       onStoreClick: function (oEvent) {
+        const nStoreId = oEvent
+          .getSource()
+          .getBindingContext("odata")
+          .getObject("id");
+
         // Setting everything to default before moving to other view
         const oAppViewModel = this.getView().getModel("appView");
         oAppViewModel.setProperty("/currStoresSearchFilter", "");
         const oStoresBinding = this.byId("storesList").getBinding("items");
         oStoresBinding.filter([]);
-
-        const nStoreId = oEvent
-          .getSource()
-          .getBindingContext("odata")
-          .getObject("id");
 
         this.getOwnerComponent().getRouter().navTo("StoreDetails", {
           storeId: nStoreId,
