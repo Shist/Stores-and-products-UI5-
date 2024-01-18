@@ -20,7 +20,7 @@
 		<f:header>
 			<f:DynamicPageHeader>
 				<SearchField
-					search="onStoresSearchBtnClick"
+					search="onStoresSearchBtnPress"
 					value="{appView>/currStoresSearchFilter}"
 					placeholder="{i18n>search}"
 					showRefreshButton="true"/>
@@ -29,7 +29,7 @@
 		<f:content>
 			<List id="storesList" items="{odata>/Stores}">
 				<ObjectListItem
-					press="onStoreClick"
+					press="onStorePress"
 					type="Active"
 					title="{odata>Name}"
 					number="{odata>FloorArea}"

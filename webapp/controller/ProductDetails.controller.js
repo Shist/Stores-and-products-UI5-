@@ -79,24 +79,11 @@ sap.ui.define(
         }
       },
 
-      getNewSortObj: function () {
-        const oAppViewModel = this.getView().getModel("appView");
-        const oNewSortState = JSON.parse(
-          JSON.stringify(oAppViewModel.getProperty("/columnsSortStates"))
-        );
-
-        for (const key in oNewSortState) {
-          oNewSortState[key].state = "DEFAULT";
-        }
-
-        return oNewSortState;
-      },
-
-      onStoresListLinkClicked: function () {
+      onStoresListLinkPress: function () {
         this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },
 
-      onStoreDetailsLinkClicked: function () {
+      onStoreDetailsLinkPress: function () {
         const nStoreId = this.getView()
           .getBindingContext("odata")
           .getObject("StoreId");

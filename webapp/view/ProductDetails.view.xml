@@ -22,8 +22,8 @@
 				</f:heading>
 				<f:breadcrumbs>
 					<Breadcrumbs>
-						<Link text="{i18n>storesList}" press="onStoresListLinkClicked"/>
-						<Link text="{i18n>storeDetails}" press="onStoreDetailsLinkClicked"/>
+						<Link text="{i18n>storesList}" press="onStoresListLinkPress"/>
+						<Link text="{i18n>storeDetails}" press="onStoreDetailsLinkPress"/>
 						<Link text="{i18n>productDetails}"/>
 					</Breadcrumbs>
 				</f:breadcrumbs>
@@ -94,14 +94,14 @@
 							<Text id="textCountry" text="{odata>MadeIn}"/>
 						</HBox>
 						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="badgeStatus" text="{
+							<Label design="Bold" class="sapUiTinyMarginEnd" text="{
 								parts: [
 									'i18n>label',
 									'i18n>status'
 								],
 								formatter: 'formatMessage'
 							}"/>
-							<tnt:InfoLabel id="badgeStatus" text="{odata>Status}" colorScheme="{
+							<tnt:InfoLabel text="{odata>Status}" colorScheme="{
 								path: 'odata>Status',
 								formatter: '.formatBadgeType'
 							}"/>
@@ -126,14 +126,14 @@
 								<Input id="authorInput" placeholder="Enter name"/>
 							</HBox>
 							<HBox alignItems="Center">
-								<Label class="sapUiTinyMarginEnd" labelFor="ratingInput" text="{
+								<Label class="sapUiTinyMarginEnd" text="{
 									parts: [
 										'i18n>label',
 										'i18n>rating'
 									],
 									formatter: 'formatMessage'
 								}"/>
-								<RatingIndicator id="ratingInput" maxValue="5"/>
+								<RatingIndicator maxValue="5"/>
 							</HBox>
 						</HBox>
 						<FeedInput post="" class="sapUiSmallMarginTopBottom" />

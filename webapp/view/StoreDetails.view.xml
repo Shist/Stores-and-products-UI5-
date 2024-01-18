@@ -15,7 +15,7 @@
 				</f:heading>
 				<f:breadcrumbs>
 					<Breadcrumbs>
-						<Link text="{i18n>storesList}" press="onStoresListLinkClicked"/>
+						<Link text="{i18n>storesList}" press="onStoresListLinkPress"/>
 						<Link text="{i18n>storeDetails}" />
 					</Breadcrumbs>
 				</f:breadcrumbs>
@@ -142,7 +142,7 @@
 						<columns>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortNameBtnClicked" type="Transparent" icon="{
+									<Button press="onSortNameBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/name/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -151,7 +151,7 @@
 							</Column>
 							<Column hAlign="End">
 								<HBox alignItems="Center">
-									<Button press="onSortPriceBtnClicked" type="Transparent" icon="{
+									<Button press="onSortPriceBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/price/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -160,7 +160,7 @@
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortSpecsBtnClicked" type="Transparent" icon="{
+									<Button press="onSortSpecsBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/specs/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -169,7 +169,7 @@
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortSupplierBtnClicked" type="Transparent" icon="{
+									<Button press="onSortSupplierBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/supplierInfo/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -178,7 +178,7 @@
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortCountryBtnClicked" type="Transparent" icon="{
+									<Button press="onSortCountryBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/country/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -187,7 +187,7 @@
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortProdCompanyBtnClicked" type="Transparent" icon="{
+									<Button press="onSortProdCompanyBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/prodCompany/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -196,7 +196,7 @@
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortRatingBtnClicked" type="Transparent" icon="{
+									<Button press="onSortRatingBtnPress" type="Transparent" icon="{
 										path: 'appView>/columnsSortStates/rating/state',
 										formatter: '.formatSortBtnIcon'
 									}"/>
@@ -206,7 +206,7 @@
 							<Column width="80px"></Column>
 						</columns>
 						<items>
-							<ColumnListItem press="onProductClick" type="Navigation">
+							<ColumnListItem press="onProductPress" type="Navigation">
 								<Text maxLines="2" text="{odata>Name}" />
 								<Text maxLines="1" text="{odata>Price}" />
 								<Text maxLines="1" text="{odata>Specs}" />

@@ -156,7 +156,7 @@ sap.ui.define(
         const oSortFieldsObj = oAppViewModel.getProperty("/columnsSortStates");
         const sQuery = this.byId("productsSearch").getValue();
 
-        if (sQuery && sQuery.length > 0) {
+        if (sQuery) {
           const aFilters = [];
 
           const oFilterName = this.getFilterForStr(
@@ -214,7 +214,7 @@ sap.ui.define(
         return oNewSortState;
       },
 
-      onSortBtnClicked: function (sBtnKey) {
+      onSortBtnPress: function (sBtnKey) {
         const oAppViewModel = this.getView().getModel("appView");
         const oProductsBinding = this.byId("productsTable").getBinding("items");
         const sCurrSortState = oAppViewModel.getProperty(
@@ -262,32 +262,32 @@ sap.ui.define(
         }
       },
 
-      onSortNameBtnClicked: function () {
-        this.onSortBtnClicked("name");
+      onSortNameBtnPress: function () {
+        this.onSortBtnPress("name");
       },
 
-      onSortPriceBtnClicked: function () {
-        this.onSortBtnClicked("price");
+      onSortPriceBtnPress: function () {
+        this.onSortBtnPress("price");
       },
 
-      onSortSpecsBtnClicked: function () {
-        this.onSortBtnClicked("specs");
+      onSortSpecsBtnPress: function () {
+        this.onSortBtnPress("specs");
       },
 
-      onSortSupplierBtnClicked: function () {
-        this.onSortBtnClicked("supplierInfo");
+      onSortSupplierBtnPress: function () {
+        this.onSortBtnPress("supplierInfo");
       },
 
-      onSortCountryBtnClicked: function () {
-        this.onSortBtnClicked("country");
+      onSortCountryBtnPress: function () {
+        this.onSortBtnPress("country");
       },
 
-      onSortProdCompanyBtnClicked: function () {
-        this.onSortBtnClicked("prodCompany");
+      onSortProdCompanyBtnPress: function () {
+        this.onSortBtnPress("prodCompany");
       },
 
-      onSortRatingBtnClicked: function () {
-        this.onSortBtnClicked("rating");
+      onSortRatingBtnPress: function () {
+        this.onSortBtnPress("rating");
       },
 
       formatSortBtnIcon: function (sSortState) {
@@ -314,14 +314,14 @@ sap.ui.define(
         oProductsBinding.sort([]);
       },
 
-      onStoresListLinkClicked: function () {
+      onStoresListLinkPress: function () {
         // Setting everything to default before moving to other view
         this.setAllControlsToDefault();
 
         this.getOwnerComponent().getRouter().navTo("StoresOverview");
       },
 
-      onProductClick: function (oEvent) {
+      onProductPress: function (oEvent) {
         const nStoreId = this.getView()
           .getBindingContext("odata")
           .getObject("id");

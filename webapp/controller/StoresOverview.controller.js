@@ -8,7 +8,7 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
-      onStoresSearchBtnClick: function (oEvent) {
+      onStoresSearchBtnPress: function (oEvent) {
         const oStoresBinding = this.byId("storesList").getBinding("items");
         const sQuery = oEvent.getParameter("query");
         let targetFilter = [];
@@ -54,7 +54,7 @@ sap.ui.define(
         return aFilters;
       },
 
-      onStoreClick: function (oEvent) {
+      onStorePress: function (oEvent) {
         const nStoreId = oEvent
           .getSource()
           .getBindingContext("odata")
