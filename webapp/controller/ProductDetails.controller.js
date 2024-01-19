@@ -1,75 +1,65 @@
 sap.ui.define(
   [
+    "pavel/zhukouski/data/constants",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (Controller, Filter, FilterOperator) {
+  function (CONSTANTS, Controller, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.ProductDetails", {
       onInit: function () {
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
-          .getRoute("ProductDetails")
+          .getRoute(CONSTANTS.ROUTE.PRODUCT_DETAILS)
           .attachPatternMatched(this.onRouterPatternMatched, this);
       },
 
       onExit: function () {
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
-          .getRoute("ProductDetails")
+          .getRoute(CONSTANTS.ROUTE.PRODUCT_DETAILS)
           .detachPatternMatched(this.onRouterPatternMatched, this);
       },
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sProductId = oEvent.getParameter("arguments").productId;
-        const oODataModel = this.getView().getModel("odata");
+        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Products", { id: sProductId });
 
           oControllerContext.getView().bindObject({
             path: sKey,
-            model: "odata",
+            model: CONSTANTS.MODEL.ODATA,
           });
 
           const oCommentsBinding = oControllerContext
-            .byId("commentsList")
+            .byId(CONSTANTS.ID.COMMENTS_LIST)
             .getBinding("items");
 
           oCommentsBinding.refresh();
 
           oCommentsBinding.filter(
             new Filter({
-              path: "ProductId",
+              path: CONSTANTS.COMMENT_PROP.PRODUCT_ID,
               operator: FilterOperator.EQ,
               value1: sProductId,
-              comparator: (a, b) => a - b, // <-- For some reason server doesn't filter without a comparator for numbers
+              comparator: (a, b) => a - b,
             })
           );
         });
       },
 
       formatBadgeType: function (sStatus) {
-        const oAppViewModel = this.getView().getModel("appView");
-        const sOkProductsKey = oAppViewModel.getProperty(
-          "/productsCounts/statusOk/serverKey"
-        );
-        const sStorageProductsKey = oAppViewModel.getProperty(
-          "/productsCounts/statusStorage/serverKey"
-        );
-        const sOutOfStockProductsKey = oAppViewModel.getProperty(
-          "/productsCounts/statusOutOfStock/serverKey"
-        );
-
         switch (sStatus) {
-          case sOkProductsKey:
+          case CONSTANTS.STATUS.OK.SERVER_KEY:
             return 8;
-          case sStorageProductsKey:
+          case CONSTANTS.STATUS.STORAGE.SERVER_KEY:
             return 1;
-          case sOutOfStockProductsKey:
+          case CONSTANTS.STATUS.OUT_OF_STOCK.SERVER_KEY:
             return 3;
           default:
             if (sStatus) {
@@ -80,17 +70,21 @@ sap.ui.define(
       },
 
       onStoresListLinkPress: function () {
-        this.getOwnerComponent().getRouter().navTo("StoresOverview");
+        this.getOwnerComponent()
+          .getRouter()
+          .navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
       },
 
       onStoreDetailsLinkPress: function () {
         const nStoreId = this.getView()
-          .getBindingContext("odata")
-          .getObject("StoreId");
+          .getBindingContext(CONSTANTS.MODEL.ODATA)
+          .getObject(CONSTANTS.PRODUCT_PROP.STORE_ID);
 
-        this.getOwnerComponent().getRouter().navTo("StoreDetails", {
-          storeId: nStoreId,
-        });
+        this.getOwnerComponent()
+          .getRouter()
+          .navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
+            [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
+          });
       },
     });
   }

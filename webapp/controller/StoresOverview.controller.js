@@ -1,21 +1,24 @@
 sap.ui.define(
   [
+    "pavel/zhukouski/data/constants",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (Controller, Filter, FilterOperator) {
+  function (CONSTANTS, Controller, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
       onStoresSearchBtnPress: function (oEvent) {
-        const oStoresBinding = this.byId("storesList").getBinding("items");
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
+          "items"
+        );
         const sQuery = oEvent.getParameter("query");
         let targetFilter = [];
 
         oStoresBinding.refresh();
 
-        if (sQuery && sQuery.length > 0) {
+        if (sQuery) {
           const aSearchFilters = this.getStoresSearchFilter(sQuery);
 
           targetFilter = new Filter({ filters: aSearchFilters, and: false });
@@ -27,29 +30,32 @@ sap.ui.define(
       getStoresSearchFilter: function (sQuery) {
         const aFilters = [];
 
-        const filterName = new Filter({
-          path: "Name",
-          operator: FilterOperator.Contains,
-          value1: sQuery,
-          caseSensitive: false,
-        });
-        aFilters.push(filterName);
+        aFilters.push(
+          new Filter({
+            path: CONSTANTS.STORE_PROP.NAME,
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+            caseSensitive: false,
+          })
+        );
 
-        const filterAddress = new Filter({
-          path: "Address",
-          operator: FilterOperator.Contains,
-          value1: sQuery,
-          caseSensitive: false,
-        });
-        aFilters.push(filterAddress);
+        aFilters.push(
+          new Filter({
+            path: CONSTANTS.STORE_PROP.ADDRESS,
+            operator: FilterOperator.Contains,
+            value1: sQuery,
+            caseSensitive: false,
+          })
+        );
 
-        const filterFloorArea = new Filter({
-          path: "FloorArea",
-          operator: FilterOperator.EQ,
-          value1: sQuery,
-          comparator: (a, b) => a - b,
-        });
-        aFilters.push(filterFloorArea);
+        aFilters.push(
+          new Filter({
+            path: CONSTANTS.STORE_PROP.FLOOR_AREA,
+            operator: FilterOperator.EQ,
+            value1: sQuery,
+            comparator: (a, b) => a - b,
+          })
+        );
 
         return aFilters;
       },
@@ -57,18 +63,21 @@ sap.ui.define(
       onStorePress: function (oEvent) {
         const nStoreId = oEvent
           .getSource()
-          .getBindingContext("odata")
-          .getObject("id");
+          .getBindingContext(CONSTANTS.MODEL.ODATA)
+          .getObject(CONSTANTS.STORE_PROP.ID);
 
-        // Setting everything to default before moving to other view
-        const oAppViewModel = this.getView().getModel("appView");
+        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
         oAppViewModel.setProperty("/currStoresSearchFilter", "");
-        const oStoresBinding = this.byId("storesList").getBinding("items");
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
+          "items"
+        );
         oStoresBinding.filter([]);
 
-        this.getOwnerComponent().getRouter().navTo("StoreDetails", {
-          storeId: nStoreId,
-        });
+        this.getOwnerComponent()
+          .getRouter()
+          .navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
+            [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
+          });
       },
     });
   }

@@ -95,31 +95,31 @@
 			<IconTabBar
 				id="iconTabBar"
 				select="onFiltersChanged"
-				selectedKey="{appView>/currStatusFilter}"
+				selectedKey="{appView>/currProductsStatusFilter}"
 				expandable="false">
 				<items>
 					<IconTabFilter
 						text="{i18n>all}"
-						count="{appView>/productsCounts/statusAll/count}"
-						key="{appView>/productsCounts/statusAll/serverKey}"
+						count="{appView>/productsCounts/all}"
+						key="ALL"
 						showAll="true" />
 					<IconTabSeparator />
 					<IconTabFilter
 						text="{i18n>ok}"
-						count="{appView>/productsCounts/statusOk/count}"
-						key="{appView>/productsCounts/statusOk/serverKey}"
+						count="{appView>/productsCounts/ok}"
+						key="OK"
 						icon="sap-icon://message-success"
 						iconColor="Positive" />
 					<IconTabFilter
 						text="{i18n>storage}"
-						count="{appView>/productsCounts/statusStorage/count}"
-						key="{appView>/productsCounts/statusStorage/serverKey}"
+						count="{appView>/productsCounts/storage}"
+						key="STORAGE"
 						icon="sap-icon://message-warning"
 						iconColor="Critical" />
 					<IconTabFilter
 						text="{i18n>outOfStock}"
-						count="{appView>/productsCounts/statusOutOfStock/count}"
-						key="{appView>/productsCounts/statusOutOfStock/serverKey}"
+						count="{appView>/productsCounts/outOfStock}"
+						key="OUT_OF_STOCK"
 						icon="sap-icon://notification"
 						iconColor="Negative" />
 				</items>
@@ -131,7 +131,6 @@
 									<Title text="{i18n>products}" class="sapUiSmallMarginBegin"/>
 									<ToolbarSpacer/>
 									<SearchField
-										id="productsSearch"
 										value="{appView>/currProductsSearchFilter}"
 										search="onFiltersChanged"
 										placeholder="{i18n>searchTip}"
@@ -143,7 +142,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortNameBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/name/state',
+										path: 'appView>/productsSortStates/name',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>name}" />
@@ -152,7 +151,7 @@
 							<Column hAlign="End">
 								<HBox alignItems="Center">
 									<Button press="onSortPriceBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/price/state',
+										path: 'appView>/productsSortStates/price',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>price}" />
@@ -161,7 +160,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortSpecsBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/specs/state',
+										path: 'appView>/productsSortStates/specs',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>specs}" />
@@ -170,7 +169,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortSupplierBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/supplierInfo/state',
+										path: 'appView>/productsSortStates/supplierInfo',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>supplierInfo}" />
@@ -179,7 +178,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortCountryBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/country/state',
+										path: 'appView>/productsSortStates/country',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>countryOfOrigin}" />
@@ -188,7 +187,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortProdCompanyBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/prodCompany/state',
+										path: 'appView>/productsSortStates/prodCompany',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>prodCompany}" />
@@ -197,7 +196,7 @@
 							<Column>
 								<HBox alignItems="Center">
 									<Button press="onSortRatingBtnPress" type="Transparent" icon="{
-										path: 'appView>/columnsSortStates/rating/state',
+										path: 'appView>/productsSortStates/rating',
 										formatter: '.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>rating}" />

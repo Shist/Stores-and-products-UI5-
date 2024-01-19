@@ -14,7 +14,7 @@
 				<f:heading>
 					<Title text="{
 						parts: [
-							'i18n>productDetaulsPrName',
+							'i18n>productDetailsPrName',
 							'odata>Name'
 						],
 						formatter: 'formatMessage'

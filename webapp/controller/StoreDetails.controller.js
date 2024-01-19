@@ -1,74 +1,76 @@
 sap.ui.define(
   [
+    "pavel/zhukouski/data/constants",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
   ],
-  function (Controller, Filter, FilterOperator, Sorter) {
+  function (CONSTANTS, Controller, Filter, FilterOperator, Sorter) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoreDetails", {
       onInit: function () {
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
-          .getRoute("StoreDetails")
+          .getRoute(CONSTANTS.ROUTE.STORE_DETAILS)
           .attachPatternMatched(this.onRouterPatternMatched, this);
       },
 
       onAfterRendering: function () {
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
         oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
       },
 
       onExit: function () {
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter
-          .getRoute("StoreDetails")
+          .getRoute(CONSTANTS.ROUTE.STORE_DETAILS)
           .detachPatternMatched(this.onRouterPatternMatched, this);
 
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
         oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
       },
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
-        const oODataModel = this.getView().getModel("odata");
+        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Stores", { id: sStoreId });
 
           oControllerContext.getView().bindObject({
             path: sKey,
-            model: "odata",
+            model: CONSTANTS.MODEL.ODATA,
           });
         });
       },
 
       getCurrStorePath: function () {
-        const oODataModel = this.getView().getModel("odata");
+        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
         const sStorePath = oODataModel.createKey(
           "/Stores",
-          this.getView().getBindingContext("odata").getObject()
+          this.getView().getBindingContext(CONSTANTS.MODEL.ODATA).getObject()
         );
         return sStorePath;
       },
 
       updateStatusFilters: function () {
-        const oODataModel = this.getView().getModel("odata");
-        const oAppViewModel = this.getView().getModel("appView");
-        const sAllProductsKey = oAppViewModel.getProperty(
-          "/productsCounts/statusAll/serverKey"
-        );
+        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
         const oProductsCounts = oAppViewModel.getProperty("/productsCounts");
         const oProductsSearchFilter = this.getProductsSearchFilter();
 
-        Object.entries(oProductsCounts).forEach(([sStatusKey, oStatusObj]) => {
+        Object.keys(oProductsCounts).forEach((sStatusModelKey) => {
           const oParams = {
             success: (sCount) => {
               oAppViewModel.setProperty(
-                `/productsCounts/${sStatusKey}/count`,
+                `/productsCounts/${sStatusModelKey}`,
                 sCount
               );
             },
@@ -78,21 +80,19 @@ sap.ui.define(
           if (oProductsSearchFilter) {
             aFilters.push(oProductsSearchFilter);
           }
-          if (oStatusObj.serverKey !== sAllProductsKey) {
+          if (sStatusModelKey !== CONSTANTS.STATUS.ALL.MODEL_KEY) {
             aFilters.push(
-              new Filter("Status", FilterOperator.EQ, oStatusObj.serverKey)
+              new Filter(
+                CONSTANTS.PRODUCT_PROP.STATUS,
+                FilterOperator.EQ,
+                this.findServerKeyByModelKey(CONSTANTS.STATUS, sStatusModelKey)
+              )
             );
           }
           if (aFilters.length) {
             oParams.filters = [new Filter({ filters: aFilters, and: true })];
           }
 
-          // FOR SOME REASON SERVER DOES NOT CALCULATE COUNTS CORRECTLY
-          // Without search filter - everything is fine; with search filter - fully ignoring search filter
-          // For example, on this URL
-          // http://localhost:3000/odata/Stores(3)/rel_Products/$count?$filter=(%20Price%20eq%20somestrangestringm%20)
-          // server will return 26, which is weird, right?
-          // There is no way that store has 26 products with Price="somestrangestring"
           oODataModel.read(
             this.getCurrStorePath() + "/rel_Products/$count",
             oParams
@@ -101,7 +101,9 @@ sap.ui.define(
       },
 
       onFiltersChanged: function () {
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
         const oIconTabBarFilter = this.getIconTabBarFilter();
         const oProductsSearchFilter = this.getProductsSearchFilter();
         const aFilters = [];
@@ -120,127 +122,123 @@ sap.ui.define(
       },
 
       getIconTabBarFilter: function () {
-        const oAppViewModel = this.getView().getModel("appView");
-        const sAllProductsKey = oAppViewModel.getProperty(
-          "/productsCounts/statusAll/serverKey"
-        );
-        const sIconTabBarKey = this.byId("iconTabBar").getSelectedKey();
+        const sIconTabBarKey = this.byId(
+          CONSTANTS.ID.ICON_TAB_BAR
+        ).getSelectedKey();
 
-        if (sIconTabBarKey !== sAllProductsKey) {
-          return new Filter("Status", FilterOperator.EQ, sIconTabBarKey);
+        if (sIconTabBarKey !== CONSTANTS.STATUS.ALL.SERVER_KEY) {
+          return new Filter(
+            CONSTANTS.PRODUCT_PROP.STATUS,
+            FilterOperator.EQ,
+            sIconTabBarKey
+          );
         } else {
           return null;
         }
       },
 
-      getFilterForStr: function (serverKey, searchValue) {
+      getFilterForStr: function (sServerKey, sSearchValue) {
         return new Filter({
-          path: serverKey,
+          path: sServerKey,
           operator: FilterOperator.Contains,
-          value1: searchValue,
+          value1: sSearchValue,
           caseSensitive: false,
         });
       },
 
-      getFilterForNum: function (serverKey, searchValue) {
+      getFilterForNum: function (sServerKey, sSearchValue) {
         return new Filter({
-          path: serverKey,
+          path: sServerKey,
           operator: FilterOperator.EQ,
-          value1: searchValue,
-          comparator: (a, b) => a - b, // <-- For some reason server doesn't filter without a comparator for numbers
+          value1: sSearchValue,
+          comparator: (a, b) => a - b,
         });
       },
 
       getProductsSearchFilter: function () {
-        const oAppViewModel = this.getView().getModel("appView");
-        const oSortFieldsObj = oAppViewModel.getProperty("/columnsSortStates");
-        const sQuery = this.byId("productsSearch").getValue();
+        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const sQuery = oAppViewModel.getProperty("/currProductsSearchFilter");
 
-        if (sQuery) {
-          const aFilters = [];
-
-          const oFilterName = this.getFilterForStr(
-            oSortFieldsObj.name.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterName);
-          const oFilterPrice = this.getFilterForNum(
-            oSortFieldsObj.price.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterPrice);
-          const oFilterSpecs = this.getFilterForStr(
-            oSortFieldsObj.specs.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterSpecs);
-          const oFilterSupplier = this.getFilterForStr(
-            oSortFieldsObj.supplierInfo.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterSupplier);
-          const oFilterCountry = this.getFilterForStr(
-            oSortFieldsObj.country.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterCountry);
-          const oFilterProdCompany = this.getFilterForStr(
-            oSortFieldsObj.prodCompany.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterProdCompany);
-          const oFilterRating = this.getFilterForNum(
-            oSortFieldsObj.rating.serverKey,
-            sQuery
-          );
-          aFilters.push(oFilterRating);
-
-          return new Filter({ filters: aFilters, and: false });
-        } else {
+        if (!sQuery) {
           return null;
         }
+
+        const aFilters = [];
+
+        aFilters.push(
+          this.getFilterForStr(CONSTANTS.SORT_PROP.NAME.SERVER_KEY, sQuery)
+        );
+        aFilters.push(
+          this.getFilterForNum(CONSTANTS.SORT_PROP.PRICE.SERVER_KEY, sQuery)
+        );
+        aFilters.push(
+          this.getFilterForStr(CONSTANTS.SORT_PROP.SPECS.SERVER_KEY, sQuery)
+        );
+        aFilters.push(
+          this.getFilterForStr(
+            CONSTANTS.SORT_PROP.SUPPLIER_INFO.SERVER_KEY,
+            sQuery
+          )
+        );
+        aFilters.push(
+          this.getFilterForStr(CONSTANTS.SORT_PROP.COUNTRY.SERVER_KEY, sQuery)
+        );
+        aFilters.push(
+          this.getFilterForStr(
+            CONSTANTS.SORT_PROP.PROD_COMPANY.SERVER_KEY,
+            sQuery
+          )
+        );
+        aFilters.push(
+          this.getFilterForNum(CONSTANTS.SORT_PROP.RATING.SERVER_KEY, sQuery)
+        );
+
+        return new Filter({ filters: aFilters, and: false });
       },
 
       getNewSortObj: function () {
-        const oAppViewModel = this.getView().getModel("appView");
-        const oNewSortState = JSON.parse(
-          JSON.stringify(oAppViewModel.getProperty("/columnsSortStates"))
+        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oNewSortStatesObj = JSON.parse(
+          JSON.stringify(oAppViewModel.getProperty("/productsSortStates"))
         );
 
-        for (const key in oNewSortState) {
-          oNewSortState[key].state = "DEFAULT";
+        for (const sKey in oNewSortStatesObj) {
+          oNewSortStatesObj[sKey] = CONSTANTS.SORT_STATE.DEFAULT;
         }
 
-        return oNewSortState;
+        return oNewSortStatesObj;
       },
 
-      onSortBtnPress: function (sBtnKey) {
-        const oAppViewModel = this.getView().getModel("appView");
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
+      onSortBtnPress: function (oSortBtnKeysObj) {
+        const sSortModelKey = oSortBtnKeysObj.MODEL_KEY;
+        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
         const sCurrSortState = oAppViewModel.getProperty(
-          `/columnsSortStates/${sBtnKey}/state`
+          `/productsSortStates/${sSortModelKey}`
         );
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
 
         const oNewSortFieldsObj = this.getNewSortObj();
 
-        if (sCurrSortState === "DEFAULT") {
-          oNewSortFieldsObj[sBtnKey].state = "ASC";
-        } else if (sCurrSortState === "ASC") {
-          oNewSortFieldsObj[sBtnKey].state = "DESC";
+        if (sCurrSortState === CONSTANTS.SORT_STATE.DEFAULT) {
+          oNewSortFieldsObj[sSortModelKey] = CONSTANTS.SORT_STATE.ASC;
+        } else if (sCurrSortState === CONSTANTS.SORT_STATE.ASC) {
+          oNewSortFieldsObj[sSortModelKey] = CONSTANTS.SORT_STATE.DESC;
         }
 
-        oAppViewModel.setProperty("/columnsSortStates", oNewSortFieldsObj);
+        oAppViewModel.setProperty("/productsSortStates", oNewSortFieldsObj);
 
         oProductsBinding.refresh();
 
-        if (oNewSortFieldsObj[sBtnKey].state === "DEFAULT") {
+        if (oNewSortFieldsObj[sSortModelKey] === CONSTANTS.SORT_STATE.DEFAULT) {
           oProductsBinding.sort([]);
         } else {
           const oSorter = new Sorter(
-            oNewSortFieldsObj[sBtnKey].serverKey,
-            oNewSortFieldsObj[sBtnKey].state === "DESC",
-            undefined, // <-- vGroup? parameter; idk how to skip it, just put undefined
-            this.sorterComparator // <-- For some reason server doesn't sort number columns without a comparator
+            oSortBtnKeysObj.SERVER_KEY,
+            oNewSortFieldsObj[sSortModelKey] === CONSTANTS.SORT_STATE.DESC,
+            undefined,
+            this.sorterComparator
           );
           oProductsBinding.sort(oSorter);
         }
@@ -263,40 +261,40 @@ sap.ui.define(
       },
 
       onSortNameBtnPress: function () {
-        this.onSortBtnPress("name");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.NAME);
       },
 
       onSortPriceBtnPress: function () {
-        this.onSortBtnPress("price");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.PRICE);
       },
 
       onSortSpecsBtnPress: function () {
-        this.onSortBtnPress("specs");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.SPECS);
       },
 
       onSortSupplierBtnPress: function () {
-        this.onSortBtnPress("supplierInfo");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.SUPPLIER_INFO);
       },
 
       onSortCountryBtnPress: function () {
-        this.onSortBtnPress("country");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.COUNTRY);
       },
 
       onSortProdCompanyBtnPress: function () {
-        this.onSortBtnPress("prodCompany");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.PROD_COMPANY);
       },
 
       onSortRatingBtnPress: function () {
-        this.onSortBtnPress("rating");
+        this.onSortBtnPress(CONSTANTS.SORT_PROP.RATING);
       },
 
       formatSortBtnIcon: function (sSortState) {
         switch (sSortState) {
-          case "DEFAULT":
+          case CONSTANTS.SORT_STATE.DEFAULT:
             return "sap-icon://sort";
-          case "ASC":
+          case CONSTANTS.SORT_STATE.ASC:
             return "sap-icon://sort-ascending";
-          case "DESC":
+          case CONSTANTS.SORT_STATE.DESC:
             return "sap-icon://sort-descending";
           default:
             console.warn(`Got unknown type of sort state: ${sSortState}`);
@@ -304,39 +302,55 @@ sap.ui.define(
         }
       },
 
-      setAllControlsToDefault() {
-        const oAppViewModel = this.getView().getModel("appView");
-        oAppViewModel.setProperty("/currStatusFilter", "ALL");
+      findServerKeyByModelKey: function (oObjForSearch, sModelKey) {
+        for (const sKey in oObjForSearch) {
+          if (oObjForSearch[sKey].MODEL_KEY === sModelKey) {
+            return oObjForSearch[sKey].SERVER_KEY;
+          }
+        }
+        return null;
+      },
+
+      setAllControlsToDefault: function () {
+        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        oAppViewModel.setProperty(
+          "/currProductsStatusFilter",
+          CONSTANTS.STATUS.ALL.SERVER_KEY
+        );
         oAppViewModel.setProperty("/currProductsSearchFilter", "");
-        oAppViewModel.setProperty("/columnsSortStates", this.getNewSortObj());
-        const oProductsBinding = this.byId("productsTable").getBinding("items");
+        oAppViewModel.setProperty("/productsSortStates", this.getNewSortObj());
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
         oProductsBinding.filter([]);
         oProductsBinding.sort([]);
       },
 
       onStoresListLinkPress: function () {
-        // Setting everything to default before moving to other view
         this.setAllControlsToDefault();
 
-        this.getOwnerComponent().getRouter().navTo("StoresOverview");
+        this.getOwnerComponent()
+          .getRouter()
+          .navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
       },
 
       onProductPress: function (oEvent) {
         const nStoreId = this.getView()
-          .getBindingContext("odata")
-          .getObject("id");
+          .getBindingContext(CONSTANTS.MODEL.ODATA)
+          .getObject(CONSTANTS.STORE_PROP.ID);
         const nProductId = oEvent
           .getSource()
-          .getBindingContext("odata")
-          .getObject("id");
+          .getBindingContext(CONSTANTS.MODEL.ODATA)
+          .getObject(CONSTANTS.PRODUCT_PROP.ID);
 
-        // Setting everything to default before moving to other view
         this.setAllControlsToDefault();
 
-        this.getOwnerComponent().getRouter().navTo("ProductDetails", {
-          storeId: nStoreId,
-          productId: nProductId,
-        });
+        this.getOwnerComponent()
+          .getRouter()
+          .navTo(CONSTANTS.ROUTE.PRODUCT_DETAILS, {
+            [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
+            [CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID]: nProductId,
+          });
       },
     });
   }
