@@ -23,42 +23,38 @@
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader>
-				<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
-					<content>
-						<layout:HorizontalLayout allowWrapping="true">
-							<layout:VerticalLayout class="sapUiMediumMarginEnd">
-								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{i18n>emailWithColon}"/>
-									<Text id="textEmail" text="{odata>Email}"/>
-								</layout:HorizontalLayout>
-								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{i18n>phoneNumberWithColon}"/>
-									<Text id="textPhoneNumber" text="{odata>PhoneNumber}"/>
-								</layout:HorizontalLayout>
-								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{i18n>addressWithColon}"/>
-									<Text id="textAddress" text="{odata>Address}"/>
-								</layout:HorizontalLayout>
-							</layout:VerticalLayout>
-							<layout:VerticalLayout>
-								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{i18n>establishedDateWithColon}"/>
-									<Text id="textEstablished" text="{
-										path: 'odata>Established',
-										type: 'sap.ui.model.type.Date',
-										formatOptions: {
-											pattern: 'MMM d, yyyy'
-										}
-									}"/>
-								</layout:HorizontalLayout>
-								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{i18n>floorAreaWithColon}"/>
-									<Text id="textFloorArea" text="{odata>FloorArea}"/>
-								</layout:HorizontalLayout>
-							</layout:VerticalLayout>
+				<layout:HorizontalLayout allowWrapping="true">
+					<layout:VerticalLayout class="sapUiMediumMarginEnd">
+						<layout:HorizontalLayout>
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{i18n>emailWithColon}"/>
+							<Text id="textEmail" text="{odata>Email}"/>
 						</layout:HorizontalLayout>
-					</content>
-				</Panel>
+						<layout:HorizontalLayout>
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{i18n>phoneNumberWithColon}"/>
+							<Text id="textPhoneNumber" text="{odata>PhoneNumber}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout>
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{i18n>addressWithColon}"/>
+							<Text id="textAddress" text="{odata>Address}"/>
+						</layout:HorizontalLayout>
+					</layout:VerticalLayout>
+					<layout:VerticalLayout>
+						<layout:HorizontalLayout>
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{i18n>establishedDateWithColon}"/>
+							<Text id="textEstablished" text="{
+								path: 'odata>Established',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									pattern: 'MMM d, yyyy'
+								}
+							}"/>
+						</layout:HorizontalLayout>
+						<layout:HorizontalLayout>
+							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{i18n>floorAreaWithColon}"/>
+							<Text id="textFloorArea" text="{odata>FloorArea}"/>
+						</layout:HorizontalLayout>
+					</layout:VerticalLayout>
+				</layout:HorizontalLayout>
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>

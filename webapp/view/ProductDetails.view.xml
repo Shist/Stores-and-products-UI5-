@@ -31,96 +31,88 @@
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader>
-				<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
-					<content>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPrice" text="{i18n>priceWithColon}"/>
-							<Text id="textPrice" text="{
-									parts: [
-										'i18n>priceValue',
-										'odata>Price'
-									],
-									formatter: 'formatMessage'
-							}"/>
-						</HBox>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textRating" text="{i18n>ratingWithColon}"/>
-							<Text id="textRating" text="{odata>Rating}"/>
-						</HBox>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSpecs" text="{i18n>specsWithColon}"/>
-							<Text id="textSpecs" text="{odata>Specs}"/>
-						</HBox>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{i18n>supplierInfoWithColon}"/>
-							<Text id="textSupplierInfo" text="{odata>SupplierInfo}"/>
-						</HBox>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textProdCompany" text="{i18n>prodCompanyWithColon}"/>
-							<Text id="textProdCompany" text="{odata>ProductionCompanyName}"/>
-						</HBox>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textCountry" text="{i18n>countryOfOriginWithColon}"/>
-							<Text id="textCountry" text="{odata>MadeIn}"/>
-						</HBox>
-						<HBox alignItems="Start">
-							<Label design="Bold" class="sapUiTinyMarginEnd" text="{i18n>statusWithColon}"/>
-							<tnt:InfoLabel text="{odata>Status}" colorScheme="{
-								path: 'odata>Status',
-								formatter: '.formatBadgeType'
-							}"/>
-						</HBox>
-					</content>
-				</Panel>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPrice" text="{i18n>priceWithColon}"/>
+					<Text id="textPrice" text="{
+							parts: [
+								'i18n>priceValue',
+								'odata>Price'
+							],
+							formatter: 'formatMessage'
+					}"/>
+				</HBox>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textRating" text="{i18n>ratingWithColon}"/>
+					<Text id="textRating" text="{odata>Rating}"/>
+				</HBox>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSpecs" text="{i18n>specsWithColon}"/>
+					<Text id="textSpecs" text="{odata>Specs}"/>
+				</HBox>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{i18n>supplierInfoWithColon}"/>
+					<Text id="textSupplierInfo" text="{odata>SupplierInfo}"/>
+				</HBox>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textProdCompany" text="{i18n>prodCompanyWithColon}"/>
+					<Text id="textProdCompany" text="{odata>ProductionCompanyName}"/>
+				</HBox>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textCountry" text="{i18n>countryOfOriginWithColon}"/>
+					<Text id="textCountry" text="{odata>MadeIn}"/>
+				</HBox>
+				<HBox alignItems="Start">
+					<Label design="Bold" class="sapUiTinyMarginEnd" text="{i18n>statusWithColon}"/>
+					<tnt:InfoLabel text="{odata>Status}" colorScheme="{
+						path: 'odata>Status',
+						formatter: '.formatBadgeType'
+					}"/>
+				</HBox>
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
-				<content>
-					<VBox>
-						<HBox>
-							<HBox alignItems="Center" class="sapUiTinyMarginEnd">
-								<Label class="sapUiTinyMarginEnd" labelFor="authorInput" text="{i18n>authorNameWithColon}"/>
-								<Input id="authorInput" placeholder="Enter name"/>
-							</HBox>
-							<HBox alignItems="Center">
-								<Label class="sapUiTinyMarginEnd" text="{i18n>ratingWithColon}"/>
-								<RatingIndicator maxValue="5"/>
-							</HBox>
-						</HBox>
-						<FeedInput post="" class="sapUiSmallMarginTopBottom" />
-						<List
-						 	id="commentsList"
-							showSeparators="Inner"
-							items="{odata>/ProductComments}" >
-							<FeedListItem
-								sender="{odata>Author}"
-								text="{odata>Message}"
-								info="{
-									parts: [
-										'i18n>ratingValue',
-										'odata>Rating'
-									],
-									formatter: 'formatMessage'
-								}"
-								timestamp="{
-									parts: [
-										'i18n>postedDate',
-										{
-											path: 'odata>Posted',
-											type: 'sap.ui.model.type.Date',
-											formatOptions: {
-												pattern: 'MMM d, yyyy, hh:mm:ss a'
-											}
-										}
-									],
-									formatter: 'formatMessage'
-								}"
-							/>
-						</List>
-					</VBox>
-				</content>
-			</Panel>
+			<VBox>
+				<HBox>
+					<HBox alignItems="Center" class="sapUiTinyMarginEnd">
+						<Label class="sapUiTinyMarginEnd" labelFor="authorInput" text="{i18n>authorNameWithColon}"/>
+						<Input id="authorInput" placeholder="Enter name"/>
+					</HBox>
+					<HBox alignItems="Center">
+						<Label class="sapUiTinyMarginEnd" text="{i18n>ratingWithColon}"/>
+						<RatingIndicator maxValue="5"/>
+					</HBox>
+				</HBox>
+				<FeedInput post="" class="sapUiSmallMarginTopBottom" />
+				<List
+					id="commentsList"
+					showSeparators="Inner"
+					items="{odata>/ProductComments}" >
+					<FeedListItem
+						sender="{odata>Author}"
+						text="{odata>Message}"
+						info="{
+							parts: [
+								'i18n>ratingValue',
+								'odata>Rating'
+							],
+							formatter: 'formatMessage'
+						}"
+						timestamp="{
+							parts: [
+								'i18n>postedDate',
+								{
+									path: 'odata>Posted',
+									type: 'sap.ui.model.type.Date',
+									formatOptions: {
+										pattern: 'MMM d, yyyy, hh:mm:ss a'
+									}
+								}
+							],
+							formatter: 'formatMessage'
+						}"
+					/>
+				</List>
+			</VBox>
 		</f:content>
 	</f:DynamicPage>
 
