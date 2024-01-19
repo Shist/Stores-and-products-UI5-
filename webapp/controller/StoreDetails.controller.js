@@ -209,8 +209,7 @@ sap.ui.define(
         return oNewSortStatesObj;
       },
 
-      onSortBtnPress: function (oSortBtnKeysObj) {
-        const sSortModelKey = oSortBtnKeysObj.MODEL_KEY;
+      onSortBtnPress: function (sSortModelKey) {
         const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
         const sCurrSortState = oAppViewModel.getProperty(
           `/productsSortStates/${sSortModelKey}`
@@ -235,7 +234,7 @@ sap.ui.define(
           oProductsBinding.sort([]);
         } else {
           const oSorter = new Sorter(
-            oSortBtnKeysObj.SERVER_KEY,
+            this.findServerKeyByModelKey(CONSTANTS.SORT_PROP, sSortModelKey),
             oNewSortFieldsObj[sSortModelKey] === CONSTANTS.SORT_STATE.DESC,
             undefined,
             this.sorterComparator
@@ -258,34 +257,6 @@ sap.ui.define(
           }
           return 0;
         }
-      },
-
-      onSortNameBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.NAME);
-      },
-
-      onSortPriceBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.PRICE);
-      },
-
-      onSortSpecsBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.SPECS);
-      },
-
-      onSortSupplierBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.SUPPLIER_INFO);
-      },
-
-      onSortCountryBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.COUNTRY);
-      },
-
-      onSortProdCompanyBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.PROD_COMPANY);
-      },
-
-      onSortRatingBtnPress: function () {
-        this.onSortBtnPress(CONSTANTS.SORT_PROP.RATING);
       },
 
       formatSortBtnIcon: function (sSortState) {
