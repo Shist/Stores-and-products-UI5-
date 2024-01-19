@@ -1,23 +1,30 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
     "pavel/zhukouski/model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
   ],
-  function (Controller, CONSTANTS, formatter, Filter, FilterOperator, Sorter) {
+  function (
+    BaseController,
+    CONSTANTS,
+    formatter,
+    Filter,
+    FilterOperator,
+    Sorter
+  ) {
     "use strict";
 
-    return Controller.extend("pavel.zhukouski.controller.StoreDetails", {
+    return BaseController.extend("pavel.zhukouski.controller.StoreDetails", {
       formatter: formatter,
 
       onInit: function () {
-        const oRouter = this.getOwnerComponent().getRouter();
-        oRouter
-          .getRoute(CONSTANTS.ROUTE.STORE_DETAILS)
-          .attachPatternMatched(this.onRouterPatternMatched, this);
+        this.getRoute(CONSTANTS.ROUTE.STORE_DETAILS).attachPatternMatched(
+          this.onRouterPatternMatched,
+          this
+        );
       },
 
       onAfterRendering: function () {
@@ -28,10 +35,10 @@ sap.ui.define(
       },
 
       onExit: function () {
-        const oRouter = this.getOwnerComponent().getRouter();
-        oRouter
-          .getRoute(CONSTANTS.ROUTE.STORE_DETAILS)
-          .detachPatternMatched(this.onRouterPatternMatched, this);
+        this.getRoute(CONSTANTS.ROUTE.STORE_DETAILS).detachPatternMatched(
+          this.onRouterPatternMatched,
+          this
+        );
 
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
@@ -42,7 +49,7 @@ sap.ui.define(
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
-        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
+        const oODataModel = this.getODataModel();
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Stores", { id: sStoreId });
@@ -55,17 +62,17 @@ sap.ui.define(
       },
 
       getCurrStorePath: function () {
-        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
+        const oODataModel = this.getODataModel();
         const sStorePath = oODataModel.createKey(
           "/Stores",
-          this.getView().getBindingContext(CONSTANTS.MODEL.ODATA).getObject()
+          this.getBindingContextData()
         );
         return sStorePath;
       },
 
       updateStatusFilters: function () {
-        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
-        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oODataModel = this.getODataModel();
+        const oAppViewModel = this.getAppViewModel();
         const oProductsCounts = oAppViewModel.getProperty("/productsCounts");
         const oProductsSearchFilter = this.getProductsSearchFilter();
 
@@ -159,7 +166,7 @@ sap.ui.define(
       },
 
       getProductsSearchFilter: function () {
-        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oAppViewModel = this.getAppViewModel();
         const sQuery = oAppViewModel.getProperty("/currProductsSearchFilter");
 
         if (!sQuery) {
@@ -200,7 +207,7 @@ sap.ui.define(
       },
 
       getNewSortObj: function () {
-        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oAppViewModel = this.getAppViewModel();
         const oNewSortStatesObj = JSON.parse(
           JSON.stringify(oAppViewModel.getProperty("/productsSortStates"))
         );
@@ -213,7 +220,7 @@ sap.ui.define(
       },
 
       onSortBtnPress: function (sSortModelKey) {
-        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oAppViewModel = this.getAppViewModel();
         const sCurrSortState = oAppViewModel.getProperty(
           `/productsSortStates/${sSortModelKey}`
         );
@@ -262,20 +269,6 @@ sap.ui.define(
         }
       },
 
-      formatSortBtnIcon: function (sSortState) {
-        switch (sSortState) {
-          case CONSTANTS.SORT_STATE.DEFAULT:
-            return "sap-icon://sort";
-          case CONSTANTS.SORT_STATE.ASC:
-            return "sap-icon://sort-ascending";
-          case CONSTANTS.SORT_STATE.DESC:
-            return "sap-icon://sort-descending";
-          default:
-            console.warn(`Got unknown type of sort state: ${sSortState}`);
-            return "sap-icon://sys-help";
-        }
-      },
-
       findServerKeyByModelKey: function (oObjForSearch, sModelKey) {
         for (const sKey in oObjForSearch) {
           if (oObjForSearch[sKey].MODEL_KEY === sModelKey) {
@@ -286,7 +279,7 @@ sap.ui.define(
       },
 
       setAllControlsToDefault: function () {
-        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oAppViewModel = this.getAppViewModel();
         oAppViewModel.setProperty(
           "/currProductsStatusFilter",
           CONSTANTS.STATUS.ALL.SERVER_KEY
@@ -303,28 +296,22 @@ sap.ui.define(
       onStoresListLinkPress: function () {
         this.setAllControlsToDefault();
 
-        this.getOwnerComponent()
-          .getRouter()
-          .navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
+        this.navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
       },
 
       onProductPress: function (oEvent) {
-        const nStoreId = this.getView()
-          .getBindingContext(CONSTANTS.MODEL.ODATA)
-          .getObject(CONSTANTS.STORE_PROP.ID);
-        const nProductId = oEvent
-          .getSource()
-          .getBindingContext(CONSTANTS.MODEL.ODATA)
-          .getObject(CONSTANTS.PRODUCT_PROP.ID);
+        const nStoreId = this.getBindingContextData(CONSTANTS.STORE_PROP.ID);
+        const nProductId = this.getBindingContextData(
+          CONSTANTS.PRODUCT_PROP.ID,
+          oEvent
+        );
 
         this.setAllControlsToDefault();
 
-        this.getOwnerComponent()
-          .getRouter()
-          .navTo(CONSTANTS.ROUTE.PRODUCT_DETAILS, {
-            [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
-            [CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID]: nProductId,
-          });
+        this.navTo(CONSTANTS.ROUTE.PRODUCT_DETAILS, {
+          [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
+          [CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID]: nProductId,
+        });
       },
     });
   }

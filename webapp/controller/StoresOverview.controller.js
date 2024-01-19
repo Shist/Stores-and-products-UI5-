@@ -1,14 +1,14 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (Controller, CONSTANTS, Filter, FilterOperator) {
+  function (BaseController, CONSTANTS, Filter, FilterOperator) {
     "use strict";
 
-    return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
+    return BaseController.extend("pavel.zhukouski.controller.StoresOverview", {
       onStoresSearchBtnPress: function (oEvent) {
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
@@ -61,23 +61,21 @@ sap.ui.define(
       },
 
       onStorePress: function (oEvent) {
-        const nStoreId = oEvent
-          .getSource()
-          .getBindingContext(CONSTANTS.MODEL.ODATA)
-          .getObject(CONSTANTS.STORE_PROP.ID);
+        const nStoreId = this.getBindingContextData(
+          CONSTANTS.STORE_PROP.ID,
+          oEvent
+        );
 
-        const oAppViewModel = this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oAppViewModel = this.getAppViewModel();
         oAppViewModel.setProperty("/currStoresSearchFilter", "");
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
         );
         oStoresBinding.filter([]);
 
-        this.getOwnerComponent()
-          .getRouter()
-          .navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
-            [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
-          });
+        this.navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
+          [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,
+        });
       },
     });
   }
