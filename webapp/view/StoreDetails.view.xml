@@ -28,45 +28,21 @@
 						<layout:HorizontalLayout allowWrapping="true">
 							<layout:VerticalLayout class="sapUiMediumMarginEnd">
 								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{
-										parts: [
-											'i18n>label',
-											'i18n>email'
-										],
-										formatter: 'formatMessage'
-									}"/>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{i18n>emailWithColon}"/>
 									<Text id="textEmail" text="{odata>Email}"/>
 								</layout:HorizontalLayout>
 								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{
-										parts: [
-											'i18n>label',
-											'i18n>phoneNumber'
-										],
-										formatter: 'formatMessage'
-									}"/>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{i18n>phoneNumberWithColon}"/>
 									<Text id="textPhoneNumber" text="{odata>PhoneNumber}"/>
 								</layout:HorizontalLayout>
 								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{
-										parts: [
-											'i18n>label',
-											'i18n>address'
-										],
-										formatter: 'formatMessage'
-									}"/>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{i18n>addressWithColon}"/>
 									<Text id="textAddress" text="{odata>Address}"/>
 								</layout:HorizontalLayout>
 							</layout:VerticalLayout>
 							<layout:VerticalLayout>
 								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{
-										parts: [
-											'i18n>label',
-											'i18n>establishedDate'
-										],
-										formatter: 'formatMessage'
-									}"/>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{i18n>establishedDateWithColon}"/>
 									<Text id="textEstablished" text="{
 										path: 'odata>Established',
 										type: 'sap.ui.model.type.Date',
@@ -76,13 +52,7 @@
 									}"/>
 								</layout:HorizontalLayout>
 								<layout:HorizontalLayout>
-									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{
-										parts: [
-											'i18n>label',
-											'i18n>floorArea'
-										],
-										formatter: 'formatMessage'
-									}"/>
+									<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{i18n>floorAreaWithColon}"/>
 									<Text id="textFloorArea" text="{odata>FloorArea}"/>
 								</layout:HorizontalLayout>
 							</layout:VerticalLayout>
@@ -207,7 +177,13 @@
 						<items>
 							<ColumnListItem press="onProductPress" type="Navigation">
 								<Text maxLines="2" text="{odata>Name}" />
-								<Text maxLines="1" text="{odata>Price}" />
+								<Text maxLines="1" text="{
+									parts: [
+										'i18n>priceValue',
+										'odata>Price'
+									],
+									formatter: 'formatMessage'
+								}"/>
 								<Text maxLines="1" text="{odata>Specs}" />
 								<Text maxLines="1" text="{odata>SupplierInfo}" />
 								<Text maxLines="1" text="{odata>MadeIn}" />
