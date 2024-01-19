@@ -65,7 +65,7 @@
 					<Label design="Bold" class="sapUiTinyMarginEnd" text="{i18n>statusWithColon}"/>
 					<tnt:InfoLabel text="{odata>Status}" colorScheme="{
 						path: 'odata>Status',
-						formatter: '.formatBadgeType'
+						formatter: '.formatter.formatBadgeType'
 					}"/>
 				</HBox>
 			</f:DynamicPageHeader>

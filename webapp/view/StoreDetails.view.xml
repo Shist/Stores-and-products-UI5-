@@ -118,7 +118,7 @@
 								<HBox alignItems="Center">
 									<Button press="onSortBtnPress('price')" type="Transparent" icon="{
 										path: 'appView>/productsSortStates/price',
-										formatter: '.formatSortBtnIcon'
+										formatter: '.formatter.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>price}" />
 								</HBox>
@@ -127,7 +127,7 @@
 								<HBox alignItems="Center">
 									<Button press="onSortBtnPress('specs')" type="Transparent" icon="{
 										path: 'appView>/productsSortStates/specs',
-										formatter: '.formatSortBtnIcon'
+										formatter: '.formatter.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>specs}" />
 								</HBox>
@@ -136,7 +136,7 @@
 								<HBox alignItems="Center">
 									<Button press="onSortBtnPress('supplierInfo')" type="Transparent" icon="{
 										path: 'appView>/productsSortStates/supplierInfo',
-										formatter: '.formatSortBtnIcon'
+										formatter: '.formatter.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>supplierInfo}" />
 								</HBox>
@@ -145,7 +145,7 @@
 								<HBox alignItems="Center">
 									<Button press="onSortBtnPress('country')" type="Transparent" icon="{
 										path: 'appView>/productsSortStates/country',
-										formatter: '.formatSortBtnIcon'
+										formatter: '.formatter.formatSortBtnIcon'
 									}"/>
 									<Text text="{i18n>countryOfOrigin}" />
 								</HBox>

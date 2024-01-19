@@ -1,14 +1,17 @@
 sap.ui.define(
   [
-    "pavel/zhukouski/data/constants",
     "sap/ui/core/mvc/Controller",
+    "pavel/zhukouski/model/constants",
+    "pavel/zhukouski/model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (CONSTANTS, Controller, Filter, FilterOperator) {
+  function (Controller, CONSTANTS, formatter, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.ProductDetails", {
+      formatter: formatter,
+
       onInit: function () {
         const oRouter = this.getOwnerComponent().getRouter();
         oRouter

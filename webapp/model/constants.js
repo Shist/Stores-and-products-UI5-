@@ -1,7 +1,7 @@
 sap.ui.define([], function () {
   "use strict";
 
-  const CONSTANTS = {
+  return {
     MODEL: {
       ODATA: "odata",
       APP_VIEW: "appView",
@@ -106,6 +106,4 @@ sap.ui.define([], function () {
       },
     },
   };
-
-  return CONSTANTS;
 });

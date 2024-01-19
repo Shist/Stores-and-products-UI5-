@@ -1,11 +1,11 @@
 sap.ui.define(
   [
-    "pavel/zhukouski/data/constants",
     "sap/ui/core/mvc/Controller",
+    "pavel/zhukouski/model/constants",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (CONSTANTS, Controller, Filter, FilterOperator) {
+  function (Controller, CONSTANTS, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("pavel.zhukouski.controller.StoresOverview", {
