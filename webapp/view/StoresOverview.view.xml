@@ -41,7 +41,7 @@
 		<f:footer>
 			<OverflowToolbar>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" type="Ghost" text="{i18n>create}"/>
+				<Button icon="sap-icon://add" type="Ghost" text="{i18n>create}" press="onCreateStorePress"/>
 			</OverflowToolbar>
 		</f:footer>
 	</f:DynamicPage>

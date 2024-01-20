@@ -36,6 +36,13 @@ sap.ui.define(
             .getObject(sProperty);
         }
       },
+
+      // onDialogCancelPress: function () {
+      //   if (this.oDialog) {
+      //     console.log("closing dialog from baseController!!!");
+      //     this.oDialog.close();
+      //   }
+      // },
     });
   }
 );

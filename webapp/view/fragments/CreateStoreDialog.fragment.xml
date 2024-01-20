@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" >
+	<Dialog
+		id="CreateStoreDialog"
+		title="{i18n>createNewStore}"
+		afterClose="onStoreFormAfterClose">
+		<f:SimpleForm
+			maxContainerCols="1"
+			layout="ResponsiveGridLayout"
+			labelSpanL="12"
+			labelSpanM="12"
+			labelSpanS="12"
+			emptySpanL="0"
+			emptySpanM="0"
+            emptySpanS="0"
+			columnsL="1"
+			columnsM="1">
+			<f:content>
+				<Label text="{i18n>name}"/>
+				<Input value="{appView>/storeFormInputs/name}" placeholder="{i18n>enterName}" />
+
+				<Label text="{i18n>email}"/>
+				<Input value="{appView>/storeFormInputs/email}" placeholder="{i18n>enterEmail}" />
+
+				<Label text="{i18n>phoneNumber}"/>
+				<Input value="{appView>/storeFormInputs/phoneNumber}" placeholder="{i18n>enterPhoneNumber}" />
+
+				<Label text="{i18n>address}"/>
+				<Input value="{appView>/storeFormInputs/address}" placeholder="{i18n>enterAddress}" />
+
+				<Label text="{i18n>establishedDate}"/>
+				<Input value="{appView>/storeFormInputs/established}" placeholder="{i18n>establishedPattern}" />
+
+				<Label text="{i18n>floorArea}"/>
+				<Input value="{appView>/storeFormInputs/floorArea}" placeholder="{i18n>enterFloorArea}" />
+			</f:content>
+		</f:SimpleForm>
+
+		<buttons>
+			<Button text="{i18n>cancel}" press="onDialogCancelPress" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

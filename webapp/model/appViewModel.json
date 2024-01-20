@@ -16,5 +16,13 @@
     "country": "DEFAULT",
     "prodCompany": "DEFAULT",
     "rating": "DEFAULT"
+  },
+  "storeFormInputs": {
+    "name": "",
+    "email": "",
+    "phoneNumber": "",
+    "address": "",
+    "established": "",
+    "floorArea": ""
   }
 }

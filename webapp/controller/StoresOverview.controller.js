@@ -60,6 +60,39 @@ sap.ui.define(
         return aFilters;
       },
 
+      onCreateStorePress: function () {
+        const oView = this.getView();
+
+        if (!this.oDialog) {
+          this.oDialog = sap.ui.xmlfragment(
+            oView.getId(),
+            "pavel.zhukouski.view.fragments.CreateStoreDialog",
+            this
+          );
+
+          oView.addDependent(this.oDialog);
+        }
+
+        this.oDialog.open();
+      },
+
+      onDialogCancelPress: function () {
+        this.oDialog.close();
+      },
+
+      onStoreFormAfterClose: function () {
+        const oAppViewModel = this.getAppViewModel();
+        const oNewStoreFormStatesObj = JSON.parse(
+          JSON.stringify(oAppViewModel.getProperty("/storeFormInputs"))
+        );
+
+        for (const sKey in oNewStoreFormStatesObj) {
+          oNewStoreFormStatesObj[sKey] = "";
+        }
+
+        oAppViewModel.setProperty("/storeFormInputs", oNewStoreFormStatesObj);
+      },
+
       onStorePress: function (oEvent) {
         const nStoreId = this.getBindingContextData(
           CONSTANTS.STORE_PROP.ID,
