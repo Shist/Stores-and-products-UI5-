@@ -2,13 +2,20 @@ sap.ui.define(
   [
     "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
+    "pavel/zhukouski/model/customTypes",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, CONSTANTS, Filter, FilterOperator) {
+  function (BaseController, CONSTANTS, customTypes, Filter, FilterOperator) {
     "use strict";
 
     return BaseController.extend("pavel.zhukouski.controller.StoresOverview", {
+      customTypes: customTypes,
+
+      onInit: function () {
+        this.registerViewToMessageManager();
+      },
+
       onStoresSearchBtnPress: function (oEvent) {
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
@@ -60,37 +67,10 @@ sap.ui.define(
         return aFilters;
       },
 
-      onCreateStorePress: function () {
-        const oView = this.getView();
-
-        if (!this.oDialog) {
-          this.oDialog = sap.ui.xmlfragment(
-            oView.getId(),
-            "pavel.zhukouski.view.fragments.CreateStoreDialog",
-            this
-          );
-
-          oView.addDependent(this.oDialog);
-        }
-
-        this.oDialog.open();
-      },
-
-      onDialogCancelPress: function () {
+      onDialogCreateBtnPress: function () {
+        console.log("Create!!!");
+        // TODO: make POST to server
         this.oDialog.close();
-      },
-
-      onStoreFormAfterClose: function () {
-        const oAppViewModel = this.getAppViewModel();
-        const oNewStoreFormStatesObj = JSON.parse(
-          JSON.stringify(oAppViewModel.getProperty("/storeFormInputs"))
-        );
-
-        for (const sKey in oNewStoreFormStatesObj) {
-          oNewStoreFormStatesObj[sKey] = "";
-        }
-
-        oAppViewModel.setProperty("/storeFormInputs", oNewStoreFormStatesObj);
       },
 
       onStorePress: function (oEvent) {

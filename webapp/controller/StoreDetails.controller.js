@@ -21,6 +21,8 @@ sap.ui.define(
       formatter: formatter,
 
       onInit: function () {
+        this.registerViewToMessageManager();
+
         this.getRoute(CONSTANTS.ROUTE.STORE_DETAILS).attachPatternMatched(
           this.onRouterPatternMatched,
           this

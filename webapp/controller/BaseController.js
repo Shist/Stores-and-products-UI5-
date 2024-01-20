@@ -37,12 +37,46 @@ sap.ui.define(
         }
       },
 
-      // onDialogCancelPress: function () {
-      //   if (this.oDialog) {
-      //     console.log("closing dialog from baseController!!!");
-      //     this.oDialog.close();
-      //   }
-      // },
+      registerViewToMessageManager: function () {
+        const oMessageManager = sap.ui.getCore().getMessageManager();
+        oMessageManager.registerObject(this.getView(), true);
+      },
+
+      loadFragmentByName: function (sFragmentName) {
+        const oView = this.getView();
+
+        if (!this.oDialog) {
+          this.oDialog = sap.ui.xmlfragment(
+            oView.getId(),
+            `pavel.zhukouski.view.fragments.${sFragmentName}`,
+            this
+          );
+
+          oView.addDependent(this.oDialog);
+        }
+
+        this.oDialog.open();
+      },
+
+      onDialogCancelBtnPress: function () {
+        if (this.oDialog) {
+          this.oDialog.close();
+        }
+      },
+
+      onDialogAfterClose: function (sAppViewPath) {
+        const oAppViewModel = this.getAppViewModel();
+        const oNewFormStatesObj = JSON.parse(
+          JSON.stringify(oAppViewModel.getProperty(sAppViewPath))
+        );
+
+        for (const sKey in oNewFormStatesObj) {
+          oNewFormStatesObj[sKey] = "";
+        }
+        oAppViewModel.setProperty(sAppViewPath, oNewFormStatesObj);
+
+        sap.ui.getCore().getMessageManager().removeAllMessages();
+      },
     });
   }
 );

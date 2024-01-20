@@ -12,7 +12,7 @@
 				</f:heading>
 				<f:breadcrumbs>
 					<Breadcrumbs>
-						<Link text="{i18n>storesList}" />
+						<Link text="{i18n>storesList}"/>
 					</Breadcrumbs>
 				</f:breadcrumbs>
 			</f:DynamicPageTitle>
@@ -33,7 +33,7 @@
 					type="Active"
 					title="{odata>Name}"
 					number="{odata>FloorArea}"
-					numberUnit="{i18n>squareUnit}" >
+					numberUnit="{i18n>squareUnit}">
 						<ObjectAttribute text="{odata>Address}" />
 				</ObjectListItem>
 			</List>
@@ -41,7 +41,11 @@
 		<f:footer>
 			<OverflowToolbar>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" type="Ghost" text="{i18n>create}" press="onCreateStorePress"/>
+				<Button
+					icon="sap-icon://add"
+					type="Ghost"
+					text="{i18n>create}"
+					press="loadFragmentByName('CreateStoreDialog')"/>
 			</OverflowToolbar>
 		</f:footer>
 	</f:DynamicPage>

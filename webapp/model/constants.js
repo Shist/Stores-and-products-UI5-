@@ -105,5 +105,17 @@ sap.ui.define([], function () {
         SERVER_KEY: "Rating",
       },
     },
+    ERROR: {
+      EMAIL: {
+        EMPTY: "Email field is manadatory!",
+        TOO_LONG: "Email field must be no more than 30 symbols!",
+        INVALID: "Email you have entered is invalid!",
+      },
+      TEL: {
+        EMPTY: "Phone field is manadatory!",
+        TOO_LONG: "Phone field must be no more than 30 symbols!",
+        INVALID: "Phone you have entered is invalid!",
+      },
+    },
   };
 });

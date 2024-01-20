@@ -5,7 +5,7 @@
 	<Dialog
 		id="CreateStoreDialog"
 		title="{i18n>createNewStore}"
-		afterClose="onStoreFormAfterClose">
+		afterClose="onDialogAfterClose('/storeFormInputs')">
 		<f:SimpleForm
 			maxContainerCols="1"
 			layout="ResponsiveGridLayout"
@@ -16,30 +16,60 @@
 			emptySpanM="0"
             emptySpanS="0"
 			columnsL="1"
-			columnsM="1">
+			columnsM="1"
+			editable="true">
 			<f:content>
-				<Label text="{i18n>name}"/>
-				<Input value="{appView>/storeFormInputs/name}" placeholder="{i18n>enterName}" />
+				<Label text="{i18n>name}" required="true"/>
+				<Input type="Text" required="true" placeholder="{i18n>enterName}" value="{
+					path: 'appView>/storeFormInputs/name',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 30
+					}
+				}"/>
 
-				<Label text="{i18n>email}"/>
-				<Input value="{appView>/storeFormInputs/email}" placeholder="{i18n>enterEmail}" />
+				<Label text="{i18n>email}" required="true"/>
+				<Input type="Email" required="true" placeholder="{i18n>enterEmail}" value="{
+					path: 'appView>/storeFormInputs/email',
+					type: '.customTypes.customEmailType'
+				}"/>
 
-				<Label text="{i18n>phoneNumber}"/>
-				<Input value="{appView>/storeFormInputs/phoneNumber}" placeholder="{i18n>enterPhoneNumber}" />
+				<Label text="{i18n>phoneNumber}" required="true"/>
+				<Input type="Tel" required="true" placeholder="{i18n>enterPhoneNumber}" value="{
+					path: 'appView>/storeFormInputs/phoneNumber',
+					type: '.customTypes.customTelType'
+				}"/>
 
 				<Label text="{i18n>address}"/>
-				<Input value="{appView>/storeFormInputs/address}" placeholder="{i18n>enterAddress}" />
+				<Input type="Text" placeholder="{i18n>enterAddress}" value="{
+					path: 'appView>/storeFormInputs/address',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						maxLength: 50
+					}
+				}"/>
 
 				<Label text="{i18n>establishedDate}"/>
-				<Input value="{appView>/storeFormInputs/established}" placeholder="{i18n>establishedPattern}" />
+				<DatePicker displayFormatType="Gregorian" placeholder="{i18n>establishedPattern}" value="{
+					path: 'appView>/storeFormInputs/established'
+				}"/>
 
 				<Label text="{i18n>floorArea}"/>
-				<Input value="{appView>/storeFormInputs/floorArea}" placeholder="{i18n>enterFloorArea}" />
+				<Input type="Number" placeholder="{i18n>enterFloorArea}" value="{
+					path: 'appView>/storeFormInputs/floorArea',
+					type: 'sap.ui.model.type.Float',
+					constraints: {
+						maximum: 100000,
+						minimum: 0
+					}
+				}"/>
 			</f:content>
 		</f:SimpleForm>
 
 		<buttons>
-			<Button text="{i18n>cancel}" press="onDialogCancelPress" />
+			<Button type="Emphasized" text="{i18n>create}" press="onDialogCreateBtnPress" />
+			<Button text="{i18n>cancel}" press="onDialogCancelBtnPress" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>
