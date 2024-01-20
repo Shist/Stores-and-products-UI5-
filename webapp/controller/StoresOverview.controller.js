@@ -2,16 +2,13 @@ sap.ui.define(
   [
     "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
-    "pavel/zhukouski/model/customTypes",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, CONSTANTS, customTypes, Filter, FilterOperator) {
+  function (BaseController, CONSTANTS, Filter, FilterOperator) {
     "use strict";
 
     return BaseController.extend("pavel.zhukouski.controller.StoresOverview", {
-      customTypes: customTypes,
-
       onInit: function () {
         this.registerViewToMessageManager();
       },

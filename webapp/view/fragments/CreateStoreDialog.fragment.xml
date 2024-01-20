@@ -32,13 +32,23 @@
 				<Label text="{i18n>email}" required="true"/>
 				<Input type="Email" required="true" placeholder="{i18n>enterEmail}" value="{
 					path: 'appView>/storeFormInputs/email',
-					type: '.customTypes.customEmailType'
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 30,
+						search: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+					}
 				}"/>
 
 				<Label text="{i18n>phoneNumber}" required="true"/>
 				<Input type="Tel" required="true" placeholder="{i18n>enterPhoneNumber}" value="{
 					path: 'appView>/storeFormInputs/phoneNumber',
-					type: '.customTypes.customTelType'
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 30,
+						search: '^[\\d\\+\\-\\(\\)x\\ ]+$'
+					}
 				}"/>
 
 				<Label text="{i18n>address}"/>
