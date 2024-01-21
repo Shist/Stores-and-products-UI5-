@@ -272,6 +272,12 @@ sap.ui.define(
       onCreateProductBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oAppViewModel = this.getAppViewModel();
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
+
+        // We need to temporarily detach this event handler while editing some entry inside ODataModel
+        oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
 
         this.loadFormFragmentByName("CreateProductForm");
 
@@ -288,7 +294,7 @@ sap.ui.define(
         this.oDialog.open();
       },
 
-      onProductFormCreateBtnPress: function () {
+      onCreateProductFormCreateBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
@@ -304,7 +310,25 @@ sap.ui.define(
           },
         });
 
+        // After creating product we need to return this event handler back
+        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
+
         oProductsBinding.refresh();
+
+        this.oDialog.close();
+      },
+
+      onCreateProductFormCancelBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oCtx = this.oDialog.getBindingContext();
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
+
+        oODataModel.deleteCreatedEntry(oCtx);
+
+        // In case of creating product cancellation we need to return this event handler back as well
+        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
 
         this.oDialog.close();
       },
@@ -327,8 +351,12 @@ sap.ui.define(
         // this.oDialog.open();
       },
 
-      onProductFormEditBtnPress: function () {
+      onEditProductFormEditBtnPress: function () {
         // TODO
+      },
+
+      onEditProductFormCancelBtnPress: function () {
+        this.oDialog.close();
       },
 
       onDeleteStoreBtnPress: function () {

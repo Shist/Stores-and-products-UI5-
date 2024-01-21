@@ -66,21 +66,6 @@ sap.ui.define(
         this.oDialog.setModel(oODataModel);
       },
 
-      // This function is used by creating forms (createStpre, createProduct)
-      onCreatingFormCancelBtnPress: function () {
-        const oODataModel = this.getODataModel();
-        const oCtx = this.oDialog.getBindingContext();
-
-        oODataModel.deleteCreatedEntry(oCtx);
-
-        this.oDialog.close();
-      },
-
-      // This function is used by editing form (editProduct)
-      onEditingFormCancelBtnPress: function () {
-        this.oDialog.close();
-      },
-
       // This function is used by all 3 forms (when each of them is closing)
       onFormAfterClose: function () {
         const oODataModel = this.getODataModel();

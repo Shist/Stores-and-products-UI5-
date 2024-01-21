@@ -35,8 +35,8 @@
 						path: 'Price',
 						type: 'sap.ui.model.type.Float',
 						constraints: {
-							maximum: 1000000000,
-							minimum: 0
+							minimum: 0,
+							maximum: 1000000000
 						}
 					}">
 						<layoutData>
@@ -61,8 +61,8 @@
 					path: 'Rating',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
-						maximum: 5,
-						minimum: 0
+						minimum: 0,
+						maximum: 5
 					}
 				}"/>
 
@@ -71,7 +71,6 @@
 					path: 'SupplierInfo',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 1,
 						maxLength: 50
 					}
 				}"/>
@@ -81,7 +80,6 @@
 					path: 'MadeIn',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 1,
 						maxLength: 30
 					}
 				}"/>
@@ -91,7 +89,6 @@
 					path: 'ProductionCompanyName',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 1,
 						maxLength: 30
 					}
 				}"/>
@@ -106,8 +103,8 @@
 		</f:SimpleForm>
 
 		<buttons>
-			<Button type="Emphasized" text="{i18n>create}" press="onProductFormCreateBtnPress" />
-			<Button text="{i18n>cancel}" press="onCreatingFormCancelBtnPress" />
+			<Button type="Emphasized" text="{i18n>create}" press="onCreateProductFormCreateBtnPress" />
+			<Button text="{i18n>cancel}" press="onCreateProductFormCancelBtnPress" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

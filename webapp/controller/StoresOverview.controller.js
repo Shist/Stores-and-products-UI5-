@@ -96,7 +96,7 @@ sap.ui.define(
         this.oDialog.open();
       },
 
-      onStoreFormCreateBtnPress: function () {
+      onCreateStoreFormCreateBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
@@ -113,6 +113,15 @@ sap.ui.define(
         });
 
         oStoresBinding.refresh();
+
+        this.oDialog.close();
+      },
+
+      onCreateStoreFormCancelBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oCtx = this.oDialog.getBindingContext();
+
+        oODataModel.deleteCreatedEntry(oCtx);
 
         this.oDialog.close();
       },

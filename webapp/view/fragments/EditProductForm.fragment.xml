@@ -106,8 +106,8 @@
 		</f:SimpleForm>
 
 		<buttons>
-			<Button type="Emphasized" text="{i18n>edit}" press="onProductFormEditBtnPress" />
-			<Button text="{i18n>cancel}" press="onEditingFormCancelBtnPress" />
+			<Button type="Emphasized" text="{i18n>edit}" press="onEditProductFormEditBtnPress" />
+			<Button text="{i18n>cancel}" press="onEditProductFormCancelBtnPress" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>
