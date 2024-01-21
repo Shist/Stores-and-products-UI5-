@@ -1,0 +1,113 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" >
+	<Dialog
+		id="EditProductDialog"
+		title="{i18n>editProduct}"
+		afterClose="onFormAfterClose">
+		<f:SimpleForm
+			maxContainerCols="1"
+			layout="ResponsiveGridLayout"
+			labelSpanL="12"
+			labelSpanM="12"
+			labelSpanS="12"
+			emptySpanL="0"
+			emptySpanM="0"
+            emptySpanS="0"
+			columnsL="1"
+			columnsM="1"
+			editable="true">
+			<f:content>
+				<Label text="{i18n>name}" required="true"/>
+				<Input type="Text" required="true" placeholder="{i18n>enterName}" value="{
+					path: 'Name',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 30
+					}
+				}"/>
+
+				<Label text="{i18n>price}" labelFor="priceInput"/>
+				<HBox>
+					<Input id="priceInput" placeholder="{i18n>enterPrice}" value="{
+						path: 'Price',
+						type: 'sap.ui.model.type.Float',
+						constraints: {
+							maximum: 1000000000,
+							minimum: 0
+						}
+					}">
+						<layoutData>
+							<FlexItemData growFactor="1" />
+						</layoutData>
+					</Input>
+					<Text text="{i18n>eur}" class="sapUiTinyMarginBegin"/>
+				</HBox>
+
+				<Label text="{i18n>specs}" required="true"/>
+				<TextArea required="true" placeholder="{i18n>enterProductSpecs}" value="{
+					path: 'Specs',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 50
+					}
+				}"/>
+
+				<Label text="{i18n>rating}"/>
+				<Input type="Text" placeholder="{i18n>enterRating}" value="{
+					path: 'Rating',
+					type: 'sap.ui.model.type.Integer',
+					constraints: {
+						maximum: 5,
+						minimum: 0
+					}
+				}"/>
+
+				<Label text="{i18n>supplierInfo}"/>
+				<TextArea placeholder="{i18n>enterSupplierInfo}" value="{
+					path: 'SupplierInfo',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 50
+					}
+				}"/>
+
+				<Label text="{i18n>madeIn}"/>
+				<Input type="Text" placeholder="{i18n>enterOriginCountry}" value="{
+					path: 'MadeIn',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 30
+					}
+				}"/>
+
+				<Label text="{i18n>productionCompanyName}"/>
+				<Input type="Text" placeholder="{i18n>enterManifactureName}" value="{
+					path: 'ProductionCompanyName',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 1,
+						maxLength: 30
+					}
+				}"/>
+
+				<Label text="{i18n>status}"/>
+				<Select forceSelection="false" selectedKey="{Status}">
+					<core:Item key="OK" text="OK" />
+					<core:Item key="STORAGE" text="Storage" />
+					<core:Item key="OUT_OF_STOCK" text="Out of stock" />
+				</Select>
+			</f:content>
+		</f:SimpleForm>
+
+		<buttons>
+			<Button type="Emphasized" text="{i18n>edit}" press="onProductFormEditBtnPress" />
+			<Button text="{i18n>cancel}" press="onEditingFormCancelBtnPress" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -269,7 +269,26 @@ sap.ui.define(
         }
       },
 
-      onDialogCreateBtnPress: function () {
+      onCreateProductBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oAppViewModel = this.getAppViewModel();
+
+        this.loadFormFragmentByName("CreateProductForm");
+
+        const oEntryCtx = oODataModel.createEntry("/Products", {
+          properties: {
+            ID: new Date().getTime().toString().slice(7),
+            Status: CONSTANTS.STATUS.OK.SERVER_KEY,
+            StoreId: oAppViewModel.getProperty("/currStoreId"),
+          },
+        });
+
+        this.oDialog.setBindingContext(oEntryCtx);
+
+        this.oDialog.open();
+      },
+
+      onProductFormCreateBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
@@ -306,6 +325,10 @@ sap.ui.define(
         // this.oDialog.setBindingContext(oCtx);
         // this.oDialog.setModel(oODataModel);
         // this.oDialog.open();
+      },
+
+      onProductFormEditBtnPress: function () {
+        // TODO
       },
 
       onDeleteStoreBtnPress: function () {

@@ -206,7 +206,7 @@
 					icon="sap-icon://add"
 					type="Ghost"
 					text="{i18n>create}"
-					press="loadFormDialog('ProductFormDialog', '/Products')"/>
+					press="onCreateProductBtnPress"/>
 				<Button icon="sap-icon://delete" type="Reject" text="{i18n>delete}" press="onDeleteStoreBtnPress"/>
 			</OverflowToolbar>
 		</f:footer>

@@ -63,9 +63,11 @@
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" text="{i18n>statusWithColon}"/>
-					<tnt:InfoLabel text="{odata>Status}" colorScheme="{
-						path: 'odata>Status',
-						formatter: '.formatter.formatBadgeType'
+					<tnt:InfoLabel
+						text="{= ${odata>Status} ? ${odata>Status} : 'not specified' }"
+						colorScheme="{
+							path: 'odata>Status',
+							formatter: '.formatter.formatBadgeType'
 					}"/>
 				</HBox>
 			</f:DynamicPageHeader>

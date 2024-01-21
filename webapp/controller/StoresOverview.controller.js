@@ -80,7 +80,23 @@ sap.ui.define(
         return aFilters;
       },
 
-      onDialogCreateBtnPress: function () {
+      onCreateStoreBtnPress: function () {
+        const oODataModel = this.getODataModel();
+
+        this.loadFormFragmentByName("CreateStoreForm");
+
+        const oEntryCtx = oODataModel.createEntry("/Stores", {
+          properties: {
+            ID: new Date().getTime().toString().slice(7),
+          },
+        });
+
+        this.oDialog.setBindingContext(oEntryCtx);
+
+        this.oDialog.open();
+      },
+
+      onStoreFormCreateBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"

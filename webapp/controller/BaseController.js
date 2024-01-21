@@ -48,10 +48,10 @@ sap.ui.define(
         return /^[^#%&*()\[\]{}\\]*$/.test(oSearchField.getValue());
       },
 
-      loadFormDialog: function (fragmentName, entryPath) {
+      // This function can load one of 3 forms (createStpre, createProduct, editProduct)
+      loadFormFragmentByName: function (fragmentName) {
         const oView = this.getView();
         const oODataModel = this.getODataModel();
-        const oAppViewModel = this.getAppViewModel();
 
         if (!this.oDialog) {
           this.oDialog = sap.ui.xmlfragment(
@@ -63,24 +63,11 @@ sap.ui.define(
           oView.addDependent(this.oDialog);
         }
 
-        const oEntryCtx = oODataModel.createEntry(entryPath, {
-          properties: {
-            ID: new Date().getTime().toString().slice(7),
-            StoreId:
-              entryPath === "/Products"
-                ? oAppViewModel.getProperty("/currStoreId")
-                : undefined,
-          },
-        });
-
-        this.oDialog.setBindingContext(oEntryCtx);
-
         this.oDialog.setModel(oODataModel);
-
-        this.oDialog.open();
       },
 
-      onDialogCancelBtnPress: function () {
+      // This function is used by creating forms (createStpre, createProduct)
+      onCreatingFormCancelBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oCtx = this.oDialog.getBindingContext();
 
@@ -89,7 +76,13 @@ sap.ui.define(
         this.oDialog.close();
       },
 
-      onDialogAfterClose: function () {
+      // This function is used by editing form (editProduct)
+      onEditingFormCancelBtnPress: function () {
+        this.oDialog.close();
+      },
+
+      // This function is used by all 3 forms (when each of them is closing)
+      onFormAfterClose: function () {
         const oODataModel = this.getODataModel();
 
         // This reset called Any time when the dialog is closing (even after confirmation)
