@@ -18,5 +18,8 @@
     "country": "DEFAULT",
     "prodCompany": "DEFAULT",
     "rating": "DEFAULT"
-  }
+  },
+  "currAuthorName": "",
+  "currRating": 0,
+  "currCommentMsg": ""
 }

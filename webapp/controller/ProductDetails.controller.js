@@ -7,6 +7,7 @@ sap.ui.define(
     "sap/m/MessageBox",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/model/Sorter",
   ],
   function (
     BaseController,
@@ -15,7 +16,8 @@ sap.ui.define(
     MessageToast,
     MessageBox,
     Filter,
-    FilterOperator
+    FilterOperator,
+    Sorter
   ) {
     "use strict";
 
@@ -66,22 +68,35 @@ sap.ui.define(
               comparator: (a, b) => a - b,
             })
           );
+
+          oCommentsBinding.sort(new Sorter("Posted", CONSTANTS.SORT_STATE.ASC));
         });
       },
 
       onPostBtnPress: function () {
         const oODataModel = this.getODataModel();
-        const oAppViewModel = this.getAppViewModel();
         const oCommentsBinding = this.byId(
           CONSTANTS.ID.COMMENTS_LIST
         ).getBinding("items");
+        const oAppViewModel = this.getAppViewModel();
+        const currAuthor = oAppViewModel.getProperty("/currAuthorName");
+        const currMessage = oAppViewModel.getProperty("/currCommentMsg");
+        const currRating = oAppViewModel.getProperty("/currRating");
+
+        if (!currAuthor) {
+          MessageBox.warning("You should enter your name before making post!");
+          return;
+        }
+
+        oAppViewModel.setProperty("/currAuthorName", "");
+        oAppViewModel.setProperty("/currRating", 0);
 
         oODataModel.createEntry("/ProductComments", {
           properties: {
             ID: new Date().getTime().toString().slice(7),
-            Author: this.byId("authorInput").getValue(),
-            Message: this.byId("feedInput").getValue(),
-            Rating: this.byId("ratingIndicator").getValue(),
+            Author: currAuthor,
+            Message: currMessage,
+            Rating: currRating ? currRating : undefined,
             Posted: new Date(),
             ProductId: oAppViewModel.getProperty("/currProductId"),
           },
@@ -104,21 +119,26 @@ sap.ui.define(
         oCommentsBinding.refresh();
       },
 
-      onStoresListLinkPress: function () {
+      setAllControlsToDefault: function () {
         const oAppViewModel = this.getAppViewModel();
-
         oAppViewModel.setProperty("/currProductId", null);
+        oAppViewModel.setProperty("/currAuthorName", "");
+        oAppViewModel.setProperty("/currRating", 0);
+        oAppViewModel.setProperty("/currCommentMsg", "");
+      },
+
+      onStoresListLinkPress: function () {
+        this.setAllControlsToDefault();
 
         this.navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
       },
 
       onStoreDetailsLinkPress: function () {
-        const oAppViewModel = this.getAppViewModel();
         const nStoreId = this.getBindingContextData(
           CONSTANTS.PRODUCT_PROP.STORE_ID
         );
 
-        oAppViewModel.setProperty("/currProductId", null);
+        this.setAllControlsToDefault();
 
         this.navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
           [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,

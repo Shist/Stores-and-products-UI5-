@@ -76,14 +76,14 @@
 				<HBox>
 					<HBox alignItems="Center" class="sapUiTinyMarginEnd">
 						<Label class="sapUiTinyMarginEnd" labelFor="authorInput" text="{i18n>authorNameWithColon}"/>
-						<Input id="authorInput" placeholder="Enter name"/>
+						<Input placeholder="Enter name" value="{appView>/currAuthorName}" maxLength="20"/>
 					</HBox>
 					<HBox alignItems="Center">
 						<Label class="sapUiTinyMarginEnd" text="{i18n>ratingWithColon}"/>
-						<RatingIndicator id="ratingIndicator" maxValue="5"/>
+						<RatingIndicator maxValue="5" value="{appView>/currRating}"/>
 					</HBox>
 				</HBox>
-				<FeedInput id="feedInput" post="onPostBtnPress" class="sapUiSmallMarginTopBottom"/>
+				<FeedInput post="onPostBtnPress" class="sapUiSmallMarginTopBottom" value="{appView>/currCommentMsg}"/>
 				<List
 					id="commentsList"
 					showSeparators="Inner"
