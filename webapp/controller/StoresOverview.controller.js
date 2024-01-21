@@ -69,12 +69,13 @@ sap.ui.define(
           CONSTANTS.STORE_PROP.ID,
           oEvent
         );
-
         const oAppViewModel = this.getAppViewModel();
-        oAppViewModel.setProperty("/currStoresSearchFilter", "");
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
         );
+
+        oAppViewModel.setProperty("/currStoresSearchFilter", "");
+
         oStoresBinding.filter([]);
 
         this.navTo(CONSTANTS.ROUTE.STORE_DETAILS, {

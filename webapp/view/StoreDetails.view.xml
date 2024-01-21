@@ -198,7 +198,11 @@
 		<f:footer>
 			<OverflowToolbar>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" type="Ghost" text="{i18n>create}"/>
+				<Button
+					icon="sap-icon://add"
+					type="Ghost"
+					text="{i18n>create}"
+					press="loadFormDialog('ProductFormDialog', '/Products')"/>
 				<Button icon="sap-icon://delete" type="Reject" text="{i18n>delete}"/>
 			</OverflowToolbar>
 		</f:footer>

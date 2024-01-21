@@ -30,6 +30,9 @@ sap.ui.define(
         const oControllerContext = this;
         const sProductId = oEvent.getParameter("arguments").productId;
         const oODataModel = this.getODataModel();
+        const oAppViewModel = this.getAppViewModel();
+
+        oAppViewModel.setProperty("/currProductId", sProductId);
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Products", { id: sProductId });
@@ -57,13 +60,20 @@ sap.ui.define(
       },
 
       onStoresListLinkPress: function () {
+        const oAppViewModel = this.getAppViewModel();
+
+        oAppViewModel.setProperty("/currProductId", null);
+
         this.navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
       },
 
       onStoreDetailsLinkPress: function () {
+        const oAppViewModel = this.getAppViewModel();
         const nStoreId = this.getBindingContextData(
           CONSTANTS.PRODUCT_PROP.STORE_ID
         );
+
+        oAppViewModel.setProperty("/currProductId", null);
 
         this.navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
           [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,

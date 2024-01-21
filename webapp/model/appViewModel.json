@@ -1,4 +1,6 @@
 {
+  "currStoreId": null,
+  "currProductId": null,
   "currStoresSearchFilter": "",
   "currProductsStatusFilter": "ALL",
   "currProductsSearchFilter": "",

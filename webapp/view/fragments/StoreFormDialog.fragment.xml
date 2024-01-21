@@ -66,7 +66,7 @@
 				}"/>
 
 				<Label text="{i18n>floorArea}"/>
-				<Input type="Number" placeholder="{i18n>enterFloorArea}" value="{
+				<Input placeholder="{i18n>enterFloorArea}" value="{
 					path: 'FloorArea',
 					type: 'sap.ui.model.type.Float',
 					constraints: {

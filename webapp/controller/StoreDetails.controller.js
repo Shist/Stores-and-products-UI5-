@@ -52,6 +52,9 @@ sap.ui.define(
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
         const oODataModel = this.getODataModel();
+        const oAppViewModel = this.getAppViewModel();
+
+        oAppViewModel.setProperty("/currStoreId", sStoreId);
 
         oODataModel.metadataLoaded().then(function () {
           const sKey = oODataModel.createKey("/Stores", { id: sStoreId });
@@ -282,6 +285,7 @@ sap.ui.define(
 
       setAllControlsToDefault: function () {
         const oAppViewModel = this.getAppViewModel();
+        oAppViewModel.setProperty("/currStoreId", null);
         oAppViewModel.setProperty(
           "/currProductsStatusFilter",
           CONSTANTS.STATUS.ALL.SERVER_KEY

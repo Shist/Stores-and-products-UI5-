@@ -45,6 +45,7 @@ sap.ui.define(
       loadFormDialog: function (fragmentName, entryPath) {
         const oView = this.getView();
         const oODataModel = this.getODataModel();
+        const oAppViewModel = this.getAppViewModel();
 
         if (!this.oDialog) {
           this.oDialog = sap.ui.xmlfragment(
@@ -59,6 +60,10 @@ sap.ui.define(
         const oEntryCtx = oODataModel.createEntry(entryPath, {
           properties: {
             ID: new Date().getTime().toString().slice(7),
+            StoreId:
+              entryPath === "/Products"
+                ? oAppViewModel.getProperty("/currStoreId")
+                : undefined,
           },
         });
 
