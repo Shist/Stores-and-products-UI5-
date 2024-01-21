@@ -258,6 +258,21 @@ sap.ui.define(
         }
       },
 
+      onDeleteProductPress: function (oEvent) {
+        const oCtx = oEvent.getSource().getBindingContext("odata");
+        const oODataModel = oCtx.getModel();
+        const sKey = oODataModel.createKey("/Products", oCtx.getObject());
+
+        oODataModel.remove(sKey, {
+          success: function () {
+            //MessageToast.show("Supplier was successfully removed!");
+          },
+          error: function () {
+            //MessageBox.error("Error while removing supplier!");
+          },
+        });
+      },
+
       sorterComparator: function (a, b) {
         if (!isNaN(a) && !isNaN(b)) {
           const numA = parseFloat(a);

@@ -187,7 +187,7 @@
 								<RatingIndicator value="{odata>Rating}" editable="false" />
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent"/>
-									<Button icon="sap-icon://sys-cancel" type="Transparent"/>
+									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductPress"/>
 								</HBox>
 							</ColumnListItem>
 						</items>
