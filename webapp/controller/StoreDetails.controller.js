@@ -120,6 +120,13 @@ sap.ui.define(
       },
 
       onFiltersChanged: function () {
+        if (!this.isSearchFieldValid("productsSearch")) {
+          MessageBox.warning(
+            "Please do not use special symbols while searching: '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', '\\'"
+          );
+          return;
+        }
+
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");

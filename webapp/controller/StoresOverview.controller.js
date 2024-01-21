@@ -23,6 +23,13 @@ sap.ui.define(
       },
 
       onStoresSearchBtnPress: function (oEvent) {
+        if (!this.isSearchFieldValid("storesSearch")) {
+          MessageBox.warning(
+            "Please do not use special symbols while searching: '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', '\\'"
+          );
+          return;
+        }
+
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
         );

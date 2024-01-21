@@ -98,9 +98,11 @@
 									<Title text="{i18n>products}" class="sapUiSmallMarginBegin"/>
 									<ToolbarSpacer/>
 									<SearchField
+										id="productsSearch"
 										value="{appView>/currProductsSearchFilter}"
 										search="onFiltersChanged"
 										placeholder="{i18n>searchTip}"
+										maxLength="30"
 										width="15rem"/>
 								</content>
 							</Toolbar>

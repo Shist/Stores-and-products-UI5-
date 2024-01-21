@@ -20,9 +20,11 @@
 		<f:header>
 			<f:DynamicPageHeader>
 				<SearchField
+					id="storesSearch"
 					search="onStoresSearchBtnPress"
 					value="{appView>/currStoresSearchFilter}"
 					placeholder="{i18n>search}"
+					maxLength="100"
 					showRefreshButton="true"/>
 			</f:DynamicPageHeader>
 		</f:header>

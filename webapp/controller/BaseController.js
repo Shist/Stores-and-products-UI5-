@@ -42,6 +42,12 @@ sap.ui.define(
         oMessageManager.registerObject(this.getView(), true);
       },
 
+      isSearchFieldValid: function (searchFieldId) {
+        const oSearchField = this.byId(searchFieldId);
+
+        return /^[^#%&*()\[\]{}\\]*$/.test(oSearchField.getValue());
+      },
+
       loadFormDialog: function (fragmentName, entryPath) {
         const oView = this.getView();
         const oODataModel = this.getODataModel();
