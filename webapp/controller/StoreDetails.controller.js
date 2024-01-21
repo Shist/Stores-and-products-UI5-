@@ -334,28 +334,53 @@ sap.ui.define(
       },
 
       onEditProductBtnPress: function (oEvent) {
-        // TODO
-        // const oCtx = oEvent.getSource().getBindingContext("odata");
-        // const oView = this.getView();
-        // const oODataModel = this.getODataModel();
-        // if (!this.oDialog) {
-        //   this.oDialog = sap.ui.xmlfragment(
-        //     oView.getId(),
-        //     `pavel.zhukouski.view.fragments.ProductFormDialog`,
-        //     this
-        //   );
-        //   oView.addDependent(this.oDialog);
-        // }
-        // this.oDialog.setBindingContext(oCtx);
-        // this.oDialog.setModel(oODataModel);
-        // this.oDialog.open();
+        const oCtx = oEvent.getSource().getBindingContext("odata");
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
+
+        // We need to temporarily detach this event handler while editing some entry inside ODataModel
+        oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
+
+        this.loadFormFragmentByName("EditProductForm");
+
+        this.oDialog.setBindingContext(oCtx);
+
+        this.oDialog.open();
       },
 
       onEditProductFormEditBtnPress: function () {
-        // TODO
+        const oODataModel = this.getODataModel();
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
+
+        oODataModel.submitChanges({
+          // These two functions will only be called when we will start using batch
+          success: function () {
+            MessageToast.show("Product was successfully edited!");
+          },
+          error: function () {
+            MessageBox.error("Error while editing product!");
+          },
+        });
+
+        // In case of creating product cancellation we need to return this event handler back as well
+        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
+
+        oProductsBinding.refresh();
+
+        this.oDialog.close();
       },
 
       onEditProductFormCancelBtnPress: function () {
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
+
+        // In case of creating product cancellation we need to return this event handler back as well
+        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
+
         this.oDialog.close();
       },
 
