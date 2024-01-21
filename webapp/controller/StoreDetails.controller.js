@@ -285,33 +285,47 @@ sap.ui.define(
 
       onDeleteStoreBtnPress: function () {
         const oControllerContext = this;
-        const oODataModel = this.getODataModel();
-        const sKey = this.getCurrStorePath();
 
-        oODataModel.remove(sKey, {
-          success: function () {
-            MessageToast.show("Store was successfully removed!", {
-              closeOnBrowserNavigation: false,
-            });
-            oControllerContext.onStoresListLinkPress();
-          },
-          error: function () {
-            MessageBox.error("Error while removing store!");
+        MessageBox.confirm("Are you sure you want to delete store?", {
+          onClose: function (oAction) {
+            if (oAction === MessageBox.Action.OK) {
+              const oODataModel = oControllerContext.getODataModel();
+              const sKey = oControllerContext.getCurrStorePath();
+
+              oODataModel.remove(sKey, {
+                success: function () {
+                  MessageToast.show("Store was successfully deleted!", {
+                    closeOnBrowserNavigation: false,
+                  });
+                  oControllerContext.onStoresListLinkPress();
+                },
+                error: function () {
+                  MessageBox.error("Error while removing store!");
+                },
+              });
+            }
           },
         });
       },
 
       onDeleteProductBtnPress: function (oEvent) {
         const oCtx = oEvent.getSource().getBindingContext("odata");
-        const oODataModel = oCtx.getModel();
-        const sKey = oODataModel.createKey("/Products", oCtx.getObject());
 
-        oODataModel.remove(sKey, {
-          success: function () {
-            MessageToast.show("Product was successfully removed!");
-          },
-          error: function () {
-            MessageBox.error("Error while removing product!");
+        MessageBox.confirm("Are you sure you want to delete product?", {
+          onClose: function (oAction) {
+            if (oAction === MessageBox.Action.OK) {
+              const oODataModel = oCtx.getModel();
+              const sKey = oODataModel.createKey("/Products", oCtx.getObject());
+
+              oODataModel.remove(sKey, {
+                success: function () {
+                  MessageToast.show("Product was successfully deleted!");
+                },
+                error: function () {
+                  MessageBox.error("Error while removing product!");
+                },
+              });
+            }
           },
         });
       },
