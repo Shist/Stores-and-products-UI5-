@@ -79,10 +79,10 @@
 					</HBox>
 					<HBox alignItems="Center">
 						<Label class="sapUiTinyMarginEnd" text="{i18n>ratingWithColon}"/>
-						<RatingIndicator maxValue="5"/>
+						<RatingIndicator id="ratingIndicator" maxValue="5"/>
 					</HBox>
 				</HBox>
-				<FeedInput post="" class="sapUiSmallMarginTopBottom" />
+				<FeedInput id="feedInput" post="onPostBtnPress" class="sapUiSmallMarginTopBottom"/>
 				<List
 					id="commentsList"
 					showSeparators="Inner"

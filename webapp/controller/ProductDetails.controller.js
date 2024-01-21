@@ -59,6 +59,24 @@ sap.ui.define(
         });
       },
 
+      onPostBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oAppViewModel = this.getAppViewModel();
+
+        oODataModel.createEntry("/ProductComments", {
+          properties: {
+            ID: new Date().getTime().toString().slice(7),
+            Author: this.byId("authorInput").getValue(),
+            Message: this.byId("feedInput").getValue(),
+            Rating: this.byId("ratingIndicator").getValue(),
+            Posted: new Date(),
+            ProductId: oAppViewModel.getProperty("/currProductId"),
+          },
+        });
+
+        oODataModel.submitChanges();
+      },
+
       onStoresListLinkPress: function () {
         const oAppViewModel = this.getAppViewModel();
 
