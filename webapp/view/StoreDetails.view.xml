@@ -187,7 +187,7 @@
 								<RatingIndicator value="{odata>Rating}" editable="false" />
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent"/>
-									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductPress"/>
+									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductBtnPress"/>
 								</HBox>
 							</ColumnListItem>
 						</items>
@@ -203,7 +203,7 @@
 					type="Ghost"
 					text="{i18n>create}"
 					press="loadFormDialog('ProductFormDialog', '/Products')"/>
-				<Button icon="sap-icon://delete" type="Reject" text="{i18n>delete}"/>
+				<Button icon="sap-icon://delete" type="Reject" text="{i18n>delete}" press="onDeleteStoreBtnPress"/>
 			</OverflowToolbar>
 		</f:footer>
 	</f:DynamicPage>

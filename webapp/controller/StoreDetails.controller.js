@@ -258,7 +258,23 @@ sap.ui.define(
         }
       },
 
-      onDeleteProductPress: function (oEvent) {
+      onDeleteStoreBtnPress: function () {
+        const oControllerContext = this;
+        const oODataModel = this.getODataModel();
+        const sKey = this.getCurrStorePath();
+
+        oODataModel.remove(sKey, {
+          success: function () {
+            //MessageToast.show("Supplier was successfully removed!");
+            oControllerContext.onStoresListLinkPress();
+          },
+          error: function () {
+            //MessageBox.error("Error while removing supplier!");
+          },
+        });
+      },
+
+      onDeleteProductBtnPress: function (oEvent) {
         const oCtx = oEvent.getSource().getBindingContext("odata");
         const oODataModel = oCtx.getModel();
         const sKey = oODataModel.createKey("/Products", oCtx.getObject());
