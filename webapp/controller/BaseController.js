@@ -74,14 +74,6 @@ sap.ui.define(
         this.oDialog.open();
       },
 
-      onDialogCreateBtnPress: function () {
-        const oODataModel = this.getODataModel();
-
-        oODataModel.submitChanges();
-
-        this.oDialog.close();
-      },
-
       onDialogCancelBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oCtx = this.oDialog.getBindingContext();

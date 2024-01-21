@@ -258,6 +258,19 @@ sap.ui.define(
         }
       },
 
+      onDialogCreateBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oProductsBinding = this.byId(
+          CONSTANTS.ID.PRODUCTS_TABLE
+        ).getBinding("items");
+
+        oODataModel.submitChanges();
+
+        oProductsBinding.refresh();
+
+        this.oDialog.close();
+      },
+
       onDeleteStoreBtnPress: function () {
         const oControllerContext = this;
         const oODataModel = this.getODataModel();

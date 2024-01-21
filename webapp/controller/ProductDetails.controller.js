@@ -62,6 +62,9 @@ sap.ui.define(
       onPostBtnPress: function () {
         const oODataModel = this.getODataModel();
         const oAppViewModel = this.getAppViewModel();
+        const oCommentsBinding = this.byId(
+          CONSTANTS.ID.COMMENTS_LIST
+        ).getBinding("items");
 
         oODataModel.createEntry("/ProductComments", {
           properties: {
@@ -75,6 +78,8 @@ sap.ui.define(
         });
 
         oODataModel.submitChanges();
+
+        oCommentsBinding.refresh();
       },
 
       onStoresListLinkPress: function () {

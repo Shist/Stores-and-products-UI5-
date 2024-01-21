@@ -64,6 +64,19 @@ sap.ui.define(
         return aFilters;
       },
 
+      onDialogCreateBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
+          "items"
+        );
+
+        oODataModel.submitChanges();
+
+        oStoresBinding.refresh();
+
+        this.oDialog.close();
+      },
+
       onStorePress: function (oEvent) {
         const nStoreId = this.getBindingContextData(
           CONSTANTS.STORE_PROP.ID,
