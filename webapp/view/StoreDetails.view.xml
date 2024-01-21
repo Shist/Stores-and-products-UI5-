@@ -35,23 +35,24 @@
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{i18n>addressWithColon}"/>
-							<Text id="textAddress" text="{odata>Address}"/>
+							<Text id="textAddress" text="{= ${odata>Address} ? ${odata>Address} : 'not specified' }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 					<layout:VerticalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{i18n>establishedDateWithColon}"/>
-							<Text id="textEstablished" text="{
-								path: 'odata>Established',
-								type: 'sap.ui.model.type.Date',
-								formatOptions: {
-									pattern: 'MMM d, yyyy'
-								}
+							<Text id="textEstablished" text="{= ${odata>Established} ? ${
+									path: 'odata>Established',
+									type: 'sap.ui.model.type.Date',
+									formatOptions: {
+										pattern: 'MMM d, yyyy'
+									}
+								} : 'not specified'
 							}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{i18n>floorAreaWithColon}"/>
-							<Text id="textFloorArea" text="{odata>FloorArea}"/>
+							<Text id="textFloorArea" text="{= ${odata>FloorArea} ? ${odata>FloorArea} : 'not specified' }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 				</layout:HorizontalLayout>
@@ -172,19 +173,20 @@
 						</columns>
 						<items>
 							<ColumnListItem press="onProductPress" type="Navigation">
-								<Text maxLines="2" text="{odata>Name}" />
-								<Text maxLines="1" text="{
-									parts: [
-										'i18n>priceValue',
-										'odata>Price'
-									],
-									formatter: 'formatMessage'
+								<Text maxLines="2" text="{odata>Name}"/>
+								<Text maxLines="1" text="{= ${odata>Price} ? ${
+										parts: [
+											'i18n>priceValue',
+											'odata>Price'
+										],
+										formatter: 'formatMessage'
+									} : 'not specified'
 								}"/>
-								<Text maxLines="1" text="{odata>Specs}" />
-								<Text maxLines="1" text="{odata>SupplierInfo}" />
-								<Text maxLines="1" text="{odata>MadeIn}" />
-								<Text maxLines="1" text="{odata>ProductionCompanyName}" />
-								<RatingIndicator value="{odata>Rating}" editable="false" />
+								<Text maxLines="1" text="{odata>Specs}"/>
+								<Text maxLines="1" text="{= ${odata>SupplierInfo} ? ${odata>SupplierInfo} : 'not specified' }"/>
+								<Text maxLines="1" text="{= ${odata>MadeIn} ? ${odata>MadeIn} : 'not specified' }"/>
+								<Text maxLines="1" text="{= ${odata>ProductionCompanyName} ? ${odata>ProductionCompanyName} : 'not specified' }"/>
+								<RatingIndicator value="{= ${odata>Rating} ? ${odata>Rating} : 0 }" editable="false" />
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent"/>
 									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductBtnPress"/>

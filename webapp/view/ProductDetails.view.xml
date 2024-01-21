@@ -33,17 +33,18 @@
 			<f:DynamicPageHeader>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPrice" text="{i18n>priceWithColon}"/>
-					<Text id="textPrice" text="{
+					<Text id="textPrice" text="{= ${odata>Price} ? ${
 							parts: [
 								'i18n>priceValue',
 								'odata>Price'
 							],
 							formatter: 'formatMessage'
+						} : 'not specified'
 					}"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textRating" text="{i18n>ratingWithColon}"/>
-					<Text id="textRating" text="{odata>Rating}"/>
+					<Text id="textRating" text="{= ${odata>Rating} ? ${odata>Rating} : 'not specified' }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSpecs" text="{i18n>specsWithColon}"/>
@@ -51,15 +52,15 @@
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{i18n>supplierInfoWithColon}"/>
-					<Text id="textSupplierInfo" text="{odata>SupplierInfo}"/>
+					<Text id="textSupplierInfo" text="{= ${odata>SupplierInfo} ? ${odata>SupplierInfo} : 'not specified' }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textProdCompany" text="{i18n>prodCompanyWithColon}"/>
-					<Text id="textProdCompany" text="{odata>ProductionCompanyName}"/>
+					<Text id="textProdCompany" text="{= ${odata>ProductionCompanyName} ? ${odata>ProductionCompanyName} : 'not specified' }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textCountry" text="{i18n>countryOfOriginWithColon}"/>
-					<Text id="textCountry" text="{odata>MadeIn}"/>
+					<Text id="textCountry" text="{= ${odata>MadeIn} ? ${odata>MadeIn} : 'not specified' }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" text="{i18n>statusWithColon}"/>
@@ -90,12 +91,13 @@
 					<FeedListItem
 						sender="{odata>Author}"
 						text="{odata>Message}"
-						info="{
-							parts: [
-								'i18n>ratingValue',
-								'odata>Rating'
-							],
-							formatter: 'formatMessage'
+						info="{= ${odata>Rating} ? ${
+								parts: [
+									'i18n>ratingValue',
+									'odata>Rating'
+								],
+								formatter: 'formatMessage'
+							} : 'Rating is not specified'
 						}"
 						timestamp="{
 							parts: [

@@ -97,6 +97,10 @@ sap.ui.define(
           },
         });
 
+        // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
+        // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
+        oODataModel.resetChanges();
+
         oCommentsBinding.refresh();
       },
 

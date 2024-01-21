@@ -32,9 +32,9 @@
 					press="onStorePress"
 					type="Active"
 					title="{odata>Name}"
-					number="{odata>FloorArea}"
+					number="{= ${odata>FloorArea} ? ${odata>FloorArea} : '-' }"
 					numberUnit="{i18n>squareUnit}">
-						<ObjectAttribute text="{odata>Address}" />
+						<ObjectAttribute text="{= ${odata>Address} ? ${odata>Address} : 'Address is not specified' }" />
 				</ObjectListItem>
 			</List>
 		</f:content>
