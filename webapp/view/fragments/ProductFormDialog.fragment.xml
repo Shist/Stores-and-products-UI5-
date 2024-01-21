@@ -30,17 +30,24 @@
 				}"/>
 
 				<Label text="{i18n>price}"/>
-				<Input placeholder="{i18n>enterPrice}" value="{
-					path: 'Price',
-					type: 'sap.ui.model.type.Float',
-					constraints: {
-						maximum: 1000000000,
-						minimum: 0
-					}
-				}"/>
+				<HBox>
+					<Input placeholder="{i18n>enterPrice}" value="{
+						path: 'Price',
+						type: 'sap.ui.model.type.Float',
+						constraints: {
+							maximum: 1000000000,
+							minimum: 0
+						}
+					}">
+						<layoutData>
+							<FlexItemData growFactor="1" />
+						</layoutData>
+					</Input>
+					<Text text="{i18n>eur}" class="sapUiTinyMarginBegin"/>
+				</HBox>
 
 				<Label text="{i18n>specs}" required="true"/>
-				<Input type="Text" required="true" placeholder="{i18n>enterProductSpecs}" value="{
+				<TextArea required="true" placeholder="{i18n>enterProductSpecs}" value="{
 					path: 'Specs',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -60,7 +67,7 @@
 				}"/>
 
 				<Label text="{i18n>supplierInfo}"/>
-				<Input type="Text" placeholder="{i18n>enterSupplierInfo}" value="{
+				<TextArea placeholder="{i18n>enterSupplierInfo}" value="{
 					path: 'SupplierInfo',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -90,7 +97,7 @@
 				}"/>
 
 				<Label text="{i18n>status}"/>
-				<Select forceSelection="false" selectedKey="{Status}">
+				<Select forceSelection="false" selectedKey="{= ${Status} ? ${Status} : 'OK' }">
 					<core:Item key="OK" text="OK" />
 					<core:Item key="STORAGE" text="Storage" />
 					<core:Item key="OUT_OF_STOCK" text="Out of stock" />

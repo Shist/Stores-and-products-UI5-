@@ -290,6 +290,24 @@ sap.ui.define(
         this.oDialog.close();
       },
 
+      onEditProductBtnPress: function (oEvent) {
+        // TODO
+        // const oCtx = oEvent.getSource().getBindingContext("odata");
+        // const oView = this.getView();
+        // const oODataModel = this.getODataModel();
+        // if (!this.oDialog) {
+        //   this.oDialog = sap.ui.xmlfragment(
+        //     oView.getId(),
+        //     `pavel.zhukouski.view.fragments.ProductFormDialog`,
+        //     this
+        //   );
+        //   oView.addDependent(this.oDialog);
+        // }
+        // this.oDialog.setBindingContext(oCtx);
+        // this.oDialog.setModel(oODataModel);
+        // this.oDialog.open();
+      },
+
       onDeleteStoreBtnPress: function () {
         const oControllerContext = this;
 

@@ -190,7 +190,7 @@
 								<Text maxLines="1" text="{= ${odata>ProductionCompanyName} ? ${odata>ProductionCompanyName} : 'not specified' }"/>
 								<RatingIndicator value="{= ${odata>Rating} ? ${odata>Rating} : 0 }" editable="false" />
 								<HBox justifyContent="SpaceBetween">
-									<Button icon="sap-icon://edit" type="Transparent"/>
+									<Button icon="sap-icon://edit" type="Transparent" press="onEditProductBtnPress"/>
 									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductBtnPress"/>
 								</HBox>
 							</ColumnListItem>
