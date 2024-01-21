@@ -3,10 +3,20 @@ sap.ui.define(
     "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
     "pavel/zhukouski/model/formatter",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, CONSTANTS, formatter, Filter, FilterOperator) {
+  function (
+    BaseController,
+    CONSTANTS,
+    formatter,
+    MessageToast,
+    MessageBox,
+    Filter,
+    FilterOperator
+  ) {
     "use strict";
 
     return BaseController.extend("pavel.zhukouski.controller.ProductDetails", {
@@ -77,7 +87,15 @@ sap.ui.define(
           },
         });
 
-        oODataModel.submitChanges();
+        oODataModel.submitChanges({
+          // These two functions will only be called when we will start using batch
+          success: function () {
+            MessageToast.show("Your comment was successfully posted!");
+          },
+          error: function () {
+            MessageBox.error("Error while posting comment!");
+          },
+        });
 
         oCommentsBinding.refresh();
       },

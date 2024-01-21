@@ -2,10 +2,19 @@ sap.ui.define(
   [
     "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, CONSTANTS, Filter, FilterOperator) {
+  function (
+    BaseController,
+    CONSTANTS,
+    MessageToast,
+    MessageBox,
+    Filter,
+    FilterOperator
+  ) {
     "use strict";
 
     return BaseController.extend("pavel.zhukouski.controller.StoresOverview", {
@@ -70,7 +79,15 @@ sap.ui.define(
           "items"
         );
 
-        oODataModel.submitChanges();
+        oODataModel.submitChanges({
+          // These two functions will only be called when we will start using batch
+          success: function () {
+            MessageToast.show("Store was successfully created!");
+          },
+          error: function () {
+            MessageBox.error("Error while creating store!");
+          },
+        });
 
         oStoresBinding.refresh();
 

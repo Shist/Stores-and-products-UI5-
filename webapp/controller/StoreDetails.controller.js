@@ -3,6 +3,8 @@ sap.ui.define(
     "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
     "pavel/zhukouski/model/formatter",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
@@ -11,6 +13,8 @@ sap.ui.define(
     BaseController,
     CONSTANTS,
     formatter,
+    MessageToast,
+    MessageBox,
     Filter,
     FilterOperator,
     Sorter
@@ -264,7 +268,15 @@ sap.ui.define(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
 
-        oODataModel.submitChanges();
+        oODataModel.submitChanges({
+          // These two functions will only be called when we will start using batch
+          success: function () {
+            MessageToast.show("Product was successfully created!");
+          },
+          error: function () {
+            MessageBox.error("Error while creating product!");
+          },
+        });
 
         oProductsBinding.refresh();
 
@@ -278,11 +290,13 @@ sap.ui.define(
 
         oODataModel.remove(sKey, {
           success: function () {
-            //MessageToast.show("Supplier was successfully removed!");
+            MessageToast.show("Store was successfully removed!", {
+              closeOnBrowserNavigation: false,
+            });
             oControllerContext.onStoresListLinkPress();
           },
           error: function () {
-            //MessageBox.error("Error while removing supplier!");
+            MessageBox.error("Error while removing store!");
           },
         });
       },
@@ -294,10 +308,10 @@ sap.ui.define(
 
         oODataModel.remove(sKey, {
           success: function () {
-            //MessageToast.show("Supplier was successfully removed!");
+            MessageToast.show("Product was successfully removed!");
           },
           error: function () {
-            //MessageBox.error("Error while removing supplier!");
+            MessageBox.error("Error while removing product!");
           },
         });
       },
