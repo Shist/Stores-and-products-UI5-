@@ -64,12 +64,6 @@ sap.ui.define(
         return aFilters;
       },
 
-      onDialogCreateBtnPress: function () {
-        console.log("Create!!!");
-        // TODO: make POST to server
-        this.oDialog.close();
-      },
-
       onStorePress: function (oEvent) {
         const nStoreId = this.getBindingContextData(
           CONSTANTS.STORE_PROP.ID,

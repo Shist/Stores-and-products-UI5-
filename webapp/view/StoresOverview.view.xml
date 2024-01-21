@@ -45,7 +45,7 @@
 					icon="sap-icon://add"
 					type="Ghost"
 					text="{i18n>create}"
-					press="loadFragmentByName('CreateStoreDialog')"/>
+					press="loadFormDialog('StoreFormDialog', '/Stores')"/>
 			</OverflowToolbar>
 		</f:footer>
 	</f:DynamicPage>

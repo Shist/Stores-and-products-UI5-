@@ -42,39 +42,51 @@ sap.ui.define(
         oMessageManager.registerObject(this.getView(), true);
       },
 
-      loadFragmentByName: function (sFragmentName) {
+      loadFormDialog: function (fragmentName, entryPath) {
         const oView = this.getView();
+        const oODataModel = this.getODataModel();
 
         if (!this.oDialog) {
           this.oDialog = sap.ui.xmlfragment(
             oView.getId(),
-            `pavel.zhukouski.view.fragments.${sFragmentName}`,
+            `pavel.zhukouski.view.fragments.${fragmentName}`,
             this
           );
 
           oView.addDependent(this.oDialog);
         }
 
+        const oEntryCtx = oODataModel.createEntry(entryPath, {
+          properties: {
+            ID: new Date().getTime().toString().slice(7),
+          },
+        });
+
+        this.oDialog.setBindingContext(oEntryCtx);
+
+        this.oDialog.setModel(oODataModel);
+
         this.oDialog.open();
       },
 
-      onDialogCancelBtnPress: function () {
-        if (this.oDialog) {
-          this.oDialog.close();
-        }
+      onDialogCreateBtnPress: function () {
+        const oODataModel = this.getODataModel();
+
+        oODataModel.submitChanges();
+
+        this.oDialog.close();
       },
 
-      onDialogAfterClose: function (sAppViewPath) {
-        const oAppViewModel = this.getAppViewModel();
-        const oNewFormStatesObj = JSON.parse(
-          JSON.stringify(oAppViewModel.getProperty(sAppViewPath))
-        );
+      onDialogCancelBtnPress: function () {
+        const oODataModel = this.getODataModel();
+        const oCtx = this.oDialog.getBindingContext();
 
-        for (const sKey in oNewFormStatesObj) {
-          oNewFormStatesObj[sKey] = "";
-        }
-        oAppViewModel.setProperty(sAppViewPath, oNewFormStatesObj);
+        oODataModel.deleteCreatedEntry(oCtx);
 
+        this.oDialog.close();
+      },
+
+      onDialogAfterClose: function () {
         sap.ui.getCore().getMessageManager().removeAllMessages();
       },
     });
