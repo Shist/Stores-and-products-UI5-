@@ -81,7 +81,11 @@ sap.ui.define(
         const currRating = oAppViewModel.getProperty("/currCommentRating");
 
         if (!currAuthor) {
-          MessageBox.warning("You should enter your name before making post!");
+          MessageBox.warning(
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.EMPTY_AUTHOR_WARNING
+            )
+          );
           return;
         }
 

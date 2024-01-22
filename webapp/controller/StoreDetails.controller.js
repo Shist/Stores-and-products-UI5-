@@ -34,10 +34,9 @@ sap.ui.define(
       },
 
       onAfterRendering: function () {
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
-        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
+        this.byId(CONSTANTS.ID.PRODUCTS_TABLE)
+          .getBinding("items")
+          .attachDataReceived(this.updateStatusFilters, this);
       },
 
       onExit: function () {
@@ -46,10 +45,9 @@ sap.ui.define(
           this
         );
 
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
-        oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
+        this.byId(CONSTANTS.ID.PRODUCTS_TABLE)
+          .getBinding("items")
+          .detachDataReceived(this.updateStatusFilters, this);
       },
 
       onRouterPatternMatched: function (oEvent) {
@@ -120,9 +118,11 @@ sap.ui.define(
       },
 
       onFiltersChanged: function () {
-        if (!this.isSearchFieldValid("productsSearch")) {
+        if (!this.isSearchFieldValid(CONSTANTS.ID.PRODUCTS_SEARCH)) {
           MessageBox.warning(
-            "Please do not use special symbols while searching: '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', '\\'"
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
+            )
           );
           return;
         }
@@ -272,14 +272,8 @@ sap.ui.define(
       onCreateProductBtnPress: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
 
-        // We need to temporarily detach this event handler while editing something inside ODataModel
-        oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
-
-        this.loadFormFragmentByName("CreateProductForm");
+        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.CREATE_PRODUCT);
 
         const oEntryCtx = oODataModel.createEntry("/Products", {
           properties: {
@@ -296,20 +290,30 @@ sap.ui.define(
 
       isCreateProductFormValid: function () {
         if (this.msgManagerHasErrors()) {
-          MessageBox.error("Please fix validation errors first!");
-          return false;
-        }
-
-        if (!this.byId("inputCreateProductName").getValue()) {
           MessageBox.error(
-            "'Name' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
+            )
           );
           return false;
         }
 
-        if (!this.byId("textAreaCreateProductSpecs").getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_PRODUCT_NAME).getValue()) {
           MessageBox.error(
-            "'Specs' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.NAME]
+            )
+          );
+          return false;
+        }
+
+        if (!this.byId(CONSTANTS.ID.TEXTAREA_CREATE_PRODUCT_SPECS).getValue()) {
+          MessageBox.error(
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.SPECS]
+            )
           );
           return false;
         }
@@ -318,19 +322,27 @@ sap.ui.define(
       },
 
       onCreateProductFormCreateBtnPress: function () {
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-
         if (!this.isCreateProductFormValid()) {
           return;
         }
 
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show("Product was successfully created!");
+            MessageToast.show(
+              this.getTextFromResourceModel(
+                CONSTANTS.I18N_KEY.PRODUCT_CREATE_SUCCESS
+              )
+            );
           },
           error: function () {
-            MessageBox.error("Error while creating product!");
+            MessageBox.error(
+              this.getTextFromResourceModel(
+                CONSTANTS.I18N_KEY.PRODUCT_CREATE_ERROR
+              )
+            );
           },
         });
 
@@ -345,14 +357,8 @@ sap.ui.define(
         const oCtx = oEvent
           .getSource()
           .getBindingContext(CONSTANTS.MODEL.ODATA);
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
 
-        // We need to temporarily detach this event handler while editing something inside ODataModel
-        oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
-
-        this.loadFormFragmentByName("EditProductForm");
+        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.EDIT_PRODUCT);
 
         this.oDialog.setBindingContext(oCtx);
 
@@ -361,20 +367,30 @@ sap.ui.define(
 
       isEditProductFormValid: function () {
         if (this.msgManagerHasErrors()) {
-          MessageBox.error("Please fix validation errors first!");
-          return false;
-        }
-
-        if (!this.byId("inputEditProductName").getValue()) {
           MessageBox.error(
-            "'Name' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
+            )
           );
           return false;
         }
 
-        if (!this.byId("textAreaEditProductSpecs").getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_EDIT_PRODUCT_NAME).getValue()) {
           MessageBox.error(
-            "'Specs' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.NAME]
+            )
+          );
+          return false;
+        }
+
+        if (!this.byId(CONSTANTS.ID.TEXTAREA_EDIT_PRODUCT_SPECS).getValue()) {
+          MessageBox.error(
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.SPECS]
+            )
           );
           return false;
         }
@@ -392,10 +408,18 @@ sap.ui.define(
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show("Product was successfully edited!");
+            MessageToast.show(
+              this.getTextFromResourceModel(
+                CONSTANTS.I18N_KEY.PRODUCT_EDIT_SUCCESS
+              )
+            );
           },
           error: function () {
-            MessageBox.error("Error while editing product!");
+            MessageBox.error(
+              this.getTextFromResourceModel(
+                CONSTANTS.I18N_KEY.PRODUCT_EDIT_ERROR
+              )
+            );
           },
         });
 
@@ -418,9 +442,6 @@ sap.ui.define(
         // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
         oODataModel.resetChanges();
 
-        // When any of forms is closing we need to attach this event handler again
-        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
-
         // For some reason server does not update my list (by additional GET request) after submitChanges()
         // That is why I have to refresh it by myself after some time
         setTimeout(() => oProductsBinding.refresh(), 100);
@@ -430,8 +451,11 @@ sap.ui.define(
 
       onDeleteStoreBtnPress: function () {
         const oControllerContext = this;
+        const sConfirmationMsg = this.getTextFromResourceModel(
+          CONSTANTS.I18N_KEY.STORE_DELETE_CONFIRMATION
+        );
 
-        MessageBox.confirm("Are you sure you want to delete store?", {
+        MessageBox.confirm(sConfirmationMsg, {
           onClose: function (oAction) {
             if (oAction === MessageBox.Action.OK) {
               const oODataModel = oControllerContext.getModel(
@@ -441,13 +465,20 @@ sap.ui.define(
 
               oODataModel.remove(sKey, {
                 success: function () {
-                  MessageToast.show("Store was successfully deleted!", {
+                  const sMsgSuccess =
+                    oControllerContext.getTextFromResourceModel(
+                      CONSTANTS.I18N_KEY.STORE_DELETE_SUCCESS
+                    );
+                  MessageToast.show(sMsgSuccess, {
                     closeOnBrowserNavigation: false,
                   });
                   oControllerContext.onStoresListLinkPress();
                 },
                 error: function () {
-                  MessageBox.error("Error while removing store!");
+                  const sMsgError = oControllerContext.getTextFromResourceModel(
+                    CONSTANTS.I18N_KEY.STORE_DELETE_ERROR
+                  );
+                  MessageBox.error(sMsgError);
                 },
               });
             }
@@ -456,11 +487,15 @@ sap.ui.define(
       },
 
       onDeleteProductBtnPress: function (oEvent) {
+        const oControllerContext = this;
         const oCtx = oEvent
           .getSource()
           .getBindingContext(CONSTANTS.MODEL.ODATA);
+        const sConfirmationMsg = this.getTextFromResourceModel(
+          CONSTANTS.I18N_KEY.PRODUCT_DELETE_CONFIRMATION
+        );
 
-        MessageBox.confirm("Are you sure you want to delete product?", {
+        MessageBox.confirm(sConfirmationMsg, {
           onClose: function (oAction) {
             if (oAction === MessageBox.Action.OK) {
               const oODataModel = oCtx.getModel();
@@ -468,10 +503,17 @@ sap.ui.define(
 
               oODataModel.remove(sKey, {
                 success: function () {
-                  MessageToast.show("Product was successfully deleted!");
+                  const sMsgSuccess =
+                    oControllerContext.getTextFromResourceModel(
+                      CONSTANTS.I18N_KEY.PRODUCT_DELETE_SUCCESS
+                    );
+                  MessageToast.show(sMsgSuccess);
                 },
                 error: function () {
-                  MessageBox.error("Error while removing product!");
+                  const sMsgError = oControllerContext.getTextFromResourceModel(
+                    CONSTANTS.I18N_KEY.PRODUCT_DELETE_ERROR
+                  );
+                  MessageBox.error(sMsgError);
                 },
               });
             }
