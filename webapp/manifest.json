@@ -102,6 +102,7 @@
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "InlineRepeat",
           "defaultOperationMode": "Client",
+          "disableHeadRequestForToken": true,
           "useBatch": false
         }
       },
@@ -111,6 +112,7 @@
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "InlineRepeat",
           "defaultOperationMode": "Server",
+          "disableHeadRequestForToken": true,
           "useBatch": false
         }
       },
