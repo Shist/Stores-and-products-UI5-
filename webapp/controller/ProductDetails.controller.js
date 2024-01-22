@@ -97,10 +97,6 @@ sap.ui.define(
 
         oODataModel.createEntry("/ProductComments", {
           properties: {
-            [CONSTANTS.COMMENT_PROP.ID]: new Date()
-              .getTime()
-              .toString()
-              .slice(7),
             [CONSTANTS.COMMENT_PROP.AUTHOR]: currAuthor,
             [CONSTANTS.COMMENT_PROP.MESSAGE]: currMessage,
             [CONSTANTS.COMMENT_PROP.RATING]: currRating

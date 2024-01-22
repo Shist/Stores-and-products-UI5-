@@ -84,11 +84,7 @@ sap.ui.define(
 
       onCreateStoreBtnPress: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-        const oEntryCtx = oODataModel.createEntry("/Stores", {
-          properties: {
-            [CONSTANTS.STORE_PROP.ID]: 0,
-          },
-        });
+        const oEntryCtx = oODataModel.createEntry("/Stores");
 
         this.loadFormFragmentByName(CONSTANTS.FORM_NAME.STORE);
 

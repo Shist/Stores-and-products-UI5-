@@ -274,10 +274,6 @@ sap.ui.define(
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const oEntryCtx = oODataModel.createEntry("/Products", {
           properties: {
-            [CONSTANTS.PRODUCT_PROP.ID]: new Date()
-              .getTime()
-              .toString()
-              .slice(7),
             [CONSTANTS.PRODUCT_PROP.STATUS]: CONSTANTS.STATUS.OK.SERVER_KEY,
             [CONSTANTS.PRODUCT_PROP.STORE_ID]:
               oAppViewModel.getProperty("/currStoreId"),
