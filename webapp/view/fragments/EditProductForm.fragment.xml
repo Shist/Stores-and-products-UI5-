@@ -1,7 +1,7 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core" >
+	xmlns:core="sap.ui.core">
 	<Dialog
 		id="EditProductDialog"
 		title="{i18n>editProduct}"
@@ -40,7 +40,7 @@
 						}
 					}">
 						<layoutData>
-							<FlexItemData growFactor="1" />
+							<FlexItemData growFactor="1"/>
 						</layoutData>
 					</Input>
 					<Text text="{i18n>eur}" class="sapUiTinyMarginBegin"/>
@@ -95,16 +95,16 @@
 
 				<Label text="{i18n>status}"/>
 				<Select forceSelection="false" selectedKey="{Status}">
-					<core:Item key="OK" text="OK" />
-					<core:Item key="STORAGE" text="Storage" />
-					<core:Item key="OUT_OF_STOCK" text="Out of stock" />
+					<core:Item key="OK" text="OK"/>
+					<core:Item key="STORAGE" text="Storage"/>
+					<core:Item key="OUT_OF_STOCK" text="Out of stock"/>
 				</Select>
 			</f:content>
 		</f:SimpleForm>
 
 		<buttons>
-			<Button type="Emphasized" text="{i18n>edit}" press="onEditProductFormEditBtnPress" />
-			<Button text="{i18n>cancel}" press="onEditProductFormCancelBtnPress" />
+			<Button type="Emphasized" text="{i18n>edit}" press="onEditProductFormEditBtnPress"/>
+			<Button text="{i18n>cancel}" press="onEditProductFormCancelBtnPress"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

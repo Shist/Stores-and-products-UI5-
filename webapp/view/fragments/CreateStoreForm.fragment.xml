@@ -1,7 +1,7 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core" >
+	xmlns:core="sap.ui.core">
 	<Dialog
 		id="CreateStoreDialog"
 		title="{i18n>createNewStore}"
@@ -20,67 +20,90 @@
 			editable="true">
 			<f:content>
 				<Label text="{i18n>name}" required="true"/>
-				<Input id="inputCreateStoreName" type="Text" required="true" placeholder="{i18n>enterName}" value="{
-					path: 'Name',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						minLength: 1,
-						maxLength: 30
-					}
-				}"/>
+				<Input
+					id="inputCreateStoreName"
+					type="Text"
+					required="true"
+					placeholder="{i18n>enterName}"
+					value="{
+						path: 'Name',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength: 1,
+							maxLength: 30
+						}
+					}"/>
 
 				<Label text="{i18n>email}" required="true"/>
-				<Input id="inputCreateStoreEmail" type="Email" required="true" placeholder="{i18n>enterEmail}" value="{
-					path: 'Email',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						minLength: 1,
-						maxLength: 30,
-						search: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
-					}
-				}"/>
+				<Input
+					id="inputCreateStoreEmail"
+					type="Email"
+					required="true"
+					placeholder="{i18n>enterEmail}"
+					value="{
+						path: 'Email',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength: 1,
+							maxLength: 30,
+							search: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+						}
+					}"/>
 
 				<Label text="{i18n>phoneNumber}" required="true"/>
-				<Input id="inputCreateStorePhone" type="Tel" required="true" placeholder="{i18n>enterPhoneNumber}" value="{
-					path: 'PhoneNumber',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						minLength: 1,
-						maxLength: 30,
-						search: '^[\\d\\+\\-\\(\\)x\\ ]+$'
-					}
-				}"/>
+				<Input
+					id="inputCreateStorePhone"
+					type="Tel"
+					required="true"
+					placeholder="{i18n>enterPhoneNumber}"
+					value="{
+						path: 'PhoneNumber',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength: 1,
+							maxLength: 30,
+							search: '^[\\d\\+\\-\\(\\)x\\ ]+$'
+						}
+					}"/>
 
 				<Label text="{i18n>address}"/>
-				<Input type="Text" placeholder="{i18n>enterAddress}" value="{
-					path: 'Address',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						maxLength: 50
-					}
-				}"/>
+				<Input
+					type="Text"
+					placeholder="{i18n>enterAddress}"
+					value="{
+						path: 'Address',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							maxLength: 50
+						}
+					}"/>
 
 				<Label text="{i18n>establishedDate}"/>
-				<DatePicker displayFormatType="Gregorian" placeholder="{i18n>establishedPattern}" value="{
-					path: 'Established',
-					type: 'sap.ui.model.type.Date'
-				}"/>
+				<DatePicker
+					displayFormatType="Gregorian"
+					placeholder="{i18n>establishedPattern}"
+					value="{
+						path: 'Established',
+						type: 'sap.ui.model.type.Date'
+					}"/>
 
 				<Label text="{i18n>floorArea}"/>
-				<Input placeholder="{i18n>enterFloorArea}" value="{
-					path: 'FloorArea',
-					type: 'sap.ui.model.type.Float',
-					constraints: {
-						minimum: 0,
-						maximum: 100000
-					}
-				}"/>
+				<Input
+					placeholder="{i18n>enterFloorArea}"
+					value="{
+						path: 'FloorArea',
+						type: 'sap.ui.model.type.Float',
+						constraints: {
+							minimum: 0,
+							maximum: 100000
+						}
+					}"/>
 			</f:content>
 		</f:SimpleForm>
 
 		<buttons>
-			<Button type="Emphasized" text="{i18n>create}" press="onCreateStoreFormCreateBtnPress" />
-			<Button text="{i18n>cancel}" press="onCreateStoreFormCancelBtnPress" />
+			<Button type="Emphasized" text="{i18n>create}" press="onCreateStoreFormCreateBtnPress"/>
+			<Button text="{i18n>cancel}" press="onCreateStoreFormCancelBtnPress"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

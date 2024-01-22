@@ -16,7 +16,7 @@
 				<f:breadcrumbs>
 					<Breadcrumbs>
 						<Link text="{i18n>storesList}" press="onStoresListLinkPress"/>
-						<Link text="{i18n>storeDetails}" />
+						<Link text="{i18n>storeDetails}"/>
 					</Breadcrumbs>
 				</f:breadcrumbs>
 			</f:DynamicPageTitle>
@@ -26,33 +26,59 @@
 				<layout:HorizontalLayout allowWrapping="true">
 					<layout:VerticalLayout class="sapUiMediumMarginEnd">
 						<layout:HorizontalLayout>
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{i18n>emailWithColon}"/>
+							<Label
+								design="Bold"
+								class="sapUiTinyMarginEnd"
+								labelFor="textEmail"
+								text="{i18n>emailWithColon}"/>
 							<Text id="textEmail" text="{odataClientMode>Email}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{i18n>phoneNumberWithColon}"/>
+							<Label
+								design="Bold"
+								class="sapUiTinyMarginEnd"
+								labelFor="textPhoneNumber"
+								text="{i18n>phoneNumberWithColon}"/>
 							<Text id="textPhoneNumber" text="{odataClientMode>PhoneNumber}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{i18n>addressWithColon}"/>
-							<Text id="textAddress" text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'not specified' }"/>
+							<Label
+								design="Bold"
+								class="sapUiTinyMarginEnd"
+								labelFor="textAddress"
+								text="{i18n>addressWithColon}"/>
+							<Text
+								id="textAddress"
+								text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'not specified' }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 					<layout:VerticalLayout>
 						<layout:HorizontalLayout>
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{i18n>establishedDateWithColon}"/>
-							<Text id="textEstablished" text="{= ${odataClientMode>Established} ? ${
-									path: 'odataClientMode>Established',
-									type: 'sap.ui.model.type.Date',
-									formatOptions: {
-										pattern: 'MMM d, yyyy'
-									}
-								} : 'not specified'
-							}"/>
+							<Label
+								design="Bold"
+								class="sapUiTinyMarginEnd"
+								labelFor="textEstablished"
+								text="{i18n>establishedDateWithColon}"/>
+							<Text
+								id="textEstablished"
+								text="{= ${odataClientMode>Established} ? ${
+										path: 'odataClientMode>Established',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'MMM d, yyyy'
+										}
+									} : 'not specified'
+								}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
-							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{i18n>floorAreaWithColon}"/>
-							<Text id="textFloorArea" text="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : 'not specified' }"/>
+							<Label
+								design="Bold"
+								class="sapUiTinyMarginEnd"
+								labelFor="textFloorArea"
+								text="{i18n>floorAreaWithColon}"/>
+							<Text
+								id="textFloorArea"
+								text="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : 'not specified' }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 				</layout:HorizontalLayout>
@@ -69,26 +95,26 @@
 						text="{i18n>all}"
 						count="{appView>/productsCounts/all}"
 						key="ALL"
-						showAll="true" />
-					<IconTabSeparator />
+						showAll="true"/>
+					<IconTabSeparator/>
 					<IconTabFilter
 						text="{i18n>ok}"
 						count="{appView>/productsCounts/ok}"
 						key="OK"
 						icon="sap-icon://message-success"
-						iconColor="Positive" />
+						iconColor="Positive"/>
 					<IconTabFilter
 						text="{i18n>storage}"
 						count="{appView>/productsCounts/storage}"
 						key="STORAGE"
 						icon="sap-icon://message-warning"
-						iconColor="Critical" />
+						iconColor="Critical"/>
 					<IconTabFilter
 						text="{i18n>outOfStock}"
 						count="{appView>/productsCounts/outOfStock}"
 						key="OUT_OF_STOCK"
 						icon="sap-icon://notification"
-						iconColor="Negative" />
+						iconColor="Negative"/>
 				</items>
 				<content>
 					<Table id="productsTable" items="{odataClientMode>rel_Products}" sticky="HeaderToolbar">
@@ -110,65 +136,86 @@
 						<columns>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('name')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/name',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>name}" />
+									<Button
+										press="onSortBtnPress('name')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/name',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>name}"/>
 								</HBox>
 							</Column>
 							<Column hAlign="End">
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('price')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/price',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>price}" />
+									<Button
+										press="onSortBtnPress('price')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/price',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>price}"/>
 								</HBox>
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('specs')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/specs',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>specs}" />
+									<Button
+										press="onSortBtnPress('specs')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/specs',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>specs}"/>
 								</HBox>
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('supplierInfo')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/supplierInfo',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>supplierInfo}" />
+									<Button
+										press="onSortBtnPress('supplierInfo')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/supplierInfo',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>supplierInfo}"/>
 								</HBox>
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('country')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/country',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>countryOfOrigin}" />
+									<Button
+										press="onSortBtnPress('country')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/country',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>countryOfOrigin}"/>
 								</HBox>
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('prodCompany')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/prodCompany',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>prodCompany}" />
+									<Button
+										press="onSortBtnPress('prodCompany')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/prodCompany',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>prodCompany}"/>
 								</HBox>
 							</Column>
 							<Column>
 								<HBox alignItems="Center">
-									<Button press="onSortBtnPress('rating')" type="Transparent" icon="{
-										path: 'appView>/productsSortStates/rating',
-										formatter: '.formatter.formatSortBtnIcon'
-									}"/>
-									<Text text="{i18n>rating}" />
+									<Button
+										press="onSortBtnPress('rating')"
+										type="Transparent"
+										icon="{
+											path: 'appView>/productsSortStates/rating',
+											formatter: '.formatter.formatSortBtnIcon'
+										}"/>
+									<Text text="{i18n>rating}"/>
 								</HBox>
 							</Column>
 							<Column width="80px"></Column>
@@ -176,19 +223,29 @@
 						<items>
 							<ColumnListItem press="onProductPress" type="Navigation">
 								<Text maxLines="2" text="{odataClientMode>Name}"/>
-								<Text maxLines="1" text="{= ${odataClientMode>Price} ? ${
-										parts: [
-											'i18n>priceValue',
-											'odataClientMode>Price'
-										],
-										formatter: 'formatMessage'
-									} : 'not specified'
-								}"/>
+								<Text
+									maxLines="1"
+									text="{= ${odataClientMode>Price} ? ${
+											parts: [
+												'i18n>priceValue',
+												'odataClientMode>Price'
+											],
+											formatter: 'formatMessage'
+										} : 'not specified'
+									}"/>
 								<Text maxLines="1" text="{odataClientMode>Specs}"/>
-								<Text maxLines="1" text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
-								<Text maxLines="1" text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : 'not specified' }"/>
-								<Text maxLines="1" text="{= ${odataClientMode>ProductionCompanyName} ? ${odataClientMode>ProductionCompanyName} : 'not specified' }"/>
-								<RatingIndicator value="{= ${odataClientMode>Rating} ? ${odataClientMode>Rating} : 0 }" editable="false" />
+								<Text
+									maxLines="1"
+									text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
+								<Text
+									maxLines="1"
+									text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : 'not specified' }"/>
+								<Text
+									maxLines="1"
+									text="{= ${odataClientMode>ProductionCompanyName}
+										? ${odataClientMode>ProductionCompanyName}
+										: 'not specified' }"/>
+								<RatingIndicator value="{= ${odataClientMode>Rating} ? ${odataClientMode>Rating} : 0 }" editable="false"/>
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent" press="onEditProductBtnPress"/>
 									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductBtnPress"/>

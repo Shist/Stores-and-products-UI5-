@@ -36,7 +36,8 @@
 					title="{odataClientMode>Name}"
 					number="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : '-' }"
 					numberUnit="{i18n>squareUnit}">
-						<ObjectAttribute text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'Address is not specified' }" />
+						<ObjectAttribute
+							text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'Address is not specified' }"/>
 				</ObjectListItem>
 			</List>
 		</f:content>

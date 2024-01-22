@@ -51,11 +51,15 @@
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{i18n>supplierInfoWithColon}"/>
-					<Text id="textSupplierInfo" text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
+					<Text
+						id="textSupplierInfo"
+						text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textProdCompany" text="{i18n>prodCompanyWithColon}"/>
-					<Text id="textProdCompany" text="{= ${odataClientMode>ProductionCompanyName} ? ${odataClientMode>ProductionCompanyName} : 'not specified' }"/>
+					<Text
+						id="textProdCompany"
+						text="{= ${odataClientMode>ProductionCompanyName} ? ${odataClientMode>ProductionCompanyName} : 'not specified' }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textCountry" text="{i18n>countryOfOriginWithColon}"/>
@@ -88,7 +92,7 @@
 				<List
 					id="commentsList"
 					showSeparators="Inner"
-					items="{odataServerMode>/ProductComments}" >
+					items="{odataServerMode>/ProductComments}">
 					<FeedListItem
 						sender="{odataServerMode>Author}"
 						text="{odataServerMode>Message}"
