@@ -48,6 +48,15 @@ sap.ui.define(
         return /^[^#%&*()\[\]{}\\]*$/.test(oSearchField.getValue());
       },
 
+      msgManagerHasErrors: function () {
+        const oMessageManager = sap.ui.getCore().getMessageManager();
+        if (oMessageManager.getMessageModel().oData.length) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+
       // This function can load one of 3 forms (createStpre, createProduct, editProduct)
       loadFormFragmentByName: function (fragmentName) {
         const oView = this.getView();

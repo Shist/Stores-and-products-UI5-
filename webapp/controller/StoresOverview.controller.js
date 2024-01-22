@@ -96,7 +96,41 @@ sap.ui.define(
         this.oDialog.open();
       },
 
+      isCreateStoreFormValid: function () {
+        if (this.msgManagerHasErrors()) {
+          MessageBox.error("Please fix validation errors first!");
+          return false;
+        }
+
+        if (!this.byId("inputName").getValue()) {
+          MessageBox.error(
+            "'Name' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        if (!this.byId("inputEmail").getValue()) {
+          MessageBox.error(
+            "'Email' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        if (!this.byId("inputPhone").getValue()) {
+          MessageBox.error(
+            "'Phone number' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        return true;
+      },
+
       onCreateStoreFormCreateBtnPress: function () {
+        if (!this.isCreateStoreFormValid()) {
+          return;
+        }
+
         const oODataModel = this.getODataModel();
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"

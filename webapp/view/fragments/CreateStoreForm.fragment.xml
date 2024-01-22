@@ -20,7 +20,7 @@
 			editable="true">
 			<f:content>
 				<Label text="{i18n>name}" required="true"/>
-				<Input type="Text" required="true" placeholder="{i18n>enterName}" value="{
+				<Input id="inputName" type="Text" required="true" placeholder="{i18n>enterName}" value="{
 					path: 'Name',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -30,7 +30,7 @@
 				}"/>
 
 				<Label text="{i18n>email}" required="true"/>
-				<Input type="Email" required="true" placeholder="{i18n>enterEmail}" value="{
+				<Input id="inputEmail" type="Email" required="true" placeholder="{i18n>enterEmail}" value="{
 					path: 'Email',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -41,7 +41,7 @@
 				}"/>
 
 				<Label text="{i18n>phoneNumber}" required="true"/>
-				<Input type="Tel" required="true" placeholder="{i18n>enterPhoneNumber}" value="{
+				<Input id="inputPhone" type="Tel" required="true" placeholder="{i18n>enterPhoneNumber}" value="{
 					path: 'PhoneNumber',
 					type: 'sap.ui.model.type.String',
 					constraints: {
