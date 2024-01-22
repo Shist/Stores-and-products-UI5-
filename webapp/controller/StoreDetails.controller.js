@@ -276,7 +276,7 @@ sap.ui.define(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
 
-        // We need to temporarily detach this event handler while editing some entry inside ODataModel
+        // We need to temporarily detach this event handler while editing something inside ODataModel
         oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
 
         this.loadFormFragmentByName("CreateProductForm");
@@ -318,14 +318,11 @@ sap.ui.define(
       },
 
       onCreateProductFormCreateBtnPress: function () {
+        const oODataModel = this.getODataModel();
+
         if (!this.isCreateProductFormValid()) {
           return;
         }
-
-        const oODataModel = this.getODataModel();
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
@@ -337,26 +334,10 @@ sap.ui.define(
           },
         });
 
-        // After creating product we need to return this event handler back
-        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
-
-        oProductsBinding.refresh();
-
         this.oDialog.close();
       },
 
       onCreateProductFormCancelBtnPress: function () {
-        const oODataModel = this.getODataModel();
-        const oCtx = this.oDialog.getBindingContext();
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
-
-        oODataModel.deleteCreatedEntry(oCtx);
-
-        // In case of creating product cancellation we need to return this event handler back as well
-        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
-
         this.oDialog.close();
       },
 
@@ -366,7 +347,7 @@ sap.ui.define(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
 
-        // We need to temporarily detach this event handler while editing some entry inside ODataModel
+        // We need to temporarily detach this event handler while editing something inside ODataModel
         oProductsBinding.detachDataReceived(this.updateStatusFilters, this);
 
         this.loadFormFragmentByName("EditProductForm");
@@ -400,14 +381,11 @@ sap.ui.define(
       },
 
       onEditProductFormEditBtnPress: function () {
+        const oODataModel = this.getODataModel();
+
         if (!this.isEditProductFormValid()) {
           return;
         }
-
-        const oODataModel = this.getODataModel();
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
@@ -419,23 +397,31 @@ sap.ui.define(
           },
         });
 
-        // In case of creating product cancellation we need to return this event handler back as well
-        oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
-
-        oProductsBinding.refresh();
-
         this.oDialog.close();
       },
 
       onEditProductFormCancelBtnPress: function () {
+        this.oDialog.close();
+      },
+
+      // Function for both 'Create Product' and 'Edit Product' forms
+      onProductFormAfterClose: function () {
+        const oODataModel = this.getODataModel();
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
 
-        // In case of creating product cancellation we need to return this event handler back as well
+        // This reset called Any time when the dialog is closing (even after confirmation)
+        // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
+        // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
+        oODataModel.resetChanges();
+
+        // When any of forms is closing we need to attach this event handler again
         oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
 
-        this.oDialog.close();
+        oProductsBinding.refresh();
+
+        sap.ui.getCore().getMessageManager().removeAllMessages();
       },
 
       onDeleteStoreBtnPress: function () {

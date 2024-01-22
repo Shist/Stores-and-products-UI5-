@@ -5,7 +5,7 @@
 	<Dialog
 		id="EditProductDialog"
 		title="{i18n>editProduct}"
-		afterClose="onFormAfterClose">
+		afterClose="onProductFormAfterClose">
 		<f:SimpleForm
 			maxContainerCols="1"
 			layout="ResponsiveGridLayout"

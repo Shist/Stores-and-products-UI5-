@@ -5,7 +5,7 @@
 	<Dialog
 		id="CreateStoreDialog"
 		title="{i18n>createNewStore}"
-		afterClose="onFormAfterClose">
+		afterClose="onStoreFormAfterClose">
 		<f:SimpleForm
 			maxContainerCols="1"
 			layout="ResponsiveGridLayout"

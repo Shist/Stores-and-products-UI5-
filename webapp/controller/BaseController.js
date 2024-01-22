@@ -74,18 +74,6 @@ sap.ui.define(
 
         this.oDialog.setModel(oODataModel);
       },
-
-      // This function is used by all 3 forms (when each of them is closing)
-      onFormAfterClose: function () {
-        const oODataModel = this.getODataModel();
-
-        // This reset called Any time when the dialog is closing (even after confirmation)
-        // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
-        // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
-        oODataModel.resetChanges();
-
-        sap.ui.getCore().getMessageManager().removeAllMessages();
-      },
     });
   }
 );

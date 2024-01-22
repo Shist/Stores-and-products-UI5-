@@ -127,14 +127,11 @@ sap.ui.define(
       },
 
       onCreateStoreFormCreateBtnPress: function () {
+        const oODataModel = this.getODataModel();
+
         if (!this.isCreateStoreFormValid()) {
           return;
         }
-
-        const oODataModel = this.getODataModel();
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
-          "items"
-        );
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
@@ -146,18 +143,27 @@ sap.ui.define(
           },
         });
 
-        oStoresBinding.refresh();
-
         this.oDialog.close();
       },
 
       onCreateStoreFormCancelBtnPress: function () {
-        const oODataModel = this.getODataModel();
-        const oCtx = this.oDialog.getBindingContext();
-
-        oODataModel.deleteCreatedEntry(oCtx);
-
         this.oDialog.close();
+      },
+
+      onStoreFormAfterClose: function () {
+        const oODataModel = this.getODataModel();
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
+          "items"
+        );
+
+        // This reset called Any time when the dialog is closing (even after confirmation)
+        // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
+        // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
+        oODataModel.resetChanges();
+
+        oStoresBinding.refresh();
+
+        sap.ui.getCore().getMessageManager().removeAllMessages();
       },
 
       onStorePress: function (oEvent) {
