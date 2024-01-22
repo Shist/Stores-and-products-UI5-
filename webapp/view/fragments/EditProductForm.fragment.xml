@@ -20,25 +20,33 @@
 			editable="true">
 			<f:content>
 				<Label text="{i18n>name}" required="true"/>
-				<Input id="inputEditProductName" type="Text" required="true" placeholder="{i18n>enterName}" value="{
-					path: 'Name',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						minLength: 1,
-						maxLength: 30
-					}
-				}"/>
-
-				<Label text="{i18n>price}" labelFor="priceInput"/>
-				<HBox>
-					<Input id="priceInput" placeholder="{i18n>enterPrice}" value="{
-						path: 'Price',
-						type: 'sap.ui.model.type.Float',
+				<Input
+					id="inputEditProductName"
+					type="Text"
+					required="true"
+					placeholder="{i18n>enterName}"
+					value="{
+						path: 'Name',
+						type: 'sap.ui.model.type.String',
 						constraints: {
-							minimum: 0,
-							maximum: 1000000000
+							minLength: 1,
+							maxLength: 30
 						}
-					}">
+					}"/>
+
+				<Label text="{i18n>price}" labelFor="inputEditProductPrice"/>
+				<HBox>
+					<Input
+						id="inputEditProductPrice"
+						placeholder="{i18n>enterPrice}"
+						value="{
+							path: 'Price',
+							type: 'sap.ui.model.type.Float',
+							constraints: {
+								minimum: 0,
+								maximum: 1000000000
+							}
+						}">
 						<layoutData>
 							<FlexItemData growFactor="1"/>
 						</layoutData>
@@ -47,51 +55,66 @@
 				</HBox>
 
 				<Label text="{i18n>specs}" required="true"/>
-				<TextArea id="textAreaEditProductSpecs" required="true" placeholder="{i18n>enterProductSpecs}" value="{
-					path: 'Specs',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						minLength: 1,
-						maxLength: 50
-					}
-				}"/>
+				<TextArea
+					id="textAreaEditProductSpecs"
+					required="true"
+					placeholder="{i18n>enterProductSpecs}"
+					value="{
+						path: 'Specs',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							minLength: 1,
+							maxLength: 50
+						}
+					}"/>
 
 				<Label text="{i18n>rating}"/>
-				<Input type="Text" placeholder="{i18n>enterRating}" value="{
-					path: 'Rating',
-					type: 'sap.ui.model.type.Integer',
-					constraints: {
-						minimum: 1,
-						maximum: 5
-					}
-				}"/>
+				<Input
+					type="Text"
+					placeholder="{i18n>enterRating}"
+					value="{
+						path: 'Rating',
+						type: 'sap.ui.model.type.Integer',
+						constraints: {
+							minimum: 1,
+							maximum: 5
+						}
+					}"/>
 
 				<Label text="{i18n>supplierInfo}"/>
-				<TextArea placeholder="{i18n>enterSupplierInfo}" value="{
-					path: 'SupplierInfo',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						maxLength: 50
-					}
-				}"/>
+				<TextArea
+					placeholder="{i18n>enterSupplierInfo}"
+					value="{
+						path: 'SupplierInfo',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							maxLength: 50
+						}
+					}"/>
 
 				<Label text="{i18n>madeIn}"/>
-				<Input type="Text" placeholder="{i18n>enterOriginCountry}" value="{
-					path: 'MadeIn',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						maxLength: 30
-					}
-				}"/>
+				<Input
+					type="Text"
+					placeholder="{i18n>enterOriginCountry}"
+					value="{
+						path: 'MadeIn',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							maxLength: 30
+						}
+					}"/>
 
 				<Label text="{i18n>productionCompanyName}"/>
-				<Input type="Text" placeholder="{i18n>enterManifactureName}" value="{
-					path: 'ProductionCompanyName',
-					type: 'sap.ui.model.type.String',
-					constraints: {
-						maxLength: 30
-					}
-				}"/>
+				<Input
+					type="Text"
+					placeholder="{i18n>enterManifactureName}"
+					value="{
+						path: 'ProductionCompanyName',
+						type: 'sap.ui.model.type.String',
+						constraints: {
+							maxLength: 30
+						}
+					}"/>
 
 				<Label text="{i18n>status}"/>
 				<Select forceSelection="false" selectedKey="{Status}">

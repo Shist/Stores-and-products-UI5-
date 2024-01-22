@@ -34,10 +34,10 @@
 						}
 					}"/>
 
-				<Label text="{i18n>price}" labelFor="priceInput"/>
+				<Label text="{i18n>price}" labelFor="inputCreateProductPrice"/>
 				<HBox>
 					<Input
-						id="priceInput"
+						id="inputCreateProductPrice"
 						placeholder="{i18n>enterPrice}"
 						value="{
 							path: 'Price',
