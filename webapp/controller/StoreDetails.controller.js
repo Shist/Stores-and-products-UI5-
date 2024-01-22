@@ -294,7 +294,34 @@ sap.ui.define(
         this.oDialog.open();
       },
 
+      isCreateProductFormValid: function () {
+        if (this.msgManagerHasErrors()) {
+          MessageBox.error("Please fix validation errors first!");
+          return false;
+        }
+
+        if (!this.byId("inputCreateProductName").getValue()) {
+          MessageBox.error(
+            "'Name' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        if (!this.byId("textAreaCreateProductSpecs").getValue()) {
+          MessageBox.error(
+            "'Specs' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        return true;
+      },
+
       onCreateProductFormCreateBtnPress: function () {
+        if (!this.isCreateProductFormValid()) {
+          return;
+        }
+
         const oODataModel = this.getODataModel();
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
@@ -349,7 +376,34 @@ sap.ui.define(
         this.oDialog.open();
       },
 
+      isEditProductFormValid: function () {
+        if (this.msgManagerHasErrors()) {
+          MessageBox.error("Please fix validation errors first!");
+          return false;
+        }
+
+        if (!this.byId("inputEditProductName").getValue()) {
+          MessageBox.error(
+            "'Name' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        if (!this.byId("textAreaEditProductSpecs").getValue()) {
+          MessageBox.error(
+            "'Specs' field is manadatory and can not be empty! Please enter some value for it."
+          );
+          return false;
+        }
+
+        return true;
+      },
+
       onEditProductFormEditBtnPress: function () {
+        if (!this.isEditProductFormValid()) {
+          return;
+        }
+
         const oODataModel = this.getODataModel();
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE

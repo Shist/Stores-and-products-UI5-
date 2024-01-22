@@ -102,21 +102,21 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId("inputName").getValue()) {
+        if (!this.byId("inputCreateStoreName").getValue()) {
           MessageBox.error(
             "'Name' field is manadatory and can not be empty! Please enter some value for it."
           );
           return false;
         }
 
-        if (!this.byId("inputEmail").getValue()) {
+        if (!this.byId("inputCreateStoreEmail").getValue()) {
           MessageBox.error(
             "'Email' field is manadatory and can not be empty! Please enter some value for it."
           );
           return false;
         }
 
-        if (!this.byId("inputPhone").getValue()) {
+        if (!this.byId("inputCreateStorePhone").getValue()) {
           MessageBox.error(
             "'Phone number' field is manadatory and can not be empty! Please enter some value for it."
           );

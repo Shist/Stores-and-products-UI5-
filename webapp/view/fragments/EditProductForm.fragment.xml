@@ -20,7 +20,7 @@
 			editable="true">
 			<f:content>
 				<Label text="{i18n>name}" required="true"/>
-				<Input type="Text" required="true" placeholder="{i18n>enterName}" value="{
+				<Input id="inputEditProductName" type="Text" required="true" placeholder="{i18n>enterName}" value="{
 					path: 'Name',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -35,8 +35,8 @@
 						path: 'Price',
 						type: 'sap.ui.model.type.Float',
 						constraints: {
-							maximum: 1000000000,
-							minimum: 0
+							minimum: 0,
+							maximum: 1000000000
 						}
 					}">
 						<layoutData>
@@ -47,7 +47,7 @@
 				</HBox>
 
 				<Label text="{i18n>specs}" required="true"/>
-				<TextArea required="true" placeholder="{i18n>enterProductSpecs}" value="{
+				<TextArea id="textAreaEditProductSpecs" required="true" placeholder="{i18n>enterProductSpecs}" value="{
 					path: 'Specs',
 					type: 'sap.ui.model.type.String',
 					constraints: {
@@ -61,8 +61,8 @@
 					path: 'Rating',
 					type: 'sap.ui.model.type.Integer',
 					constraints: {
-						maximum: 5,
-						minimum: 0
+						minimum: 1,
+						maximum: 5
 					}
 				}"/>
 
@@ -71,7 +71,6 @@
 					path: 'SupplierInfo',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 1,
 						maxLength: 50
 					}
 				}"/>
@@ -81,7 +80,6 @@
 					path: 'MadeIn',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 1,
 						maxLength: 30
 					}
 				}"/>
@@ -91,7 +89,6 @@
 					path: 'ProductionCompanyName',
 					type: 'sap.ui.model.type.String',
 					constraints: {
-						minLength: 1,
 						maxLength: 30
 					}
 				}"/>
