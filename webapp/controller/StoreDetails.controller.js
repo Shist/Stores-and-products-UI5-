@@ -422,7 +422,9 @@ sap.ui.define(
         // When any of forms is closing we need to attach this event handler again
         oProductsBinding.attachDataReceived(this.updateStatusFilters, this);
 
-        oProductsBinding.refresh();
+        // For some reason server does not update my list (by additional GET request) after submitChanges()
+        // That is why I have to refresh it by myself after some time
+        setTimeout(() => oProductsBinding.refresh(), 100);
 
         sap.ui.getCore().getMessageManager().removeAllMessages();
       },
@@ -433,7 +435,9 @@ sap.ui.define(
         MessageBox.confirm("Are you sure you want to delete store?", {
           onClose: function (oAction) {
             if (oAction === MessageBox.Action.OK) {
-              const oODataModel = oControllerContext.getODataModel();
+              const oODataModel = oControllerContext.getModel(
+                CONSTANTS.MODEL.ODATA
+              );
               const sKey = oControllerContext.getCurrStorePath();
 
               oODataModel.remove(sKey, {

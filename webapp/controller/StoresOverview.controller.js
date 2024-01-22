@@ -161,7 +161,9 @@ sap.ui.define(
         // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
         oODataModel.resetChanges();
 
-        oStoresBinding.refresh();
+        // For some reason server does not update my list (by additional GET request) after submitChanges()
+        // That is why I have to refresh it by myself after some time
+        setTimeout(() => oStoresBinding.refresh(), 100);
 
         sap.ui.getCore().getMessageManager().removeAllMessages();
       },
