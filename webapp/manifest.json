@@ -105,6 +105,15 @@
           "useBatch": false
         }
       },
+      "odataComments": {
+        "dataSource": "mainService",
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "InlineRepeat",
+          "defaultOperationMode": "Server",
+          "useBatch": false
+        }
+      },
       "appView": {
         "type": "sap.ui.model.json.JSONModel",
         "dataSource": "appViewData"

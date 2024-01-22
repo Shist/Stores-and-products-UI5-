@@ -58,14 +58,11 @@ sap.ui.define(
             .byId(CONSTANTS.ID.COMMENTS_LIST)
             .getBinding("items");
 
-          oCommentsBinding.refresh();
-
           oCommentsBinding.filter(
             new Filter({
               path: CONSTANTS.COMMENT_PROP.PRODUCT_ID,
               operator: FilterOperator.EQ,
               value1: sProductId,
-              comparator: (a, b) => a - b,
             })
           );
 
