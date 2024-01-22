@@ -272,7 +272,16 @@ sap.ui.define(
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
-        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.CREATE_PRODUCT);
+        oAppViewModel.setProperty(
+          "/currProductFormTitle",
+          this.getTextFromResourceModel(CONSTANTS.I18N_KEY.CREATE_NEW_PRODUCT)
+        );
+        oAppViewModel.setProperty(
+          "/currProductFormConfirmBtn",
+          this.getTextFromResourceModel(CONSTANTS.I18N_KEY.CREATE)
+        );
+
+        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.PRODUCT);
 
         const oEntryCtx = oODataModel.createEntry("/Products", {
           properties: {
@@ -287,79 +296,29 @@ sap.ui.define(
         this.oDialog.open();
       },
 
-      isCreateProductFormValid: function () {
-        if (this.msgManagerHasErrors()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_PRODUCT_NAME).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.NAME]
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        if (!this.byId(CONSTANTS.ID.TEXTAREA_CREATE_PRODUCT_SPECS).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.SPECS]
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        return true;
-      },
-
-      onCreateProductFormCreateBtnPress: function () {
-        if (!this.isCreateProductFormValid()) {
-          return;
-        }
-
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-
-        oODataModel.submitChanges({
-          // These two functions will only be called when we will start using batch
-          success: function () {
-            const sMsgSuccess = this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.PRODUCT_CREATE_SUCCESS
-            );
-            MessageToast.show(sMsgSuccess);
-          },
-          error: function () {
-            const sMsgError = this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.PRODUCT_CREATE_ERROR
-            );
-            MessageBox.error(sMsgError);
-          },
-        });
-
-        this.oDialog.close();
-      },
-
-      onCreateProductFormCancelBtnPress: function () {
-        this.oDialog.close();
-      },
-
       onEditProductBtnPress: function (oEvent) {
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const oCtx = oEvent
           .getSource()
           .getBindingContext(CONSTANTS.MODEL.ODATA);
 
-        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.EDIT_PRODUCT);
+        oAppViewModel.setProperty(
+          "/currProductFormTitle",
+          this.getTextFromResourceModel(CONSTANTS.I18N_KEY.EDIT_PRODUCT)
+        );
+        oAppViewModel.setProperty(
+          "/currProductFormConfirmBtn",
+          this.getTextFromResourceModel(CONSTANTS.I18N_KEY.EDIT)
+        );
+
+        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.PRODUCT);
 
         this.oDialog.setBindingContext(oCtx);
 
         this.oDialog.open();
       },
 
-      isEditProductFormValid: function () {
+      isProductFormValid: function () {
         if (this.msgManagerHasErrors()) {
           const sMsgError = this.getTextFromResourceModel(
             CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
@@ -368,7 +327,7 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.INPUT_EDIT_PRODUCT_NAME).getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_PRODUCT_NAME).getValue()) {
           const sMsgError = this.getTextFromResourceModel(
             CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
             [CONSTANTS.FORM_FIELD.NAME]
@@ -377,7 +336,7 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.TEXTAREA_EDIT_PRODUCT_SPECS).getValue()) {
+        if (!this.byId(CONSTANTS.ID.TEXTAREA_PRODUCT_SPECS).getValue()) {
           const sMsgError = this.getTextFromResourceModel(
             CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
             [CONSTANTS.FORM_FIELD.SPECS]
@@ -389,24 +348,32 @@ sap.ui.define(
         return true;
       },
 
-      onEditProductFormEditBtnPress: function () {
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-
-        if (!this.isEditProductFormValid()) {
+      onProductFormConfirmBtnPress: function () {
+        if (!this.isProductFormValid()) {
           return;
         }
+
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        const formIsCreating =
+          oAppViewModel.getProperty("/currProductFormTitle") ===
+          this.getTextFromResourceModel(CONSTANTS.I18N_KEY.CREATE_NEW_PRODUCT);
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
             const sMsgSuccess = this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.PRODUCT_EDIT_SUCCESS
+              formIsCreating
+                ? CONSTANTS.I18N_KEY.PRODUCT_CREATE_SUCCESS
+                : CONSTANTS.I18N_KEY.PRODUCT_EDIT_SUCCESS
             );
             MessageToast.show(sMsgSuccess);
           },
           error: function () {
             const sMsgError = this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.PRODUCT_EDIT_ERROR
+              formIsCreating
+                ? CONSTANTS.I18N_KEY.PRODUCT_CREATE_ERROR
+                : CONSTANTS.I18N_KEY.PRODUCT_EDIT_ERROR
             );
             MessageBox.error(sMsgError);
           },
@@ -415,11 +382,10 @@ sap.ui.define(
         this.oDialog.close();
       },
 
-      onEditProductFormCancelBtnPress: function () {
+      onProductFormCancelBtnPress: function () {
         this.oDialog.close();
       },
 
-      // Function for both 'Create Product' and 'Edit Product' forms
       onProductFormAfterClose: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oProductsBinding = this.byId(

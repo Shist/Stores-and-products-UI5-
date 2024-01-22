@@ -3,7 +3,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 	<Dialog
-		id="CreateStoreDialog"
+		id="StoreForm"
 		title="{i18n>createNewStore}"
 		afterClose="onStoreFormAfterClose">
 		<f:SimpleForm
@@ -21,7 +21,7 @@
 			<f:content>
 				<Label text="{i18n>name}" required="true"/>
 				<Input
-					id="inputCreateStoreName"
+					id="inputStoreName"
 					type="Text"
 					required="true"
 					placeholder="{i18n>enterName}"
@@ -36,7 +36,7 @@
 
 				<Label text="{i18n>email}" required="true"/>
 				<Input
-					id="inputCreateStoreEmail"
+					id="inputStoreEmail"
 					type="Email"
 					required="true"
 					placeholder="{i18n>enterEmail}"
@@ -52,7 +52,7 @@
 
 				<Label text="{i18n>phoneNumber}" required="true"/>
 				<Input
-					id="inputCreateStorePhone"
+					id="inputStorePhone"
 					type="Tel"
 					required="true"
 					placeholder="{i18n>enterPhoneNumber}"
@@ -102,8 +102,8 @@
 		</f:SimpleForm>
 
 		<buttons>
-			<Button type="Emphasized" text="{i18n>create}" press="onCreateStoreFormCreateBtnPress"/>
-			<Button text="{i18n>cancel}" press="onCreateStoreFormCancelBtnPress"/>
+			<Button type="Emphasized" text="{i18n>create}" press="onStoreFormCreateBtnPress"/>
+			<Button text="{i18n>cancel}" press="onStoreFormCancelBtnPress"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

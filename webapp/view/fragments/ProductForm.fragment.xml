@@ -3,8 +3,8 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 	<Dialog
-		id="EditProductDialog"
-		title="{i18n>editProduct}"
+		id="ProductForm"
+		title="{appView>/currProductFormTitle}"
 		afterClose="onProductFormAfterClose">
 		<f:SimpleForm
 			maxContainerCols="1"
@@ -21,7 +21,7 @@
 			<f:content>
 				<Label text="{i18n>name}" required="true"/>
 				<Input
-					id="inputEditProductName"
+					id="inputProductName"
 					type="Text"
 					required="true"
 					placeholder="{i18n>enterName}"
@@ -34,10 +34,10 @@
 						}
 					}"/>
 
-				<Label text="{i18n>price}" labelFor="inputEditProductPrice"/>
+				<Label text="{i18n>price}" labelFor="inputProductPrice"/>
 				<HBox>
 					<Input
-						id="inputEditProductPrice"
+						id="inputProductPrice"
 						placeholder="{i18n>enterPrice}"
 						value="{
 							path: 'Price',
@@ -56,7 +56,7 @@
 
 				<Label text="{i18n>specs}" required="true"/>
 				<TextArea
-					id="textAreaEditProductSpecs"
+					id="textAreaProductSpecs"
 					required="true"
 					placeholder="{i18n>enterProductSpecs}"
 					value="{
@@ -126,8 +126,8 @@
 		</f:SimpleForm>
 
 		<buttons>
-			<Button type="Emphasized" text="{i18n>edit}" press="onEditProductFormEditBtnPress"/>
-			<Button text="{i18n>cancel}" press="onEditProductFormCancelBtnPress"/>
+			<Button type="Emphasized" text="{appView>/currProductFormConfirmBtn}" press="onProductFormConfirmBtnPress"/>
+			<Button text="{i18n>cancel}" press="onProductFormCancelBtnPress"/>
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

@@ -90,7 +90,7 @@ sap.ui.define(
           },
         });
 
-        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.CREATE_STORE);
+        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.STORE);
 
         this.oDialog.setBindingContext(oEntryCtx);
 
@@ -106,7 +106,7 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_NAME).getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_STORE_NAME).getValue()) {
           const sMsgError = this.getTextFromResourceModel(
             CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
             [CONSTANTS.FORM_FIELD.NAME]
@@ -115,7 +115,7 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_EMAIL).getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_STORE_EMAIL).getValue()) {
           const sMsgError = this.getTextFromResourceModel(
             CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
             [CONSTANTS.FORM_FIELD.EMAIL]
@@ -124,7 +124,7 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_PHONE).getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_STORE_PHONE).getValue()) {
           const sMsgError = this.getTextFromResourceModel(
             CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
             [CONSTANTS.FORM_FIELD.PHONE_NUMBER]
@@ -136,7 +136,7 @@ sap.ui.define(
         return true;
       },
 
-      onCreateStoreFormCreateBtnPress: function () {
+      onStoreFormCreateBtnPress: function () {
         if (!this.isCreateStoreFormValid()) {
           return;
         }
@@ -162,7 +162,7 @@ sap.ui.define(
         this.oDialog.close();
       },
 
-      onCreateStoreFormCancelBtnPress: function () {
+      onStoreFormCancelBtnPress: function () {
         this.oDialog.close();
       },
 

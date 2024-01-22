@@ -4,6 +4,8 @@
   "currStoresSearchFilter": "",
   "currProductsStatusFilter": "ALL",
   "currProductsSearchFilter": "",
+  "currProductFormTitle": null,
+  "currProductFormConfirmBtn": null,
   "productsCounts": {
     "all": null,
     "ok": null,
