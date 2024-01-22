@@ -81,11 +81,10 @@ sap.ui.define(
         const currRating = oAppViewModel.getProperty("/currCommentRating");
 
         if (!currAuthor) {
-          MessageBox.warning(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.EMPTY_AUTHOR_WARNING
-            )
+          const sMsgWarning = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.EMPTY_AUTHOR_WARNING
           );
+          MessageBox.warning(sMsgWarning);
           return;
         }
 

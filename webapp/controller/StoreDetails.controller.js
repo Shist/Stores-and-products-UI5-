@@ -119,11 +119,10 @@ sap.ui.define(
 
       onFiltersChanged: function () {
         if (!this.isSearchFieldValid(CONSTANTS.ID.PRODUCTS_SEARCH)) {
-          MessageBox.warning(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
-            )
+          const sMsgWarning = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
           );
+          MessageBox.warning(sMsgWarning);
           return;
         }
 
@@ -290,31 +289,28 @@ sap.ui.define(
 
       isCreateProductFormValid: function () {
         if (this.msgManagerHasErrors()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.INPUT_CREATE_PRODUCT_NAME).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.NAME]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.NAME]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.TEXTAREA_CREATE_PRODUCT_SPECS).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.SPECS]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.SPECS]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
@@ -331,18 +327,16 @@ sap.ui.define(
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show(
-              this.getTextFromResourceModel(
-                CONSTANTS.I18N_KEY.PRODUCT_CREATE_SUCCESS
-              )
+            const sMsgSuccess = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.PRODUCT_CREATE_SUCCESS
             );
+            MessageToast.show(sMsgSuccess);
           },
           error: function () {
-            MessageBox.error(
-              this.getTextFromResourceModel(
-                CONSTANTS.I18N_KEY.PRODUCT_CREATE_ERROR
-              )
+            const sMsgError = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.PRODUCT_CREATE_ERROR
             );
+            MessageBox.error(sMsgError);
           },
         });
 
@@ -367,31 +361,28 @@ sap.ui.define(
 
       isEditProductFormValid: function () {
         if (this.msgManagerHasErrors()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.INPUT_EDIT_PRODUCT_NAME).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.NAME]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.NAME]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.TEXTAREA_EDIT_PRODUCT_SPECS).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.SPECS]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.SPECS]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
@@ -408,18 +399,16 @@ sap.ui.define(
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show(
-              this.getTextFromResourceModel(
-                CONSTANTS.I18N_KEY.PRODUCT_EDIT_SUCCESS
-              )
+            const sMsgSuccess = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.PRODUCT_EDIT_SUCCESS
             );
+            MessageToast.show(sMsgSuccess);
           },
           error: function () {
-            MessageBox.error(
-              this.getTextFromResourceModel(
-                CONSTANTS.I18N_KEY.PRODUCT_EDIT_ERROR
-              )
+            const sMsgError = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.PRODUCT_EDIT_ERROR
             );
+            MessageBox.error(sMsgError);
           },
         });
 

@@ -24,11 +24,10 @@ sap.ui.define(
 
       onStoresSearchBtnPress: function (oEvent) {
         if (!this.isSearchFieldValid(CONSTANTS.ID.STORES_SEARCH)) {
-          MessageBox.warning(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
-            )
+          const sMsgWarning = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
           );
+          MessageBox.warning(sMsgWarning);
           return;
         }
 
@@ -100,41 +99,37 @@ sap.ui.define(
 
       isCreateStoreFormValid: function () {
         if (this.msgManagerHasErrors()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_NAME).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.NAME]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.NAME]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_EMAIL).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.EMAIL]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.EMAIL]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
         if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_PHONE).getValue()) {
-          MessageBox.error(
-            this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [CONSTANTS.FORM_FIELD.PHONE_NUMBER]
-            )
+          const sMsgError = this.getTextFromResourceModel(
+            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+            [CONSTANTS.FORM_FIELD.PHONE_NUMBER]
           );
+          MessageBox.error(sMsgError);
           return false;
         }
 
@@ -151,18 +146,16 @@ sap.ui.define(
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show(
-              this.getTextFromResourceModel(
-                CONSTANTS.I18N_KEY.STORE_CREATE_SUCCESS
-              )
+            const sMsgSuccess = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.STORE_CREATE_SUCCESS
             );
+            MessageToast.show(sMsgSuccess);
           },
           error: function () {
-            MessageBox.error(
-              this.getTextFromResourceModel(
-                CONSTANTS.I18N_KEY.STORE_CREATE_ERROR
-              )
+            const sMsgError = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.STORE_CREATE_ERROR
             );
+            MessageBox.error(sMsgError);
           },
         });
 
