@@ -78,7 +78,7 @@ sap.ui.define(
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const currAuthor = oAppViewModel.getProperty("/currAuthorName");
         const currMessage = oAppViewModel.getProperty("/currCommentMsg");
-        const currRating = oAppViewModel.getProperty("/currRating");
+        const currRating = oAppViewModel.getProperty("/currCommentRating");
 
         if (!currAuthor) {
           MessageBox.warning("You should enter your name before making post!");
@@ -86,7 +86,7 @@ sap.ui.define(
         }
 
         oAppViewModel.setProperty("/currAuthorName", "");
-        oAppViewModel.setProperty("/currRating", 0);
+        oAppViewModel.setProperty("/currCommentRating", 0);
 
         oODataModel.createEntry("/ProductComments", {
           properties: {
@@ -122,7 +122,7 @@ sap.ui.define(
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         oAppViewModel.setProperty("/currProductId", null);
         oAppViewModel.setProperty("/currAuthorName", "");
-        oAppViewModel.setProperty("/currRating", 0);
+        oAppViewModel.setProperty("/currCommentRating", 0);
         oAppViewModel.setProperty("/currCommentMsg", "");
       },
 

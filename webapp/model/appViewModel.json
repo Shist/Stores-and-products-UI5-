@@ -20,6 +20,6 @@
     "rating": "DEFAULT"
   },
   "currAuthorName": "",
-  "currRating": 0,
+  "currCommentRating": 0,
   "currCommentMsg": ""
 }

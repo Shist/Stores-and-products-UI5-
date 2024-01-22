@@ -16,10 +16,18 @@ sap.ui.define(
         return this.getRouter().getRoute(sRoute);
       },
 
-      getModel: function (modelName) {
-        return this.getView().getModel(modelName);
+      getModel: function (sModelName) {
+        return this.getView().getModel(sModelName);
       },
 
+      // aArgs parameter is optional and used for i18n strings with placeholders
+      getTextFromResourceModel: function (sTextKey, aArgs) {
+        return this.getModel(CONSTANTS.MODEL.I18N)
+          .getResourceBundle()
+          .getText(sTextKey, aArgs);
+      },
+
+      // Both parameters (sProperty, oEvent) are optional
       getBindingContextData: function (sProperty, oEvent) {
         if (oEvent) {
           return oEvent
@@ -34,19 +42,22 @@ sap.ui.define(
       },
 
       registerViewToMessageManager: function () {
-        const oMessageManager = sap.ui.getCore().getMessageManager();
-        oMessageManager.registerObject(this.getView(), true);
+        sap.ui
+          .getCore()
+          .getMessageManager()
+          .registerObject(this.getView(), true);
       },
 
-      isSearchFieldValid: function (searchFieldId) {
-        const oSearchField = this.byId(searchFieldId);
-
-        return /^[^#%&*()\[\]{}\\]*$/.test(oSearchField.getValue());
+      isSearchFieldValid: function (sSearchFieldId) {
+        return /^[^#%&*()\[\]{}\\]*$/.test(
+          this.byId(sSearchFieldId).getValue()
+        );
       },
 
       msgManagerHasErrors: function () {
-        const oMessageManager = sap.ui.getCore().getMessageManager();
-        if (oMessageManager.getMessageModel().oData.length) {
+        if (
+          sap.ui.getCore().getMessageManager().getMessageModel().oData.length
+        ) {
           return true;
         } else {
           return false;
@@ -54,21 +65,20 @@ sap.ui.define(
       },
 
       // This function can load one of 3 forms (createStpre, createProduct, editProduct)
-      loadFormFragmentByName: function (fragmentName) {
+      loadFormFragmentByName: function (sFragmentName) {
         const oView = this.getView();
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         if (!this.oDialog) {
           this.oDialog = sap.ui.xmlfragment(
             oView.getId(),
-            `pavel.zhukouski.view.fragments.${fragmentName}`,
+            `pavel.zhukouski.view.fragments.${sFragmentName}`,
             this
           );
 
           oView.addDependent(this.oDialog);
         }
 
-        this.oDialog.setModel(oODataModel);
+        this.oDialog.setModel(this.getModel(CONSTANTS.MODEL.ODATA));
       },
     });
   }

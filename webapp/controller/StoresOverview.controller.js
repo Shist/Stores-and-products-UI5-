@@ -23,9 +23,11 @@ sap.ui.define(
       },
 
       onStoresSearchBtnPress: function (oEvent) {
-        if (!this.isSearchFieldValid("storesSearch")) {
+        if (!this.isSearchFieldValid(CONSTANTS.ID.STORES_SEARCH)) {
           MessageBox.warning(
-            "Please do not use special symbols while searching: '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', '\\'"
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
+            )
           );
           return;
         }
@@ -34,17 +36,18 @@ sap.ui.define(
           "items"
         );
         const sQuery = oEvent.getParameter("query");
-        let targetFilter = [];
+        let oTargetFilter = [];
 
         oStoresBinding.refresh();
 
         if (sQuery) {
-          const aSearchFilters = this.getStoresSearchFilter(sQuery);
-
-          targetFilter = new Filter({ filters: aSearchFilters, and: false });
+          oTargetFilter = new Filter({
+            filters: this.getStoresSearchFilter(sQuery),
+            and: false,
+          });
         }
 
-        oStoresBinding.filter(targetFilter);
+        oStoresBinding.filter(oTargetFilter);
       },
 
       getStoresSearchFilter: function (sQuery) {
@@ -82,14 +85,13 @@ sap.ui.define(
 
       onCreateStoreBtnPress: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-
-        this.loadFormFragmentByName("CreateStoreForm");
-
         const oEntryCtx = oODataModel.createEntry("/Stores", {
           properties: {
             ID: new Date().getTime().toString().slice(7),
           },
         });
+
+        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.CREATE_STORE);
 
         this.oDialog.setBindingContext(oEntryCtx);
 
@@ -98,27 +100,40 @@ sap.ui.define(
 
       isCreateStoreFormValid: function () {
         if (this.msgManagerHasErrors()) {
-          MessageBox.error("Please fix validation errors first!");
-          return false;
-        }
-
-        if (!this.byId("inputCreateStoreName").getValue()) {
           MessageBox.error(
-            "'Name' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
+            )
           );
           return false;
         }
 
-        if (!this.byId("inputCreateStoreEmail").getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_NAME).getValue()) {
           MessageBox.error(
-            "'Email' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.NAME]
+            )
           );
           return false;
         }
 
-        if (!this.byId("inputCreateStorePhone").getValue()) {
+        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_EMAIL).getValue()) {
           MessageBox.error(
-            "'Phone number' field is manadatory and can not be empty! Please enter some value for it."
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.EMAIL]
+            )
+          );
+          return false;
+        }
+
+        if (!this.byId(CONSTANTS.ID.INPUT_CREATE_STORE_PHONE).getValue()) {
+          MessageBox.error(
+            this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [CONSTANTS.FORM_FIELD.PHONE_NUMBER]
+            )
           );
           return false;
         }
@@ -127,19 +142,27 @@ sap.ui.define(
       },
 
       onCreateStoreFormCreateBtnPress: function () {
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-
         if (!this.isCreateStoreFormValid()) {
           return;
         }
 
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show("Store was successfully created!");
+            MessageToast.show(
+              this.getTextFromResourceModel(
+                CONSTANTS.I18N_KEY.STORE_CREATE_SUCCESS
+              )
+            );
           },
           error: function () {
-            MessageBox.error("Error while creating store!");
+            MessageBox.error(
+              this.getTextFromResourceModel(
+                CONSTANTS.I18N_KEY.STORE_CREATE_ERROR
+              )
+            );
           },
         });
 

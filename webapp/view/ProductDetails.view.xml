@@ -81,7 +81,7 @@
 					</HBox>
 					<HBox alignItems="Center">
 						<Label class="sapUiTinyMarginEnd" text="{i18n>ratingWithColon}"/>
-						<RatingIndicator maxValue="5" value="{appView>/currRating}"/>
+						<RatingIndicator maxValue="5" value="{appView>/currCommentRating}"/>
 					</HBox>
 				</HBox>
 				<FeedInput post="onPostBtnPress" class="sapUiSmallMarginTopBottom" value="{appView>/currCommentMsg}"/>

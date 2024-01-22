@@ -345,7 +345,6 @@ sap.ui.define(
         const oCtx = oEvent
           .getSource()
           .getBindingContext(CONSTANTS.MODEL.ODATA);
-        console.log(oCtx);
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");

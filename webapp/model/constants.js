@@ -18,9 +18,30 @@ sap.ui.define([], function () {
     },
     ID: {
       STORES_LIST: "storesList",
+      STORES_SEARCH: "storesSearch",
+      INPUT_CREATE_STORE_NAME: "inputCreateStoreName",
+      INPUT_CREATE_STORE_EMAIL: "inputCreateStoreEmail",
+      INPUT_CREATE_STORE_PHONE: "inputCreateStorePhone",
       PRODUCTS_TABLE: "productsTable",
       ICON_TAB_BAR: "iconTabBar",
       COMMENTS_LIST: "commentsList",
+    },
+    I18N_KEY: {
+      SEARCH_VALIDATION_WARNING: "searchValidationWarning",
+      FIX_VALIDATION_ERRORS_MSG: "fixValidationErrorsMsg",
+      FIELD_IS_MANADATORY_MSG: "msgFieldIsManadatory",
+      STORE_CREATE_SUCCESS: "storeCreatedSuccessfully",
+      STORE_CREATE_ERROR: "storeCreatedWithError",
+    },
+    FORM_NAME: {
+      CREATE_STORE: "CreateStoreForm",
+      CREATE_PRODUCT: "",
+      EDIT_PRODUCT: "",
+    },
+    FORM_FIELD: {
+      NAME: "Name",
+      EMAIL: "Email",
+      PHONE_NUMBER: "Phone number",
     },
     STORE_PROP: {
       ID: "id",
