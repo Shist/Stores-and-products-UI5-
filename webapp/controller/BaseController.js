@@ -64,21 +64,21 @@ sap.ui.define(
         }
       },
 
-      // This function can load one of 3 forms (createStpre, createProduct, editProduct)
+      // This function can load one of two forms: StoreForm or ProductForm
       loadFormFragmentByName: function (sFragmentName) {
         const oView = this.getView();
 
-        if (!this.oDialog) {
-          this.oDialog = sap.ui.xmlfragment(
+        if (!this.oForm) {
+          this.oForm = sap.ui.xmlfragment(
             oView.getId(),
             `pavel.zhukouski.view.fragments.${sFragmentName}`,
             this
           );
 
-          oView.addDependent(this.oDialog);
+          oView.addDependent(this.oForm);
         }
 
-        this.oDialog.setModel(this.getModel(CONSTANTS.MODEL.ODATA));
+        this.oForm.setModel(this.getModel(CONSTANTS.MODEL.ODATA));
       },
     });
   }

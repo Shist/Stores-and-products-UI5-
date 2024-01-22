@@ -86,15 +86,15 @@ sap.ui.define(
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oEntryCtx = oODataModel.createEntry("/Stores", {
           properties: {
-            ID: new Date().getTime().toString().slice(7),
+            [CONSTANTS.STORE_PROP.ID]: 0,
           },
         });
 
         this.loadFormFragmentByName(CONSTANTS.FORM_NAME.STORE);
 
-        this.oDialog.setBindingContext(oEntryCtx);
+        this.oForm.setBindingContext(oEntryCtx);
 
-        this.oDialog.open();
+        this.oForm.open();
       },
 
       isCreateStoreFormValid: function () {
@@ -141,29 +141,30 @@ sap.ui.define(
           return;
         }
 
+        const oControllerContext = this;
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            const sMsgSuccess = this.getTextFromResourceModel(
+            const sMsgSuccess = oControllerContext.getTextFromResourceModel(
               CONSTANTS.I18N_KEY.STORE_CREATE_SUCCESS
             );
             MessageToast.show(sMsgSuccess);
           },
           error: function () {
-            const sMsgError = this.getTextFromResourceModel(
+            const sMsgError = oControllerContext.getTextFromResourceModel(
               CONSTANTS.I18N_KEY.STORE_CREATE_ERROR
             );
             MessageBox.error(sMsgError);
           },
         });
 
-        this.oDialog.close();
+        this.oForm.close();
       },
 
       onStoreFormCancelBtnPress: function () {
-        this.oDialog.close();
+        this.oForm.close();
       },
 
       onStoreFormAfterClose: function () {

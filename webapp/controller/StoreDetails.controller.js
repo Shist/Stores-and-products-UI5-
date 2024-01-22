@@ -52,7 +52,8 @@ sap.ui.define(
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
-        const sStoreId = oEvent.getParameter("arguments").storeId;
+        const sStoreId =
+          oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.STORE_ID];
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
@@ -271,6 +272,17 @@ sap.ui.define(
       onCreateProductBtnPress: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        const oEntryCtx = oODataModel.createEntry("/Products", {
+          properties: {
+            [CONSTANTS.PRODUCT_PROP.ID]: new Date()
+              .getTime()
+              .toString()
+              .slice(7),
+            [CONSTANTS.PRODUCT_PROP.STATUS]: CONSTANTS.STATUS.OK.SERVER_KEY,
+            [CONSTANTS.PRODUCT_PROP.STORE_ID]:
+              oAppViewModel.getProperty("/currStoreId"),
+          },
+        });
 
         oAppViewModel.setProperty(
           "/currProductFormTitle",
@@ -283,17 +295,9 @@ sap.ui.define(
 
         this.loadFormFragmentByName(CONSTANTS.FORM_NAME.PRODUCT);
 
-        const oEntryCtx = oODataModel.createEntry("/Products", {
-          properties: {
-            ID: new Date().getTime().toString().slice(7),
-            Status: CONSTANTS.STATUS.OK.SERVER_KEY,
-            StoreId: oAppViewModel.getProperty("/currStoreId"),
-          },
-        });
+        this.oForm.setBindingContext(oEntryCtx);
 
-        this.oDialog.setBindingContext(oEntryCtx);
-
-        this.oDialog.open();
+        this.oForm.open();
       },
 
       onEditProductBtnPress: function (oEvent) {
@@ -313,9 +317,9 @@ sap.ui.define(
 
         this.loadFormFragmentByName(CONSTANTS.FORM_NAME.PRODUCT);
 
-        this.oDialog.setBindingContext(oCtx);
+        this.oForm.setBindingContext(oCtx);
 
-        this.oDialog.open();
+        this.oForm.open();
       },
 
       isProductFormValid: function () {
@@ -353,6 +357,7 @@ sap.ui.define(
           return;
         }
 
+        const oControllerContext = this;
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const formIsCreating =
@@ -362,7 +367,7 @@ sap.ui.define(
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            const sMsgSuccess = this.getTextFromResourceModel(
+            const sMsgSuccess = oControllerContext.getTextFromResourceModel(
               formIsCreating
                 ? CONSTANTS.I18N_KEY.PRODUCT_CREATE_SUCCESS
                 : CONSTANTS.I18N_KEY.PRODUCT_EDIT_SUCCESS
@@ -370,7 +375,7 @@ sap.ui.define(
             MessageToast.show(sMsgSuccess);
           },
           error: function () {
-            const sMsgError = this.getTextFromResourceModel(
+            const sMsgError = oControllerContext.getTextFromResourceModel(
               formIsCreating
                 ? CONSTANTS.I18N_KEY.PRODUCT_CREATE_ERROR
                 : CONSTANTS.I18N_KEY.PRODUCT_EDIT_ERROR
@@ -379,11 +384,11 @@ sap.ui.define(
           },
         });
 
-        this.oDialog.close();
+        this.oForm.close();
       },
 
       onProductFormCancelBtnPress: function () {
-        this.oDialog.close();
+        this.oForm.close();
       },
 
       onProductFormAfterClose: function () {

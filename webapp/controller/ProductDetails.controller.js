@@ -40,7 +40,8 @@ sap.ui.define(
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
-        const sProductId = oEvent.getParameter("arguments").productId;
+        const sProductId =
+          oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID];
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
@@ -66,11 +67,14 @@ sap.ui.define(
             })
           );
 
-          oCommentsBinding.sort(new Sorter("Posted", CONSTANTS.SORT_STATE.ASC));
+          oCommentsBinding.sort(
+            new Sorter(CONSTANTS.COMMENT_PROP.POSTED, CONSTANTS.SORT_STATE.ASC)
+          );
         });
       },
 
       onPostBtnPress: function () {
+        const oControllerContext = this;
         const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
         const oCommentsBinding = this.byId(
           CONSTANTS.ID.COMMENTS_LIST
@@ -93,22 +97,34 @@ sap.ui.define(
 
         oODataModel.createEntry("/ProductComments", {
           properties: {
-            ID: new Date().getTime().toString().slice(7),
-            Author: currAuthor,
-            Message: currMessage,
-            Rating: currRating ? currRating : undefined,
-            Posted: new Date(),
-            ProductId: oAppViewModel.getProperty("/currProductId"),
+            [CONSTANTS.COMMENT_PROP.ID]: new Date()
+              .getTime()
+              .toString()
+              .slice(7),
+            [CONSTANTS.COMMENT_PROP.AUTHOR]: currAuthor,
+            [CONSTANTS.COMMENT_PROP.MESSAGE]: currMessage,
+            [CONSTANTS.COMMENT_PROP.RATING]: currRating
+              ? currRating
+              : undefined,
+            [CONSTANTS.COMMENT_PROP.POSTED]: new Date(),
+            [CONSTANTS.COMMENT_PROP.PRODUCT_ID]:
+              oAppViewModel.getProperty("/currProductId"),
           },
         });
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
-            MessageToast.show("Your comment was successfully posted!");
+            const sMsgSuccess = oControllerContext.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.COMMENT_POST_SUCCESS
+            );
+            MessageToast.show(sMsgSuccess);
           },
           error: function () {
-            MessageBox.error("Error while posting comment!");
+            const sMsgError = oControllerContext.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.COMMENT_POST_ERROR
+            );
+            MessageBox.error(sMsgError);
           },
         });
 

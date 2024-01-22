@@ -50,6 +50,8 @@ sap.ui.define([], function () {
       PRODUCT_DELETE_SUCCESS: "productDeletedSuccessfully",
       PRODUCT_DELETE_ERROR: "productDeletedWithError",
       EMPTY_AUTHOR_WARNING: "emptyAuthorWarningMsg",
+      COMMENT_POST_SUCCESS: "commentPostedSuccessfully",
+      COMMENT_POST_ERROR: "commentPostedWithError",
     },
     FORM_NAME: {
       STORE: "StoreForm",
