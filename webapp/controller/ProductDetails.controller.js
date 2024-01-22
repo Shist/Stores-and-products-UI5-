@@ -41,8 +41,8 @@ sap.ui.define(
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sProductId = oEvent.getParameter("arguments").productId;
-        const oODataModel = this.getODataModel();
-        const oAppViewModel = this.getAppViewModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
         oAppViewModel.setProperty("/currProductId", sProductId);
 
@@ -71,11 +71,11 @@ sap.ui.define(
       },
 
       onPostBtnPress: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
         const oCommentsBinding = this.byId(
           CONSTANTS.ID.COMMENTS_LIST
         ).getBinding("items");
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const currAuthor = oAppViewModel.getProperty("/currAuthorName");
         const currMessage = oAppViewModel.getProperty("/currCommentMsg");
         const currRating = oAppViewModel.getProperty("/currRating");
@@ -117,7 +117,7 @@ sap.ui.define(
       },
 
       setAllControlsToDefault: function () {
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         oAppViewModel.setProperty("/currProductId", null);
         oAppViewModel.setProperty("/currAuthorName", "");
         oAppViewModel.setProperty("/currRating", 0);

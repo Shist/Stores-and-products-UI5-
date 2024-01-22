@@ -16,12 +16,8 @@ sap.ui.define(
         return this.getRouter().getRoute(sRoute);
       },
 
-      getAppViewModel: function () {
-        return this.getView().getModel(CONSTANTS.MODEL.APP_VIEW);
-      },
-
-      getODataModel: function () {
-        return this.getView().getModel(CONSTANTS.MODEL.ODATA);
+      getModel: function (modelName) {
+        return this.getView().getModel(modelName);
       },
 
       getBindingContextData: function (sProperty, oEvent) {
@@ -60,7 +56,7 @@ sap.ui.define(
       // This function can load one of 3 forms (createStpre, createProduct, editProduct)
       loadFormFragmentByName: function (fragmentName) {
         const oView = this.getView();
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         if (!this.oDialog) {
           this.oDialog = sap.ui.xmlfragment(

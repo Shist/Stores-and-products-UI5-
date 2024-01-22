@@ -96,7 +96,7 @@
       }
     },
     "models": {
-      "odata": {
+      "odataClientMode": {
         "dataSource": "mainService",
         "settings": {
           "defaultBindingMode": "TwoWay",
@@ -105,7 +105,7 @@
           "useBatch": false
         }
       },
-      "odataComments": {
+      "odataServerMode": {
         "dataSource": "mainService",
         "settings": {
           "defaultBindingMode": "TwoWay",

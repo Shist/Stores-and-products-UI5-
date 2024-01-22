@@ -55,8 +55,8 @@ sap.ui.define(
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments").storeId;
-        const oODataModel = this.getODataModel();
-        const oAppViewModel = this.getAppViewModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
         oAppViewModel.setProperty("/currStoreId", sStoreId);
 
@@ -71,7 +71,7 @@ sap.ui.define(
       },
 
       getCurrStorePath: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const sStorePath = oODataModel.createKey(
           "/Stores",
           this.getBindingContextData()
@@ -80,8 +80,8 @@ sap.ui.define(
       },
 
       updateStatusFilters: function () {
-        const oODataModel = this.getODataModel();
-        const oAppViewModel = this.getAppViewModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const oProductsCounts = oAppViewModel.getProperty("/productsCounts");
         const oProductsSearchFilter = this.getProductsSearchFilter();
 
@@ -182,7 +182,7 @@ sap.ui.define(
       },
 
       getProductsSearchFilter: function () {
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const sQuery = oAppViewModel.getProperty("/currProductsSearchFilter");
 
         if (!sQuery) {
@@ -223,7 +223,7 @@ sap.ui.define(
       },
 
       getNewSortObj: function () {
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const oNewSortStatesObj = JSON.parse(
           JSON.stringify(oAppViewModel.getProperty("/productsSortStates"))
         );
@@ -236,7 +236,7 @@ sap.ui.define(
       },
 
       onSortBtnPress: function (sSortModelKey) {
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const sCurrSortState = oAppViewModel.getProperty(
           `/productsSortStates/${sSortModelKey}`
         );
@@ -270,8 +270,8 @@ sap.ui.define(
       },
 
       onCreateProductBtnPress: function () {
-        const oODataModel = this.getODataModel();
-        const oAppViewModel = this.getAppViewModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
@@ -318,7 +318,7 @@ sap.ui.define(
       },
 
       onCreateProductFormCreateBtnPress: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         if (!this.isCreateProductFormValid()) {
           return;
@@ -342,7 +342,10 @@ sap.ui.define(
       },
 
       onEditProductBtnPress: function (oEvent) {
-        const oCtx = oEvent.getSource().getBindingContext("odata");
+        const oCtx = oEvent
+          .getSource()
+          .getBindingContext(CONSTANTS.MODEL.ODATA);
+        console.log(oCtx);
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
@@ -381,7 +384,7 @@ sap.ui.define(
       },
 
       onEditProductFormEditBtnPress: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         if (!this.isEditProductFormValid()) {
           return;
@@ -406,7 +409,7 @@ sap.ui.define(
 
       // Function for both 'Create Product' and 'Edit Product' forms
       onProductFormAfterClose: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oProductsBinding = this.byId(
           CONSTANTS.ID.PRODUCTS_TABLE
         ).getBinding("items");
@@ -450,7 +453,9 @@ sap.ui.define(
       },
 
       onDeleteProductBtnPress: function (oEvent) {
-        const oCtx = oEvent.getSource().getBindingContext("odata");
+        const oCtx = oEvent
+          .getSource()
+          .getBindingContext(CONSTANTS.MODEL.ODATA);
 
         MessageBox.confirm("Are you sure you want to delete product?", {
           onClose: function (oAction) {
@@ -497,7 +502,7 @@ sap.ui.define(
       },
 
       setAllControlsToDefault: function () {
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         oAppViewModel.setProperty("/currStoreId", null);
         oAppViewModel.setProperty(
           "/currProductsStatusFilter",

@@ -3,7 +3,7 @@ sap.ui.define([], function () {
 
   return {
     MODEL: {
-      ODATA: "odata",
+      ODATA: "odataClientMode",
       APP_VIEW: "appView",
       I18N: "i18n",
     },

@@ -29,14 +29,14 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<List id="storesList" items="{odata>/Stores}">
+			<List id="storesList" items="{odataClientMode>/Stores}">
 				<ObjectListItem
 					press="onStorePress"
 					type="Active"
-					title="{odata>Name}"
-					number="{= ${odata>FloorArea} ? ${odata>FloorArea} : '-' }"
+					title="{odataClientMode>Name}"
+					number="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : '-' }"
 					numberUnit="{i18n>squareUnit}">
-						<ObjectAttribute text="{= ${odata>Address} ? ${odata>Address} : 'Address is not specified' }" />
+						<ObjectAttribute text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'Address is not specified' }" />
 				</ObjectListItem>
 			</List>
 		</f:content>

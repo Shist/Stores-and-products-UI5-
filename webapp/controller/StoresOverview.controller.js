@@ -81,7 +81,7 @@ sap.ui.define(
       },
 
       onCreateStoreBtnPress: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         this.loadFormFragmentByName("CreateStoreForm");
 
@@ -127,7 +127,7 @@ sap.ui.define(
       },
 
       onCreateStoreFormCreateBtnPress: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
 
         if (!this.isCreateStoreFormValid()) {
           return;
@@ -151,7 +151,7 @@ sap.ui.define(
       },
 
       onStoreFormAfterClose: function () {
-        const oODataModel = this.getODataModel();
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
         );
@@ -171,7 +171,7 @@ sap.ui.define(
           CONSTANTS.STORE_PROP.ID,
           oEvent
         );
-        const oAppViewModel = this.getAppViewModel();
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
           "items"
         );

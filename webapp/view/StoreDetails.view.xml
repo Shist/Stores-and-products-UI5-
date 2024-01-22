@@ -27,22 +27,22 @@
 					<layout:VerticalLayout class="sapUiMediumMarginEnd">
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEmail" text="{i18n>emailWithColon}"/>
-							<Text id="textEmail" text="{odata>Email}"/>
+							<Text id="textEmail" text="{odataClientMode>Email}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textPhoneNumber" text="{i18n>phoneNumberWithColon}"/>
-							<Text id="textPhoneNumber" text="{odata>PhoneNumber}"/>
+							<Text id="textPhoneNumber" text="{odataClientMode>PhoneNumber}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textAddress" text="{i18n>addressWithColon}"/>
-							<Text id="textAddress" text="{= ${odata>Address} ? ${odata>Address} : 'not specified' }"/>
+							<Text id="textAddress" text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'not specified' }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 					<layout:VerticalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textEstablished" text="{i18n>establishedDateWithColon}"/>
-							<Text id="textEstablished" text="{= ${odata>Established} ? ${
-									path: 'odata>Established',
+							<Text id="textEstablished" text="{= ${odataClientMode>Established} ? ${
+									path: 'odataClientMode>Established',
 									type: 'sap.ui.model.type.Date',
 									formatOptions: {
 										pattern: 'MMM d, yyyy'
@@ -52,7 +52,7 @@
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textFloorArea" text="{i18n>floorAreaWithColon}"/>
-							<Text id="textFloorArea" text="{= ${odata>FloorArea} ? ${odata>FloorArea} : 'not specified' }"/>
+							<Text id="textFloorArea" text="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : 'not specified' }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 				</layout:HorizontalLayout>
@@ -91,7 +91,7 @@
 						iconColor="Negative" />
 				</items>
 				<content>
-					<Table id="productsTable" items="{odata>rel_Products}" sticky="HeaderToolbar">
+					<Table id="productsTable" items="{odataClientMode>rel_Products}" sticky="HeaderToolbar">
 						<headerToolbar>
 							<Toolbar design="Solid">
 								<content>
@@ -175,20 +175,20 @@
 						</columns>
 						<items>
 							<ColumnListItem press="onProductPress" type="Navigation">
-								<Text maxLines="2" text="{odata>Name}"/>
-								<Text maxLines="1" text="{= ${odata>Price} ? ${
+								<Text maxLines="2" text="{odataClientMode>Name}"/>
+								<Text maxLines="1" text="{= ${odataClientMode>Price} ? ${
 										parts: [
 											'i18n>priceValue',
-											'odata>Price'
+											'odataClientMode>Price'
 										],
 										formatter: 'formatMessage'
 									} : 'not specified'
 								}"/>
-								<Text maxLines="1" text="{odata>Specs}"/>
-								<Text maxLines="1" text="{= ${odata>SupplierInfo} ? ${odata>SupplierInfo} : 'not specified' }"/>
-								<Text maxLines="1" text="{= ${odata>MadeIn} ? ${odata>MadeIn} : 'not specified' }"/>
-								<Text maxLines="1" text="{= ${odata>ProductionCompanyName} ? ${odata>ProductionCompanyName} : 'not specified' }"/>
-								<RatingIndicator value="{= ${odata>Rating} ? ${odata>Rating} : 0 }" editable="false" />
+								<Text maxLines="1" text="{odataClientMode>Specs}"/>
+								<Text maxLines="1" text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
+								<Text maxLines="1" text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : 'not specified' }"/>
+								<Text maxLines="1" text="{= ${odataClientMode>ProductionCompanyName} ? ${odataClientMode>ProductionCompanyName} : 'not specified' }"/>
+								<RatingIndicator value="{= ${odataClientMode>Rating} ? ${odataClientMode>Rating} : 0 }" editable="false" />
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent" press="onEditProductBtnPress"/>
 									<Button icon="sap-icon://sys-cancel" type="Transparent" press="onDeleteProductBtnPress"/>
