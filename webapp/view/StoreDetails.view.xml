@@ -49,7 +49,7 @@
 								text="{i18n>addressWithColon}"/>
 							<Text
 								id="textAddress"
-								text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'not specified' }"/>
+								text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : ${i18n>notSpecified} }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 					<layout:VerticalLayout>
@@ -67,7 +67,7 @@
 										formatOptions: {
 											pattern: 'MMM d, yyyy'
 										}
-									} : 'not specified'
+									} : ${i18n>notSpecified}
 								}"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
@@ -78,7 +78,7 @@
 								text="{i18n>floorAreaWithColon}"/>
 							<Text
 								id="textFloorArea"
-								text="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : 'not specified' }"/>
+								text="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : ${i18n>notSpecified} }"/>
 						</layout:HorizontalLayout>
 					</layout:VerticalLayout>
 				</layout:HorizontalLayout>
@@ -231,20 +231,20 @@
 												'odataClientMode>Price'
 											],
 											formatter: 'formatMessage'
-										} : 'not specified'
+										} : ${i18n>notSpecified}
 									}"/>
 								<Text maxLines="1" text="{odataClientMode>Specs}"/>
 								<Text
 									maxLines="1"
-									text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
+									text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : ${i18n>notSpecified} }"/>
 								<Text
 									maxLines="1"
-									text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : 'not specified' }"/>
+									text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : ${i18n>notSpecified} }"/>
 								<Text
 									maxLines="1"
 									text="{= ${odataClientMode>ProductionCompanyName}
 										? ${odataClientMode>ProductionCompanyName}
-										: 'not specified' }"/>
+										: ${i18n>notSpecified} }"/>
 								<RatingIndicator value="{= ${odataClientMode>Rating} ? ${odataClientMode>Rating} : 0 }" editable="false"/>
 								<HBox justifyContent="SpaceBetween">
 									<Button icon="sap-icon://edit" type="Transparent" press="onEditProductBtnPress"/>

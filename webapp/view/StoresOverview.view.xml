@@ -2,6 +2,8 @@
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+	core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
 	controllerName="pavel.zhukouski.controller.StoresOverview">
 
 	<f:DynamicPage showFooter="true" class="sapUiNoContentPadding">
@@ -37,7 +39,14 @@
 					number="{= ${odataClientMode>FloorArea} ? ${odataClientMode>FloorArea} : '-' }"
 					numberUnit="{i18n>squareUnit}">
 						<ObjectAttribute
-							text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : 'Address is not specified' }"/>
+							text="{= ${odataClientMode>Address} ? ${odataClientMode>Address} : ${
+									parts: [
+										'i18n>fieldIsNotSpecified',
+										'i18n>address'
+									],
+									formatter: 'formatMessage'
+								}
+							}"/>
 				</ObjectListItem>
 			</List>
 		</f:content>

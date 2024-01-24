@@ -38,12 +38,12 @@
 								'odataClientMode>Price'
 							],
 							formatter: 'formatMessage'
-						} : 'not specified'
+						} : ${i18n>notSpecified}
 					}"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textRating" text="{i18n>ratingWithColon}"/>
-					<Text id="textRating" text="{= ${odataClientMode>Rating} ? ${odataClientMode>Rating} : 'not specified' }"/>
+					<Text id="textRating" text="{= ${odataClientMode>Rating} ? ${odataClientMode>Rating} : ${i18n>notSpecified} }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSpecs" text="{i18n>specsWithColon}"/>
@@ -53,22 +53,22 @@
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{i18n>supplierInfoWithColon}"/>
 					<Text
 						id="textSupplierInfo"
-						text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : 'not specified' }"/>
+						text="{= ${odataClientMode>SupplierInfo} ? ${odataClientMode>SupplierInfo} : ${i18n>notSpecified} }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textProdCompany" text="{i18n>prodCompanyWithColon}"/>
 					<Text
 						id="textProdCompany"
-						text="{= ${odataClientMode>ProductionCompanyName} ? ${odataClientMode>ProductionCompanyName} : 'not specified' }"/>
+						text="{= ${odataClientMode>ProductionCompanyName} ? ${odataClientMode>ProductionCompanyName} : ${i18n>notSpecified} }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textCountry" text="{i18n>countryOfOriginWithColon}"/>
-					<Text id="textCountry" text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : 'not specified' }"/>
+					<Text id="textCountry" text="{= ${odataClientMode>MadeIn} ? ${odataClientMode>MadeIn} : ${i18n>notSpecified} }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" text="{i18n>statusWithColon}"/>
 					<tnt:InfoLabel
-						text="{= ${odataClientMode>Status} ? ${odataClientMode>Status} : 'not specified' }"
+						text="{= ${odataClientMode>Status} ? ${odataClientMode>Status} : ${i18n>notSpecified} }"
 						colorScheme="{
 							path: 'odataClientMode>Status',
 							formatter: '.formatter.formatBadgeType'
@@ -81,7 +81,7 @@
 				<HBox>
 					<HBox alignItems="Center" class="sapUiTinyMarginEnd">
 						<Label class="sapUiTinyMarginEnd" labelFor="authorInput" text="{i18n>authorNameWithColon}"/>
-						<Input placeholder="Enter name" value="{appView>/currAuthorName}" maxLength="20"/>
+						<Input placeholder="{i18n>enterName}" value="{appView>/currAuthorName}" maxLength="20"/>
 					</HBox>
 					<HBox alignItems="Center">
 						<Label class="sapUiTinyMarginEnd" text="{i18n>ratingWithColon}"/>
@@ -102,20 +102,33 @@
 									'odataServerMode>Rating'
 								],
 								formatter: 'formatMessage'
-							} : 'Rating is not specified'
+							} : ${
+								parts: [
+									'i18n>fieldIsNotSpecified',
+									'i18n>rating'
+								],
+								formatter: 'formatMessage'
+							}
 						}"
-						timestamp="{
-							parts: [
-								'i18n>postedDate',
-								{
-									path: 'odataServerMode>Posted',
-									type: 'sap.ui.model.type.Date',
-									formatOptions: {
-										pattern: 'MMM d, yyyy, hh:mm:ss a'
+						timestamp="{= ${odataServerMode>Posted} ? ${
+								parts: [
+									'i18n>postedDate',
+									{
+										path: 'odataServerMode>Posted',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'MMM d, yyyy, hh:mm:ss a'
+										}
 									}
-								}
-							],
-							formatter: 'formatMessage'
+								],
+								formatter: 'formatMessage'
+							} : ${
+								parts: [
+									'i18n>fieldIsNotSpecified',
+									'i18n>date'
+								],
+								formatter: 'formatMessage'
+							}
 						}"
 					/>
 				</List>
