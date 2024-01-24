@@ -38,6 +38,13 @@
       "compact": true,
       "cozy": true
     },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",

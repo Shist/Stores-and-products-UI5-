@@ -117,7 +117,7 @@
 						iconColor="Negative"/>
 				</items>
 				<content>
-					<Table id="productsTable" items="{odataClientMode>rel_Products}" sticky="HeaderToolbar">
+					<Table id="productsTable" items="{odataClientMode>rel_Products}" sticky="HeaderToolbar" popinLayout="GridSmall">
 						<headerToolbar>
 							<Toolbar design="Solid">
 								<content>
@@ -135,7 +135,7 @@
 						</headerToolbar>
 						<columns>
 							<Column>
-								<HBox alignItems="Center">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('name')"
 										type="Transparent"
@@ -146,8 +146,8 @@
 									<Text text="{i18n>name}"/>
 								</HBox>
 							</Column>
-							<Column hAlign="End">
-								<HBox alignItems="Center">
+							<Column hAlign="End" minScreenWidth="480px" demandPopin="true">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('price')"
 										type="Transparent"
@@ -158,8 +158,8 @@
 									<Text text="{i18n>price}"/>
 								</HBox>
 							</Column>
-							<Column>
-								<HBox alignItems="Center">
+							<Column minScreenWidth="580px" demandPopin="true">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('specs')"
 										type="Transparent"
@@ -170,8 +170,8 @@
 									<Text text="{i18n>specs}"/>
 								</HBox>
 							</Column>
-							<Column>
-								<HBox alignItems="Center">
+							<Column minScreenWidth="680px" demandPopin="true">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('supplierInfo')"
 										type="Transparent"
@@ -182,8 +182,8 @@
 									<Text text="{i18n>supplierInfo}"/>
 								</HBox>
 							</Column>
-							<Column>
-								<HBox alignItems="Center">
+							<Column minScreenWidth="780px" demandPopin="true">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('country')"
 										type="Transparent"
@@ -194,8 +194,8 @@
 									<Text text="{i18n>countryOfOrigin}"/>
 								</HBox>
 							</Column>
-							<Column>
-								<HBox alignItems="Center">
+							<Column minScreenWidth="880px" demandPopin="true">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('prodCompany')"
 										type="Transparent"
@@ -206,8 +206,8 @@
 									<Text text="{i18n>prodCompany}"/>
 								</HBox>
 							</Column>
-							<Column>
-								<HBox alignItems="Center">
+							<Column minScreenWidth="980px" demandPopin="true">
+								<HBox class="hboxAlign">
 									<Button
 										press="onSortBtnPress('rating')"
 										type="Transparent"

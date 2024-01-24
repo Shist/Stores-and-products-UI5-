@@ -1,0 +1,7 @@
+.sapMListTblHeader .hboxAlign {
+  align-items: center;
+}
+
+.hboxAlign {
+  align-items: start;
+}
