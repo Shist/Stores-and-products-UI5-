@@ -173,28 +173,26 @@ sap.ui.define(
 
         const aFilters = [];
 
-        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.NAME.SERVER_KEY, sQuery));
-        aFilters.push(this.getFilterForNum(CONSTANTS.SORT_PROP.PRICE.SERVER_KEY, sQuery));
-        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.SPECS.SERVER_KEY, sQuery));
-        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.SUPPLIER_INFO.SERVER_KEY, sQuery));
-        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.COUNTRY.SERVER_KEY, sQuery));
-        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.PROD_COMPANY.SERVER_KEY, sQuery));
-        aFilters.push(this.getFilterForNum(CONSTANTS.SORT_PROP.RATING.SERVER_KEY, sQuery));
+        Object.values(CONSTANTS.SORT_PROP).forEach((oField) => {
+          oField.IS_NUM
+            ? aFilters.push(this.getFilterForNum(oField.SERVER_KEY, sQuery))
+            : aFilters.push(this.getFilterForStr(oField.SERVER_KEY, sQuery));
+        });
 
         return new Filter({ filters: aFilters, and: false });
       },
 
       getNewSortObj: function () {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
-        const oNewSortStatesObj = JSON.parse(
+        const oNewSortStates = JSON.parse(
           JSON.stringify(oAppViewModel.getProperty("/productsSortStates"))
         );
 
-        for (const sKey in oNewSortStatesObj) {
-          oNewSortStatesObj[sKey] = CONSTANTS.SORT_STATE.DEFAULT;
+        for (const sKey in oNewSortStates) {
+          oNewSortStates[sKey] = CONSTANTS.SORT_STATE.DEFAULT;
         }
 
-        return oNewSortStatesObj;
+        return oNewSortStates;
       },
 
       onSortBtnPress: function (sSortModelKey) {

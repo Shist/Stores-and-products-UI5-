@@ -135,30 +135,37 @@ sap.ui.define([], function () {
       NAME: {
         MODEL_KEY: "name",
         SERVER_KEY: "Name",
+        IS_NUM: false,
       },
       PRICE: {
         MODEL_KEY: "price",
         SERVER_KEY: "Price",
+        IS_NUM: true,
       },
       SPECS: {
         MODEL_KEY: "specs",
         SERVER_KEY: "Specs",
+        IS_NUM: false,
       },
       SUPPLIER_INFO: {
         MODEL_KEY: "supplierInfo",
         SERVER_KEY: "SupplierInfo",
+        IS_NUM: false,
       },
       COUNTRY: {
         MODEL_KEY: "country",
         SERVER_KEY: "MadeIn",
+        IS_NUM: false,
       },
       PROD_COMPANY: {
         MODEL_KEY: "prodCompany",
         SERVER_KEY: "ProductionCompanyName",
+        IS_NUM: false,
       },
       RATING: {
         MODEL_KEY: "rating",
         SERVER_KEY: "Rating",
+        IS_NUM: true,
       },
     },
   };
