@@ -52,8 +52,7 @@ sap.ui.define(
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
-        const sStoreId =
-          oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.STORE_ID];
+        const sStoreId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.STORE_ID];
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
@@ -71,10 +70,7 @@ sap.ui.define(
 
       getCurrStorePath: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-        const sStorePath = oODataModel.createKey(
-          "/Stores",
-          this.getBindingContextData()
-        );
+        const sStorePath = oODataModel.createKey("/Stores", this.getBindingContextData());
         return sStorePath;
       },
 
@@ -87,10 +83,7 @@ sap.ui.define(
         Object.keys(oProductsCounts).forEach((sStatusModelKey) => {
           const oParams = {
             success: (sCount) => {
-              oAppViewModel.setProperty(
-                `/productsCounts/${sStatusModelKey}`,
-                sCount
-              );
+              oAppViewModel.setProperty(`/productsCounts/${sStatusModelKey}`, sCount);
             },
           };
           const aFilters = [];
@@ -111,10 +104,7 @@ sap.ui.define(
             oParams.filters = [new Filter({ filters: aFilters, and: true })];
           }
 
-          oODataModel.read(
-            this.getCurrStorePath() + "/rel_Products/$count",
-            oParams
-          );
+          oODataModel.read(this.getCurrStorePath() + "/rel_Products/$count", oParams);
         });
       },
 
@@ -127,9 +117,7 @@ sap.ui.define(
           return;
         }
 
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
+        const oProductsBinding = this.byId(CONSTANTS.ID.PRODUCTS_TABLE).getBinding("items");
         const oIconTabBarFilter = this.getIconTabBarFilter();
         const oProductsSearchFilter = this.getProductsSearchFilter();
         const aFilters = [];
@@ -148,16 +136,10 @@ sap.ui.define(
       },
 
       getIconTabBarFilter: function () {
-        const sIconTabBarKey = this.byId(
-          CONSTANTS.ID.ICON_TAB_BAR
-        ).getSelectedKey();
+        const sIconTabBarKey = this.byId(CONSTANTS.ID.ICON_TAB_BAR).getSelectedKey();
 
         if (sIconTabBarKey !== CONSTANTS.STATUS.ALL.SERVER_KEY) {
-          return new Filter(
-            CONSTANTS.PRODUCT_PROP.STATUS,
-            FilterOperator.EQ,
-            sIconTabBarKey
-          );
+          return new Filter(CONSTANTS.PRODUCT_PROP.STATUS, FilterOperator.EQ, sIconTabBarKey);
         } else {
           return null;
         }
@@ -191,33 +173,13 @@ sap.ui.define(
 
         const aFilters = [];
 
-        aFilters.push(
-          this.getFilterForStr(CONSTANTS.SORT_PROP.NAME.SERVER_KEY, sQuery)
-        );
-        aFilters.push(
-          this.getFilterForNum(CONSTANTS.SORT_PROP.PRICE.SERVER_KEY, sQuery)
-        );
-        aFilters.push(
-          this.getFilterForStr(CONSTANTS.SORT_PROP.SPECS.SERVER_KEY, sQuery)
-        );
-        aFilters.push(
-          this.getFilterForStr(
-            CONSTANTS.SORT_PROP.SUPPLIER_INFO.SERVER_KEY,
-            sQuery
-          )
-        );
-        aFilters.push(
-          this.getFilterForStr(CONSTANTS.SORT_PROP.COUNTRY.SERVER_KEY, sQuery)
-        );
-        aFilters.push(
-          this.getFilterForStr(
-            CONSTANTS.SORT_PROP.PROD_COMPANY.SERVER_KEY,
-            sQuery
-          )
-        );
-        aFilters.push(
-          this.getFilterForNum(CONSTANTS.SORT_PROP.RATING.SERVER_KEY, sQuery)
-        );
+        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.NAME.SERVER_KEY, sQuery));
+        aFilters.push(this.getFilterForNum(CONSTANTS.SORT_PROP.PRICE.SERVER_KEY, sQuery));
+        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.SPECS.SERVER_KEY, sQuery));
+        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.SUPPLIER_INFO.SERVER_KEY, sQuery));
+        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.COUNTRY.SERVER_KEY, sQuery));
+        aFilters.push(this.getFilterForStr(CONSTANTS.SORT_PROP.PROD_COMPANY.SERVER_KEY, sQuery));
+        aFilters.push(this.getFilterForNum(CONSTANTS.SORT_PROP.RATING.SERVER_KEY, sQuery));
 
         return new Filter({ filters: aFilters, and: false });
       },
@@ -237,12 +199,8 @@ sap.ui.define(
 
       onSortBtnPress: function (sSortModelKey) {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
-        const sCurrSortState = oAppViewModel.getProperty(
-          `/productsSortStates/${sSortModelKey}`
-        );
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
+        const sCurrSortState = oAppViewModel.getProperty(`/productsSortStates/${sSortModelKey}`);
+        const oProductsBinding = this.byId(CONSTANTS.ID.PRODUCTS_TABLE).getBinding("items");
 
         const oNewSortFieldsObj = this.getNewSortObj();
 
@@ -275,8 +233,7 @@ sap.ui.define(
         const oEntryCtx = oODataModel.createEntry("/Products", {
           properties: {
             [CONSTANTS.PRODUCT_PROP.STATUS]: CONSTANTS.STATUS.OK.SERVER_KEY,
-            [CONSTANTS.PRODUCT_PROP.STORE_ID]:
-              oAppViewModel.getProperty("/currStoreId"),
+            [CONSTANTS.PRODUCT_PROP.STORE_ID]: oAppViewModel.getProperty("/currStoreId"),
           },
         });
 
@@ -298,9 +255,7 @@ sap.ui.define(
 
       onEditProductBtnPress: function (oEvent) {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
-        const oCtx = oEvent
-          .getSource()
-          .getBindingContext(CONSTANTS.MODEL.ODATA);
+        const oCtx = oEvent.getSource().getBindingContext(CONSTANTS.MODEL.ODATA);
 
         oAppViewModel.setProperty(
           "/currProductFormTitle",
@@ -327,22 +282,15 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.INPUT_PRODUCT_NAME).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.NAME]
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        if (!this.byId(CONSTANTS.ID.TEXTAREA_PRODUCT_SPECS).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.SPECS]
-          );
-          MessageBox.error(sMsgError);
-          return false;
+        for (const oField of Object.values(CONSTANTS.FORM_FIELD.PRODUCT)) {
+          if (!this.byId(oField.ID).getValue()) {
+            const sMsgError = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [oField.LABEL]
+            );
+            MessageBox.error(sMsgError);
+            return false;
+          }
         }
 
         return true;
@@ -389,9 +337,7 @@ sap.ui.define(
 
       onProductFormAfterClose: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
+        const oProductsBinding = this.byId(CONSTANTS.ID.PRODUCTS_TABLE).getBinding("items");
 
         // This reset called Any time when the dialog is closing (even after confirmation)
         // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
@@ -414,17 +360,14 @@ sap.ui.define(
         MessageBox.confirm(sConfirmationMsg, {
           onClose: function (oAction) {
             if (oAction === MessageBox.Action.OK) {
-              const oODataModel = oControllerContext.getModel(
-                CONSTANTS.MODEL.ODATA
-              );
+              const oODataModel = oControllerContext.getModel(CONSTANTS.MODEL.ODATA);
               const sKey = oControllerContext.getCurrStorePath();
 
               oODataModel.remove(sKey, {
                 success: function () {
-                  const sMsgSuccess =
-                    oControllerContext.getTextFromResourceModel(
-                      CONSTANTS.I18N_KEY.STORE_DELETE_SUCCESS
-                    );
+                  const sMsgSuccess = oControllerContext.getTextFromResourceModel(
+                    CONSTANTS.I18N_KEY.STORE_DELETE_SUCCESS
+                  );
                   MessageToast.show(sMsgSuccess, {
                     closeOnBrowserNavigation: false,
                   });
@@ -444,9 +387,7 @@ sap.ui.define(
 
       onDeleteProductBtnPress: function (oEvent) {
         const oControllerContext = this;
-        const oCtx = oEvent
-          .getSource()
-          .getBindingContext(CONSTANTS.MODEL.ODATA);
+        const oCtx = oEvent.getSource().getBindingContext(CONSTANTS.MODEL.ODATA);
         const sConfirmationMsg = this.getTextFromResourceModel(
           CONSTANTS.I18N_KEY.PRODUCT_DELETE_CONFIRMATION
         );
@@ -459,10 +400,9 @@ sap.ui.define(
 
               oODataModel.remove(sKey, {
                 success: function () {
-                  const sMsgSuccess =
-                    oControllerContext.getTextFromResourceModel(
-                      CONSTANTS.I18N_KEY.PRODUCT_DELETE_SUCCESS
-                    );
+                  const sMsgSuccess = oControllerContext.getTextFromResourceModel(
+                    CONSTANTS.I18N_KEY.PRODUCT_DELETE_SUCCESS
+                  );
                   MessageToast.show(sMsgSuccess);
                 },
                 error: function () {
@@ -505,15 +445,10 @@ sap.ui.define(
       setAllControlsToDefault: function () {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         oAppViewModel.setProperty("/currStoreId", null);
-        oAppViewModel.setProperty(
-          "/currProductsStatusFilter",
-          CONSTANTS.STATUS.ALL.SERVER_KEY
-        );
+        oAppViewModel.setProperty("/currProductsStatusFilter", CONSTANTS.STATUS.ALL.SERVER_KEY);
         oAppViewModel.setProperty("/currProductsSearchFilter", "");
         oAppViewModel.setProperty("/productsSortStates", this.getNewSortObj());
-        const oProductsBinding = this.byId(
-          CONSTANTS.ID.PRODUCTS_TABLE
-        ).getBinding("items");
+        const oProductsBinding = this.byId(CONSTANTS.ID.PRODUCTS_TABLE).getBinding("items");
         oProductsBinding.filter([]);
         oProductsBinding.sort([]);
       },
@@ -526,10 +461,7 @@ sap.ui.define(
 
       onProductPress: function (oEvent) {
         const nStoreId = this.getBindingContextData(CONSTANTS.STORE_PROP.ID);
-        const nProductId = this.getBindingContextData(
-          CONSTANTS.PRODUCT_PROP.ID,
-          oEvent
-        );
+        const nProductId = this.getBindingContextData(CONSTANTS.PRODUCT_PROP.ID, oEvent);
 
         this.setAllControlsToDefault();
 

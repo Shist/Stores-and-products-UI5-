@@ -7,14 +7,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (
-    BaseController,
-    CONSTANTS,
-    MessageToast,
-    MessageBox,
-    Filter,
-    FilterOperator
-  ) {
+  function (BaseController, CONSTANTS, MessageToast, MessageBox, Filter, FilterOperator) {
     "use strict";
 
     return BaseController.extend("pavel.zhukouski.controller.StoresOverview", {
@@ -31,9 +24,7 @@ sap.ui.define(
           return;
         }
 
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
-          "items"
-        );
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
         const sQuery = oEvent.getParameter("query");
         let oTargetFilter = [];
 
@@ -102,31 +93,15 @@ sap.ui.define(
           return false;
         }
 
-        if (!this.byId(CONSTANTS.ID.INPUT_STORE_NAME).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.NAME]
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        if (!this.byId(CONSTANTS.ID.INPUT_STORE_EMAIL).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.EMAIL]
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        if (!this.byId(CONSTANTS.ID.INPUT_STORE_PHONE).getValue()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-            [CONSTANTS.FORM_FIELD.PHONE_NUMBER]
-          );
-          MessageBox.error(sMsgError);
-          return false;
+        for (const oField of Object.values(CONSTANTS.FORM_FIELD.STORE)) {
+          if (!this.byId(oField.ID).getValue()) {
+            const sMsgError = this.getTextFromResourceModel(
+              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
+              [oField.LABEL]
+            );
+            MessageBox.error(sMsgError);
+            return false;
+          }
         }
 
         return true;
@@ -165,9 +140,7 @@ sap.ui.define(
 
       onStoreFormAfterClose: function () {
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
-          "items"
-        );
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
 
         // This reset called Any time when the dialog is closing (even after confirmation)
         // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
@@ -182,14 +155,9 @@ sap.ui.define(
       },
 
       onStorePress: function (oEvent) {
-        const nStoreId = this.getBindingContextData(
-          CONSTANTS.STORE_PROP.ID,
-          oEvent
-        );
+        const nStoreId = this.getBindingContextData(CONSTANTS.STORE_PROP.ID, oEvent);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding(
-          "items"
-        );
+        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
 
         oAppViewModel.setProperty("/currStoresSearchFilter", "");
 

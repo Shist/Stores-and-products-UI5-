@@ -19,13 +19,8 @@ sap.ui.define([], function () {
     ID: {
       STORES_LIST: "storesList",
       STORES_SEARCH: "storesSearch",
-      INPUT_STORE_NAME: "inputStoreName",
-      INPUT_STORE_EMAIL: "inputStoreEmail",
-      INPUT_STORE_PHONE: "inputStorePhone",
       PRODUCTS_TABLE: "productsTable",
       PRODUCTS_SEARCH: "productsSearch",
-      INPUT_PRODUCT_NAME: "inputProductName",
-      TEXTAREA_PRODUCT_SPECS: "textAreaProductSpecs",
       ICON_TAB_BAR: "iconTabBar",
       COMMENTS_LIST: "commentsList",
     },
@@ -58,10 +53,30 @@ sap.ui.define([], function () {
       PRODUCT: "ProductForm",
     },
     FORM_FIELD: {
-      NAME: "Name",
-      EMAIL: "Email",
-      PHONE_NUMBER: "Phone number",
-      SPECS: "Specs",
+      STORE: {
+        NAME: {
+          ID: "inputStoreName",
+          LABEL: "Name",
+        },
+        EMAIL: {
+          ID: "inputStoreEmail",
+          LABEL: "Email",
+        },
+        PHONE_NUMBER: {
+          ID: "inputStorePhone",
+          LABEL: "Phone number",
+        },
+      },
+      PRODUCT: {
+        NAME: {
+          ID: "inputProductName",
+          LABEL: "Name",
+        },
+        SPECS: {
+          ID: "textAreaProductSpecs",
+          LABEL: "Specs",
+        },
+      },
     },
     STORE_PROP: {
       ID: "id",

@@ -22,46 +22,28 @@ sap.ui.define(
 
       // aArgs parameter is optional and used for i18n strings with placeholders
       getTextFromResourceModel: function (sTextKey, aArgs) {
-        return this.getModel(CONSTANTS.MODEL.I18N)
-          .getResourceBundle()
-          .getText(sTextKey, aArgs);
+        return this.getModel(CONSTANTS.MODEL.I18N).getResourceBundle().getText(sTextKey, aArgs);
       },
 
       // Both parameters (sProperty, oEvent) are optional
       getBindingContextData: function (sProperty, oEvent) {
         if (oEvent) {
-          return oEvent
-            .getSource()
-            .getBindingContext(CONSTANTS.MODEL.ODATA)
-            .getObject(sProperty);
+          return oEvent.getSource().getBindingContext(CONSTANTS.MODEL.ODATA).getObject(sProperty);
         } else {
-          return this.getView()
-            .getBindingContext(CONSTANTS.MODEL.ODATA)
-            .getObject(sProperty);
+          return this.getView().getBindingContext(CONSTANTS.MODEL.ODATA).getObject(sProperty);
         }
       },
 
       registerViewToMessageManager: function () {
-        sap.ui
-          .getCore()
-          .getMessageManager()
-          .registerObject(this.getView(), true);
+        sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
       },
 
       isSearchFieldValid: function (sSearchFieldId) {
-        return /^[^#%&*()\[\]{}\\]*$/.test(
-          this.byId(sSearchFieldId).getValue()
-        );
+        return /^[^#%&*()\[\]{}\\]*$/.test(this.byId(sSearchFieldId).getValue());
       },
 
       msgManagerHasErrors: function () {
-        if (
-          sap.ui.getCore().getMessageManager().getMessageModel().oData.length
-        ) {
-          return true;
-        } else {
-          return false;
-        }
+        return !!sap.ui.getCore().getMessageManager().getMessageModel().oData.length;
       },
 
       // This function can load one of two forms: StoreForm or ProductForm

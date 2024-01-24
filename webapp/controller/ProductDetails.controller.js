@@ -40,8 +40,7 @@ sap.ui.define(
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
-        const sProductId =
-          oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID];
+        const sProductId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID];
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
@@ -76,9 +75,7 @@ sap.ui.define(
       onPostBtnPress: function () {
         const oControllerContext = this;
         const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
-        const oCommentsBinding = this.byId(
-          CONSTANTS.ID.COMMENTS_LIST
-        ).getBinding("items");
+        const oCommentsBinding = this.byId(CONSTANTS.ID.COMMENTS_LIST).getBinding("items");
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const currAuthor = oAppViewModel.getProperty("/currAuthorName");
         const currMessage = oAppViewModel.getProperty("/currCommentMsg");
@@ -99,12 +96,9 @@ sap.ui.define(
           properties: {
             [CONSTANTS.COMMENT_PROP.AUTHOR]: currAuthor,
             [CONSTANTS.COMMENT_PROP.MESSAGE]: currMessage,
-            [CONSTANTS.COMMENT_PROP.RATING]: currRating
-              ? currRating
-              : undefined,
+            [CONSTANTS.COMMENT_PROP.RATING]: currRating ? currRating : undefined,
             [CONSTANTS.COMMENT_PROP.POSTED]: new Date(),
-            [CONSTANTS.COMMENT_PROP.PRODUCT_ID]:
-              oAppViewModel.getProperty("/currProductId"),
+            [CONSTANTS.COMMENT_PROP.PRODUCT_ID]: oAppViewModel.getProperty("/currProductId"),
           },
         });
 
@@ -148,9 +142,7 @@ sap.ui.define(
       },
 
       onStoreDetailsLinkPress: function () {
-        const nStoreId = this.getBindingContextData(
-          CONSTANTS.PRODUCT_PROP.STORE_ID
-        );
+        const nStoreId = this.getBindingContextData(CONSTANTS.PRODUCT_PROP.STORE_ID);
 
         this.setAllControlsToDefault();
 
