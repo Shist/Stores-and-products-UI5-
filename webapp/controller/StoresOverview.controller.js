@@ -26,18 +26,18 @@ sap.ui.define(
 
         const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
         const sQuery = oEvent.getParameter("query");
-        let oTargetFilter = [];
+        let aTargetFilter = [];
 
         oStoresBinding.refresh();
 
         if (sQuery) {
-          oTargetFilter = new Filter({
+          aTargetFilter = new Filter({
             filters: this.getStoresSearchFilter(sQuery),
             and: false,
           });
         }
 
-        oStoresBinding.filter(oTargetFilter);
+        oStoresBinding.filter(aTargetFilter);
       },
 
       getStoresSearchFilter: function (sQuery) {
