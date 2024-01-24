@@ -84,31 +84,8 @@ sap.ui.define(
         this.oForm.open();
       },
 
-      isCreateStoreFormValid: function () {
-        if (this.msgManagerHasErrors()) {
-          const sMsgError = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.FIX_VALIDATION_ERRORS_MSG
-          );
-          MessageBox.error(sMsgError);
-          return false;
-        }
-
-        for (const oField of Object.values(CONSTANTS.FORM_FIELD.STORE)) {
-          if (!this.byId(oField.ID).getValue()) {
-            const sMsgError = this.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.FIELD_IS_MANADATORY_MSG,
-              [oField.LABEL]
-            );
-            MessageBox.error(sMsgError);
-            return false;
-          }
-        }
-
-        return true;
-      },
-
       onStoreFormCreateBtnPress: function () {
-        if (!this.isCreateStoreFormValid()) {
+        if (!this.isFormValid(CONSTANTS.FORM_FIELD.STORE)) {
           return;
         }
 
@@ -151,7 +128,8 @@ sap.ui.define(
         // That is why I have to refresh it by myself after some time
         setTimeout(() => oStoresBinding.refresh(), 100);
 
-        sap.ui.getCore().getMessageManager().removeAllMessages();
+        this.clearFormValueStates(CONSTANTS.FORM_FIELD.STORE);
+        this.getMsgManager().removeAllMessages();
       },
 
       onStorePress: function (oEvent) {

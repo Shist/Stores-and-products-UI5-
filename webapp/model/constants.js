@@ -27,7 +27,7 @@ sap.ui.define([], function () {
     I18N_KEY: {
       SEARCH_VALIDATION_WARNING: "searchValidationWarning",
       FIX_VALIDATION_ERRORS_MSG: "fixValidationErrorsMsg",
-      FIELD_IS_MANADATORY_MSG: "msgFieldIsManadatory",
+      FIELD_IS_MANADATORY: "msgFieldIsManadatory",
       STORE_CREATE_SUCCESS: "storeCreatedSuccessfully",
       STORE_CREATE_ERROR: "storeCreatedWithError",
       STORE_DELETE_CONFIRMATION: "deleteStoreConfirmationMsg",
@@ -54,28 +54,21 @@ sap.ui.define([], function () {
     },
     FORM_FIELD: {
       STORE: {
-        NAME: {
-          ID: "inputStoreName",
-          LABEL: "Name",
-        },
-        EMAIL: {
-          ID: "inputStoreEmail",
-          LABEL: "Email",
-        },
-        PHONE_NUMBER: {
-          ID: "inputStorePhone",
-          LABEL: "Phone number",
-        },
+        NAME: "inputStoreName",
+        EMAIL: "inputStoreEmail",
+        PHONE_NUMBER: "inputStorePhone",
+        ADDRESS: "inputStoreAddress",
+        ESTABLISHED: "datePickerStoreEstablished",
+        FLOOR_AREA: "inputStoreFloorArea",
       },
       PRODUCT: {
-        NAME: {
-          ID: "inputProductName",
-          LABEL: "Name",
-        },
-        SPECS: {
-          ID: "textAreaProductSpecs",
-          LABEL: "Specs",
-        },
+        NAME: "inputProductName",
+        PRICE: "inputProductPrice",
+        SPECS: "textAreaProductSpecs",
+        RATING: "inputProductRating",
+        SUPPLIER: "textAreaProductSupplier",
+        COUNTRY: "inputProductProdCompany",
+        PROD_COMPANY: "inputProductCountry",
       },
     },
     STORE_PROP: {

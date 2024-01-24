@@ -3,7 +3,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 	<Dialog
-		id="ProductForm"
+		id="productDialog"
 		title="{appView>/currProductFormTitle}"
 		afterClose="onProductFormAfterClose">
 		<f:SimpleForm
@@ -22,6 +22,7 @@
 				<Label text="{i18n>name}" required="true"/>
 				<Input
 					id="inputProductName"
+					change="onFormFieldChange"
 					type="Text"
 					required="true"
 					placeholder="{i18n>enterName}"
@@ -34,10 +35,12 @@
 						}
 					}"/>
 
-				<Label text="{i18n>price}" labelFor="inputProductPrice"/>
+				<Label text="{i18n>price}" labelFor="inputProductPrice" required="true"/>
 				<HBox>
 					<Input
 						id="inputProductPrice"
+						change="onFormFieldChange"
+						required="true"
 						placeholder="{i18n>enterPrice}"
 						value="{
 							path: 'Price',
@@ -57,6 +60,7 @@
 				<Label text="{i18n>specs}" required="true"/>
 				<TextArea
 					id="textAreaProductSpecs"
+					change="onFormFieldChange"
 					required="true"
 					placeholder="{i18n>enterProductSpecs}"
 					value="{
@@ -68,9 +72,12 @@
 						}
 					}"/>
 
-				<Label text="{i18n>rating}"/>
+				<Label text="{i18n>rating}" required="true"/>
 				<Input
+					id="inputProductRating"
+					change="onFormFieldChange"
 					type="Text"
+					required="true"
 					placeholder="{i18n>enterRating}"
 					value="{
 						path: 'Rating',
@@ -81,42 +88,54 @@
 						}
 					}"/>
 
-				<Label text="{i18n>supplierInfo}"/>
+				<Label text="{i18n>supplierInfo}" required="true"/>
 				<TextArea
+					id="textAreaProductSupplier"
+					change="onFormFieldChange"
+					required="true"
 					placeholder="{i18n>enterSupplierInfo}"
 					value="{
 						path: 'SupplierInfo',
 						type: 'sap.ui.model.type.String',
 						constraints: {
+							minLength: 1,
 							maxLength: 50
 						}
 					}"/>
 
-				<Label text="{i18n>madeIn}"/>
+				<Label text="{i18n>madeIn}" required="true"/>
 				<Input
+					id="inputProductCountry"
+					change="onFormFieldChange"
 					type="Text"
+					required="true"
 					placeholder="{i18n>enterOriginCountry}"
 					value="{
 						path: 'MadeIn',
 						type: 'sap.ui.model.type.String',
 						constraints: {
+							minLength: 1,
 							maxLength: 30
 						}
 					}"/>
 
-				<Label text="{i18n>productionCompanyName}"/>
+				<Label text="{i18n>productionCompanyName}" required="true"/>
 				<Input
+					id="inputProductProdCompany"
+					change="onFormFieldChange"
 					type="Text"
+					required="true"
 					placeholder="{i18n>enterManifactureName}"
 					value="{
 						path: 'ProductionCompanyName',
 						type: 'sap.ui.model.type.String',
 						constraints: {
+							minLength: 1,
 							maxLength: 30
 						}
 					}"/>
 
-				<Label text="{i18n>status}"/>
+				<Label text="{i18n>status}" required="true"/>
 				<Select forceSelection="false" selectedKey="{Status}">
 					<core:Item key="OK" text="OK"/>
 					<core:Item key="STORAGE" text="Storage"/>
