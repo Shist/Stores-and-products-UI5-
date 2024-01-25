@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controller/StoresOverview.controller.js</title>
+    <title>JSDoc: Source: controller/ProductDetails.controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controller/StoresOverview.controller.js</h1>
+    <h1 class="page-title">Source: controller/ProductDetails.controller.js</h1>
 
     
 
@@ -30,180 +30,187 @@
   [
     "pavel/zhukouski/controller/BaseController",
     "pavel/zhukouski/model/constants",
+    "pavel/zhukouski/model/formatter",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/model/Sorter",
   ],
-  function (BaseController, CONSTANTS, MessageToast, MessageBox, Filter, FilterOperator) {
+  function (
+    BaseController,
+    CONSTANTS,
+    formatter,
+    MessageToast,
+    MessageBox,
+    Filter,
+    FilterOperator,
+    Sorter
+  ) {
     "use strict";
 
-    return BaseController.extend("pavel.zhukouski.controller.StoresOverview", {
+    return BaseController.extend("pavel.zhukouski.controller.ProductDetails", {
+      /**
+       * Field for storing formatter that is needed for status InfoLabel formatting
+       * @type {Object}
+       * @public
+       */
+      formatter: formatter,
+
       /**
        * This method is called upon initialization of the View; it is only called once per View instance
        * @public
        */
       onInit: function () {
-        this.registerViewToMessageManager();
+        this.getRoute(CONSTANTS.ROUTE.PRODUCT_DETAILS).attachPatternMatched(
+          this.onRouterPatternMatched,
+          this
+        );
       },
 
       /**
-       * Handles search event of search stores input
+       * This method is called upon desctuction of the view
+       * @public
+       */
+      onExit: function () {
+        this.getRoute(CONSTANTS.ROUTE.PRODUCT_DETAILS).detachPatternMatched(
+          this.onRouterPatternMatched,
+          this
+        );
+      },
+
+      /**
+       * Handles the patternMatched event of sap.ui.core.routing.Route; calls every time pattern is matched
        * @param {sap.ui.base.Event} oEvent oEvent event object
        * @public
        */
-      onStoresSearchBtnPress: function (oEvent) {
-        if (!this.isSearchFieldValid(CONSTANTS.ID.STORES_SEARCH)) {
+      onRouterPatternMatched: function (oEvent) {
+        const oControllerContext = this;
+        const sStoreId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.STORE_ID];
+        const sProductId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID];
+        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+
+        oAppViewModel.setProperty("/currStoreId", sStoreId);
+        oAppViewModel.setProperty("/currProductId", sProductId);
+
+        oODataModel.metadataLoaded().then(function () {
+          const sKey = oODataModel.createKey("/Products", { id: sProductId });
+
+          oControllerContext.getView().bindObject({
+            path: sKey,
+            model: CONSTANTS.MODEL.ODATA,
+          });
+
+          const oCommentsBinding = oControllerContext
+            .byId(CONSTANTS.ID.COMMENTS_LIST)
+            .getBinding("items");
+
+          oCommentsBinding.filter(
+            new Filter({
+              path: CONSTANTS.COMMENT_PROP.PRODUCT_ID,
+              operator: FilterOperator.EQ,
+              value1: sProductId,
+            })
+          );
+
+          oCommentsBinding.sort(
+            new Sorter(CONSTANTS.COMMENT_PROP.POSTED, CONSTANTS.SORT_STATE.ASC)
+          );
+        });
+      },
+
+      /**
+       * Handles press event for post button inside FeedInput control
+       * @public
+       */
+      onPostBtnPress: function () {
+        const oControllerContext = this;
+        const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
+        const oCommentsBinding = this.byId(CONSTANTS.ID.COMMENTS_LIST).getBinding("items");
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        const currAuthor = oAppViewModel.getProperty("/currAuthorName");
+        const currMessage = oAppViewModel.getProperty("/currCommentMsg");
+        const currRating = oAppViewModel.getProperty("/currCommentRating");
+
+        if (!currAuthor) {
           const sMsgWarning = this.getTextFromResourceModel(
-            CONSTANTS.I18N_KEY.SEARCH_VALIDATION_WARNING
+            CONSTANTS.I18N_KEY.EMPTY_AUTHOR_WARNING
           );
           MessageBox.warning(sMsgWarning);
           return;
         }
 
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
-        const sQuery = oEvent.getParameter("query");
-        let aTargetFilter = [];
+        oAppViewModel.setProperty("/currAuthorName", "");
+        oAppViewModel.setProperty("/currCommentRating", 0);
 
-        oStoresBinding.refresh();
-
-        if (sQuery) {
-          aTargetFilter = new Filter({
-            filters: this.getStoresSearchFilter(sQuery),
-            and: false,
-          });
-        }
-
-        oStoresBinding.filter(aTargetFilter);
-      },
-
-      /**
-       * Collects all needed filters for given sQuery and returns them as an array
-       * @param {sQuery} sQuery string containing search query
-       * @returns {sap.ui.model.Filter[]} array with all needed store filters
-       * @public
-       */
-      getStoresSearchFilter: function (sQuery) {
-        const aFilters = [];
-
-        aFilters.push(
-          new Filter({
-            path: CONSTANTS.STORE_PROP.NAME,
-            operator: FilterOperator.Contains,
-            value1: sQuery,
-            caseSensitive: false,
-          })
-        );
-
-        aFilters.push(
-          new Filter({
-            path: CONSTANTS.STORE_PROP.ADDRESS,
-            operator: FilterOperator.Contains,
-            value1: sQuery,
-            caseSensitive: false,
-          })
-        );
-
-        aFilters.push(
-          new Filter({
-            path: CONSTANTS.STORE_PROP.FLOOR_AREA,
-            operator: FilterOperator.EQ,
-            value1: sQuery,
-            comparator: (a, b) => a - b,
-          })
-        );
-
-        return aFilters;
-      },
-
-      /**
-       * Handles press event of create store button
-       * @public
-       */
-      onCreateStoreBtnPress: function () {
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-        const oEntryCtx = oODataModel.createEntry("/Stores");
-
-        this.loadFormFragmentByName(CONSTANTS.FORM_NAME.STORE);
-
-        this.oForm.setBindingContext(oEntryCtx);
-
-        this.oForm.open();
-      },
-
-      /**
-       * Handles press event of create button that is located inside store form
-       * @public
-       */
-      onStoreFormCreateBtnPress: function () {
-        if (!this.isFormValid(CONSTANTS.FORM_FIELD.STORE)) {
-          return;
-        }
-
-        const oControllerContext = this;
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
+        oODataModel.createEntry("/ProductComments", {
+          properties: {
+            [CONSTANTS.COMMENT_PROP.AUTHOR]: currAuthor,
+            [CONSTANTS.COMMENT_PROP.MESSAGE]: currMessage,
+            [CONSTANTS.COMMENT_PROP.RATING]: currRating ? currRating : undefined,
+            [CONSTANTS.COMMENT_PROP.POSTED]: new Date(),
+            [CONSTANTS.COMMENT_PROP.PRODUCT_ID]: oAppViewModel.getProperty("/currProductId"),
+          },
+        });
 
         oODataModel.submitChanges({
           // These two functions will only be called when we will start using batch
           success: function () {
             const sMsgSuccess = oControllerContext.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.STORE_CREATE_SUCCESS
+              CONSTANTS.I18N_KEY.COMMENT_POST_SUCCESS
             );
             MessageToast.show(sMsgSuccess);
           },
           error: function () {
             const sMsgError = oControllerContext.getTextFromResourceModel(
-              CONSTANTS.I18N_KEY.STORE_CREATE_ERROR
+              CONSTANTS.I18N_KEY.COMMENT_POST_ERROR
             );
             MessageBox.error(sMsgError);
           },
         });
 
-        this.oForm.close();
-      },
-
-      /**
-       * Handles press event of cancel button that is located inside store form
-       * @public
-       */
-      onStoreFormCancelBtnPress: function () {
-        this.oForm.close();
-      },
-
-      /**
-       * Handles afterClose event of store form
-       * @public
-       */
-      onStoreFormAfterClose: function () {
-        const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
-
-        // This reset called Any time when the dialog is closing (even after confirmation)
         // For some reason my model does not release data after submitChanges(), may be because of server behaviour,
         // so I call resetChanges() after submitChanges() not to duplicate some stores, products or comments
         oODataModel.resetChanges();
 
         // For some reason server does not update my list (by additional GET request) after submitChanges()
         // That is why I have to refresh it by myself after some time
-        setTimeout(() => oStoresBinding.refresh(), 100);
-
-        this.clearFormValueStates(CONSTANTS.FORM_FIELD.STORE);
-        this.getMsgManager().removeAllMessages();
+        setTimeout(() => oCommentsBinding.refresh(), 100);
       },
 
       /**
-       * Handles press event of stores list item
-       * @param {sap.ui.base.Event} oEvent oEvent event object
+       * Sets all AppViewModel states (and therefore all controls values) to default
        * @public
        */
-      onStorePress: function (oEvent) {
-        const nStoreId = this.getBindingContextData(CONSTANTS.STORE_PROP.ID, oEvent);
+      setAllControlsToDefault: function () {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
-        const oStoresBinding = this.byId(CONSTANTS.ID.STORES_LIST).getBinding("items");
+        oAppViewModel.setProperty("/currStoreId", null);
+        oAppViewModel.setProperty("/currProductId", null);
+        oAppViewModel.setProperty("/currAuthorName", "");
+        oAppViewModel.setProperty("/currCommentRating", 0);
+        oAppViewModel.setProperty("/currCommentMsg", "");
+      },
 
-        oAppViewModel.setProperty("/currStoresSearchFilter", "");
+      /**
+       * Handles press event of link to the stores list
+       * @public
+       */
+      onStoresListLinkPress: function () {
+        this.setAllControlsToDefault();
 
-        oStoresBinding.filter([]);
+        this.navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
+      },
+
+      /**
+       * Handles press event of link to the products table
+       * @public
+       */
+      onStoreDetailsLinkPress: function () {
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        const nStoreId = oAppViewModel.getProperty("/currStoreId");
+
+        this.setAllControlsToDefault();
 
         this.navTo(CONSTANTS.ROUTE.STORE_DETAILS, {
           [CONSTANTS.ROUTE.PAYLOAD.STORE_ID]: nStoreId,

@@ -22,8 +22,17 @@ sap.ui.define(
     "use strict";
 
     return BaseController.extend("pavel.zhukouski.controller.ProductDetails", {
+      /**
+       * Field for storing formatter that is needed for status InfoLabel formatting
+       * @type {Object}
+       * @public
+       */
       formatter: formatter,
 
+      /**
+       * This method is called upon initialization of the View; it is only called once per View instance
+       * @public
+       */
       onInit: function () {
         this.getRoute(CONSTANTS.ROUTE.PRODUCT_DETAILS).attachPatternMatched(
           this.onRouterPatternMatched,
@@ -31,6 +40,10 @@ sap.ui.define(
         );
       },
 
+      /**
+       * This method is called upon desctuction of the view
+       * @public
+       */
       onExit: function () {
         this.getRoute(CONSTANTS.ROUTE.PRODUCT_DETAILS).detachPatternMatched(
           this.onRouterPatternMatched,
@@ -38,6 +51,11 @@ sap.ui.define(
         );
       },
 
+      /**
+       * Handles the patternMatched event of sap.ui.core.routing.Route; calls every time pattern is matched
+       * @param {sap.ui.base.Event} oEvent oEvent event object
+       * @public
+       */
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
         const sStoreId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.STORE_ID];
@@ -74,6 +92,10 @@ sap.ui.define(
         });
       },
 
+      /**
+       * Handles press event for post button inside FeedInput control
+       * @public
+       */
       onPostBtnPress: function () {
         const oControllerContext = this;
         const oODataModel = this.getView().getModel(CONSTANTS.MODEL.ODATA);
@@ -129,6 +151,10 @@ sap.ui.define(
         setTimeout(() => oCommentsBinding.refresh(), 100);
       },
 
+      /**
+       * Sets all AppViewModel states (and therefore all controls values) to default
+       * @public
+       */
       setAllControlsToDefault: function () {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         oAppViewModel.setProperty("/currStoreId", null);
@@ -138,12 +164,20 @@ sap.ui.define(
         oAppViewModel.setProperty("/currCommentMsg", "");
       },
 
+      /**
+       * Handles press event of link to the stores list
+       * @public
+       */
       onStoresListLinkPress: function () {
         this.setAllControlsToDefault();
 
         this.navTo(CONSTANTS.ROUTE.STORES_OVERVIEW);
       },
 
+      /**
+       * Handles press event of link to the products table
+       * @public
+       */
       onStoreDetailsLinkPress: function () {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
         const nStoreId = oAppViewModel.getProperty("/currStoreId");
