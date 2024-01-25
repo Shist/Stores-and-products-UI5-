@@ -148,7 +148,7 @@ sap.ui.define(
 
         // For some reason server does not update my list (by additional GET request) after submitChanges()
         // That is why I have to refresh it by myself after some time
-        setTimeout(() => oCommentsBinding.refresh(), 100);
+        setTimeout(() => oCommentsBinding.refresh(), 200);
       },
 
       /**
