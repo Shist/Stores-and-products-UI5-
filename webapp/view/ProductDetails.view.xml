@@ -11,12 +11,19 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title text="{
-						parts: [
-							'i18n>productDetailsPrName',
-							'odataClientMode>Name'
-						],
-						formatter: 'formatMessage'
+					<Title text="{= ${odataClientMode>Name} ? ${
+							parts: [
+								'i18n>productDetailsPrName',
+								'odataClientMode>Name'
+							],
+							formatter: 'formatMessage'
+						} : ${
+							parts: [
+								'i18n>productDetailsPrName',
+								'i18n>notSpecified'
+							],
+							formatter: 'formatMessage'
+						}
 					}"/>
 				</f:heading>
 				<f:breadcrumbs>
@@ -47,7 +54,7 @@
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSpecs" text="{i18n>specsWithColon}"/>
-					<Text id="textSpecs" text="{odataClientMode>Specs}"/>
+					<Text id="textSpecs" text="{= ${odataClientMode>Specs} ? ${odataClientMode>Specs} : ${i18n>notSpecified} }"/>
 				</HBox>
 				<HBox alignItems="Start">
 					<Label design="Bold" class="sapUiTinyMarginEnd" labelFor="textSupplierInfo" text="{i18n>supplierInfoWithColon}"/>

@@ -33,9 +33,9 @@ sap.ui.define(
       // Both parameters (sProperty, oEvent) are optional
       getBindingContextData: function (sProperty, oEvent) {
         if (oEvent) {
-          return oEvent.getSource().getBindingContext(CONSTANTS.MODEL.ODATA).getObject(sProperty);
+          return oEvent.getSource().getBindingContext(CONSTANTS.MODEL.ODATA)?.getObject(sProperty);
         } else {
-          return this.getView().getBindingContext(CONSTANTS.MODEL.ODATA).getObject(sProperty);
+          return this.getView().getBindingContext(CONSTANTS.MODEL.ODATA)?.getObject(sProperty);
         }
       },
 

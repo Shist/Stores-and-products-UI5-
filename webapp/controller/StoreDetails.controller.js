@@ -436,7 +436,8 @@ sap.ui.define(
       },
 
       onProductPress: function (oEvent) {
-        const nStoreId = this.getBindingContextData(CONSTANTS.STORE_PROP.ID);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        const nStoreId = oAppViewModel.getProperty("/currStoreId");
         const nProductId = this.getBindingContextData(CONSTANTS.PRODUCT_PROP.ID, oEvent);
 
         this.setAllControlsToDefault();

@@ -40,10 +40,12 @@ sap.ui.define(
 
       onRouterPatternMatched: function (oEvent) {
         const oControllerContext = this;
+        const sStoreId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.STORE_ID];
         const sProductId = oEvent.getParameter("arguments")[CONSTANTS.ROUTE.PAYLOAD.PRODUCT_ID];
         const oODataModel = this.getModel(CONSTANTS.MODEL.ODATA);
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
 
+        oAppViewModel.setProperty("/currStoreId", sStoreId);
         oAppViewModel.setProperty("/currProductId", sProductId);
 
         oODataModel.metadataLoaded().then(function () {
@@ -129,6 +131,7 @@ sap.ui.define(
 
       setAllControlsToDefault: function () {
         const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        oAppViewModel.setProperty("/currStoreId", null);
         oAppViewModel.setProperty("/currProductId", null);
         oAppViewModel.setProperty("/currAuthorName", "");
         oAppViewModel.setProperty("/currCommentRating", 0);
@@ -142,7 +145,8 @@ sap.ui.define(
       },
 
       onStoreDetailsLinkPress: function () {
-        const nStoreId = this.getBindingContextData(CONSTANTS.PRODUCT_PROP.STORE_ID);
+        const oAppViewModel = this.getModel(CONSTANTS.MODEL.APP_VIEW);
+        const nStoreId = oAppViewModel.getProperty("/currStoreId");
 
         this.setAllControlsToDefault();
 

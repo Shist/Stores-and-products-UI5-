@@ -31,7 +31,9 @@
 								class="sapUiTinyMarginEnd"
 								labelFor="textEmail"
 								text="{i18n>emailWithColon}"/>
-							<Text id="textEmail" text="{odataClientMode>Email}"/>
+							<Text
+								id="textEmail"
+								text="{= ${odataClientMode>Email} ? ${odataClientMode>Email} : ${i18n>notSpecified} }"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label
@@ -39,7 +41,9 @@
 								class="sapUiTinyMarginEnd"
 								labelFor="textPhoneNumber"
 								text="{i18n>phoneNumberWithColon}"/>
-							<Text id="textPhoneNumber" text="{odataClientMode>PhoneNumber}"/>
+							<Text
+								id="textPhoneNumber"
+								text="{= ${odataClientMode>PhoneNumber} ? ${odataClientMode>PhoneNumber} : ${i18n>notSpecified} }"/>
 						</layout:HorizontalLayout>
 						<layout:HorizontalLayout>
 							<Label
