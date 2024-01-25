@@ -2,6 +2,12 @@ sap.ui.define(["pavel/zhukouski/model/constants"], function (CONSTANTS) {
   "use strict";
 
   return {
+    /**
+     * Formats the sort button icon based on its state
+     * @param {string} sSortState current state of the button (comes from AppViewModel)
+     * @returns {string} link to needed sap icon
+     * @public
+     */
     formatSortBtnIcon: function (sSortState) {
       switch (sSortState) {
         case CONSTANTS.SORT_STATE.DEFAULT:
@@ -16,6 +22,12 @@ sap.ui.define(["pavel/zhukouski/model/constants"], function (CONSTANTS) {
       }
     },
 
+    /**
+     * Formats the type of sap.tnt.InfoLabel with product status
+     * @param {string} sStatus status of the product (comes from ODataModel)
+     * @returns {number} value for colorScheme of sap.tnt.InfoLabel
+     * @public
+     */
     formatBadgeType: function (sStatus) {
       switch (sStatus) {
         case CONSTANTS.STATUS.OK.SERVER_KEY:
