@@ -4,6 +4,10 @@
 
 ---
 
+### This project has a [twin project](https://github.com/Shist/Stores-and-products-JS-) which has almost same functional however written on native JavaScript.
+
+---
+
 ## Video demo:
 
 https://github.com/Shist/Stores-and-products-UI5-/assets/40572268/47a05280-4630-4b45-8d12-64a7da71f49a
