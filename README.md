@@ -30,8 +30,8 @@ https://github.com/Shist/Stores-and-products-UI5-/assets/40572268/47a05280-4630-
    `npm install`
 1. Run the server:
    `node .`
-1. Move back to root folder:
-   `cd ..`
+1. Open second terminal and go to the path where you created the project folder:
+    `cd "your-folder"`
 1. Download and install files of this project (front side):
    `git clone https://github.com/Shist/Stores-and-products-UI5-`
 1. Go to the front app folder:
